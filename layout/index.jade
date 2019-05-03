@@ -1,0 +1,67 @@
+extends ./layout
+
+block content
+
+    .banner
+        h1 A Tool for Generating JavaScript Utility Libraries:)
+        a.btn.second(href='#{site.baseUrl}docs.html') GET STARTED
+        .glow.hidden
+
+    .procedure
+        .container
+            ul
+                li
+                    h2 Easy to Use
+                    p.
+                       5 Minutes is Good Enough to Master it
+                li
+                    h2 Rich Modules
+                    p.
+                       Number of Modules Growing Everyday
+                li
+                    h2 Extensible
+                    p.
+                       Collect and Build Your Module Libraries
+
+    .md.container.mobile.intro!= contents
+
+    script.
+        _.ready(function glowEffect()
+        {
+            var $glow = _.$('.glow');
+
+            var imgWidth = 1828,
+                imgHeight = 360,
+                imgRatio = imgWidth / imgHeight;
+
+            var bannerWidth, bannerHeight = 360, bannerRatio;
+
+            function onResize()
+            {
+                var width, height;
+
+                bannerWidth = window.innerWidth;
+                bannerRatio = bannerWidth / bannerHeight;
+
+                if (bannerRatio > imgRatio)
+                {
+                    width = bannerWidth;
+                    height = width / imgRatio;
+                } else
+                {
+                    height = bannerHeight;
+                    width = height * imgRatio;
+                }
+
+                var x = width * (297 / imgWidth) - 10,
+                    y = height * (272 / imgHeight) - 10;
+
+                $glow.css({top : y, left: x});
+            }
+
+            onResize();
+
+            $glow.show();
+
+            window.onresize = onResize;
+        });

@@ -1,0 +1,21 @@
+{
+    "title": "Eustia: A Tool for Generating JavaScript Utility Libraries:)",
+    "nav": [
+        {
+            "text": "DOCS",
+            "url": "docs.html"
+        },
+        {
+            "text": "MODULE",
+            "url": "module.html"
+        },
+        {
+            "text": "PLAYGROUND",
+            "url": "playground.html"
+        },
+        {
+            "text": "BUILDER",
+            "url": "builder.html"
+        }
+    ]
+}

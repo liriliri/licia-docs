@@ -1,0 +1,74 @@
+.banner
+    height 360px
+    padding 80px 48px 40px
+    background #333
+    background-image url(./static/img/banner.jpg)
+    background-size cover
+    background-position top left
+    text-align center
+    position relative
+    h1
+        margin 40px auto
+        text-align center
+        color #fff
+        font-size 24px
+    .glow
+        position absolute
+        width 20px
+        height 20px
+        border-radius 50%
+        background #fff
+        box-shadow 0 0 60px 30px #fff, 0 0 120px 80px #fff
+        transition box-shadow 4s ease-out
+        animation glow 3s linear infinite;
+
+.intro
+    padding 20px 0 64px
+
+.procedure
+    background #333
+    padding 40px 0
+    ul
+        margin-right -26px
+        &:after
+            content ''
+            display block
+            clear both
+    li
+        width 324px
+        margin-right 26px
+        height 150px
+        display block
+        border 1px solid $pri-color
+        border-bottom-width 3px
+        text-align center
+        background #fff
+        float left
+        &:hover
+            border-color $sec-color
+            h2
+                background $sec-color
+        h2
+            background  $pri-color
+            padding 10px 0;
+            text-align center
+            margin 0
+            color #fff
+        p
+            font-size 14px
+            padding 15px 20px
+
+@keyframes glow
+    50%
+        box-shadow 0 0 80px 50px #fff, 0 0 240px 120px #fff
+    100%
+        box-shadow 0 0 60px 30px #fff, 0 0 120px 80px #fff
+
+@media (max-width $container-width)
+    .procedure
+        display none
+    .banner
+        padding 20px 48px
+        height 280px
+        .glow
+            display none !important

@@ -1,0 +1,62 @@
+{
+  "name": "caim",
+  "version": "0.0.1",
+  "description": "Eustia documentation",
+  "main": "index.js",
+  "scripts": {
+    "build": "node script/updateMod && node . && gulp",
+    "dev": "node . serve",
+    "format": "prettier *.js lib/markedToc.js script/*.js static/js/builder.js --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liriliri/caim.git"
+  },
+  "author": "surunzi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/liriliri/caim/issues"
+  },
+  "eustia": {
+    "page": {
+      "files": [
+        "layout/**/*.jade",
+        "static/js/*.js"
+      ],
+      "output": "static/js/eustia.js",
+      "format": "global"
+    },
+    "node": {
+      "files": [
+        "lib/*.js",
+        "index.js",
+        "script/*.js"
+      ],
+      "output": "./lib/util.js",
+      "format": "commonjs"
+    }
+  },
+  "homepage": "https://github.com/liriliri/caim#readme",
+  "devDependencies": {
+    "autoprefixer-stylus": "^0.8.1",
+    "chokidar": "^1.3.0",
+    "extract-comments": "^0.8.6",
+    "gulp": "^3.9.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-uglify": "^2.1.2",
+    "jade": "^1.11.0",
+    "marked": "^0.3.5",
+    "marked-toc": "^0.3.0",
+    "metalsmith": "^2.1.0",
+    "metalsmith-ignore": "^0.1.2",
+    "metalsmith-layouts": "^1.4.2",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-prism": "^2.1.1",
+    "metalsmith-stylus": "^1.0.0",
+    "metalsmith-uglify": "^1.5.1",
+    "ncp": "^2.0.0",
+    "prettier": "^1.14.3",
+    "request": "^2.72.0",
+    "st": "^1.0.0"
+  }
+}
