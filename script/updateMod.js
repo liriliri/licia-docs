@@ -15,12 +15,12 @@ request(INDEX_URL, function(err, res, body) {
   fs.writeFile('src/licia.json', JSON.stringify(index, null, 4), function() {})
 
   requestDoc(
-    'module',
+    'docs',
     'https://raw.githubusercontent.com/liriliri/licia/master/DOC.md',
     'en'
   )
   requestDoc(
-    'module_cn',
+    'docs_cn',
     'https://raw.githubusercontent.com/liriliri/licia/master/DOC_CN.md',
     'cn'
   )
@@ -33,7 +33,7 @@ function requestDoc(name, url, lang) {
     body = addDesc(body, lang)
     body = addLink(body)
 
-    var data = '---\nlayout: module.jade\ntitle: Module\n---\n\n' + body
+    var data = '---\nlayout: docs.jade\ntitle: Docs\n---\n\n' + body
 
     fs.writeFile(`src/${name}.md`, data, 'utf-8', function(err) {
       if (err) console.log(err)
@@ -44,14 +44,10 @@ function requestDoc(name, url, lang) {
 function addDesc(body, lang) {
   if (lang === 'en') {
     return body.replace(/^#.*/, function() {
-      return '[English](/module.html) [中文](/module_cn.html)\n'
+      return '[English](/docs.html) [中文](/docs_cn.html)\n'
     })
   } else if (lang === 'cn') {
-    return (
-      ['[English](/module.html) [中文](/module_cn.html)'].join('\n\n') +
-      '\n\n' +
-      body
-    )
+    return '[English](/docs.html) [中文](/docs_cn.html)\n\n' + body
   }
 
   return body

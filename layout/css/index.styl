@@ -12,30 +12,11 @@
         text-align center
         color #fff
         font-size 24px
-    .glow
-        position absolute
-        width 20px
-        height 20px
-        border-radius 50%
-        background #fff
-        box-shadow 0 0 60px 30px #fff, 0 0 120px 80px #fff
-        transition box-shadow 4s ease-out
-        animation glow 3s linear infinite;
 
 .intro
     padding 20px 0 64px
 
-@keyframes glow
-    50%
-        box-shadow 0 0 80px 50px #fff, 0 0 240px 120px #fff
-    100%
-        box-shadow 0 0 60px 30px #fff, 0 0 120px 80px #fff
-
 @media (max-width $container-width)
-    .procedure
-        display none
     .banner
         padding 20px 48px
         height 280px
-        .glow
-            display none !important

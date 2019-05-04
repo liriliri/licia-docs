@@ -44,7 +44,7 @@ function build() {
   site.baseUrl =
     env === 'development'
       ? '//localhost:' + port + '/'
-      : '//eustia.liriliri.io/'
+      : '//licia.liriliri.io/'
   site.env = env
 
   var metalsmith = require('metalsmith')(dirname)
