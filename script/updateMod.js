@@ -44,26 +44,11 @@ function requestDoc(name, url, lang) {
 function addDesc(body, lang) {
   if (lang === 'en') {
     return body.replace(/^#.*/, function() {
-      return [
-        '[English](/module.html) [中文](/module_cn.html)',
-        'All source code is [hosted on GitHub](https://github.com/liriliri/licia).',
-        'Feel free to report issues and make pull requests:)',
-        'Use as an npm package:',
-        '```bash\nnpm i licia --save\n```',
-        "```javascript\nvar uuid = require('licia/uuid');\n\nconsole.log(uuid()); // -> 0e3b84af-f911-4a55-b78a-cedf6f0bd815\n```"
-      ].join('\n\n')
+      return '[English](/module.html) [中文](/module_cn.html)\n'
     })
   } else if (lang === 'cn') {
     return (
-      [
-        '[English](/module.html) [中文](/module_cn.html)',
-        '所有源代码均[托管在 GitHub 上](https://github.com/liriliri/licia).',
-        '如果发现 bug 或有改进意见，可以到上边地址发起 issue 帮助我们让该项目变得更好:)',
-        '使用 npm 安装：',
-        'Use as an npm package:',
-        '```bash\nnpm i licia --save\n```',
-        "```javascript\nvar uuid = require('licia/uuid');\n\nconsole.log(uuid()); // -> 0e3b84af-f911-4a55-b78a-cedf6f0bd815\n```"
-      ].join('\n\n') +
+      ['[English](/module.html) [中文](/module_cn.html)'].join('\n\n') +
       '\n\n' +
       body
     )

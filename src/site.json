@@ -1,10 +1,6 @@
 {
-    "title": "Eustia: A Tool for Generating JavaScript Utility Libraries:)",
+    "title": "Licia: Useful Utility Collection with Zero Dependencies:)",
     "nav": [
-        {
-            "text": "DOCS",
-            "url": "docs.html"
-        },
         {
             "text": "MODULE",
             "url": "module.html"

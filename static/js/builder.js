@@ -298,7 +298,7 @@ var logger = {
 }
 
 var regDependency = /\s*\b_\(\s*['"]([\w\s$]+)['"]\s*\);?/m,
-  regExports = /\bexports\b/;
+  regExports = /\bexports\b/
 
 var codeTpl = _.template(
   [

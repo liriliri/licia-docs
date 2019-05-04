@@ -2,49 +2,29 @@
 layout: index.jade
 ---
 
-**Eustia** will scan your source code to find strings that match the pattern
-**util.method**, **util = require('./util')** or **import {...} from './util'**,
-then generates a JavaScript library containing only the methods you have used.
-It provides most of underscore's functions and some other useful small
-modules, for example, Class, cookie helpers. You can also collect and build your
-own modules to create libraries for multiple projects.
+# Licia
 
-![Eustia screen shot](/static/img/eustia-screenshot.gif)
+Useful utility collection with zero dependencies.
 
-## Installation
+To check all current available functions, click
+[here](https://eustia.liriliri.io/module.html).
 
-You can install Eustia using Node Package Manager(**npm**).
+## Another Lodash?
 
-```bash
-npm install -g eustia
-```
+No. The goal of Licia is to provide a huge number of useful and small JavaScript codes, not just functions, but also modules and classes. Think of it as a mini version of npm suitable for tiny packages.
 
-## Quick Example
+## Usage
 
-Suppose you want to use trim function in index.html, just write the code
-down as follows:
-
-```html
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Eustia</title>
-    <script src="util.js"></script>
-</head>
-<body>
-    <script>
-    var projectName = _.trim(' Eustia ');
-    // Some code...
-    </script>
-</body>
-</html>
-```
-
-Run command:
+Just install **licia** and use it like any other npm utility modules such as lodash.
 
 ```bash
-eustia build
+npm i licia --save
 ```
 
-The tool will scan you html code and generate a file name **util.js**
-(Default output file name). And that is it, everything is just done!
+```javascript
+var uuid = require('licia/uuid');
+
+console.log(uuid()); // -> 0e3b84af-f911-4a55-b78a-cedf6f0bd815
+```
+
+There is also an online tool to build a customized utility library, check [here](https://eustia.liriliri.io/builder.html).
