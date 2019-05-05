@@ -81,10 +81,15 @@ function addLink(body) {
     var env = index[name].env,
       envHtml = ''
 
-    if (env === 'browser' || env === 'all')
+    if (env.indexOf('browser') > -1) {
       envHtml += '<i class="env iconfont icon-browser"></i>'
-    if (env === 'node' || env === 'all')
+    }
+    if (env.indexOf('node') > -1) {
       envHtml += '<i class="env iconfont icon-nodejs"></i>'
+    }
+    if (env.indexOf('miniprogram') > -1) {
+      envHtml += '<i class="env iconfont icon-mini-program"></i>'
+    }
 
     ret += envHtml
 

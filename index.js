@@ -42,9 +42,7 @@ var site = require('./src/site.json'),
 
 function build() {
   site.baseUrl =
-    env === 'development'
-      ? '//localhost:' + port + '/'
-      : '//licia.liriliri.io/'
+    env === 'development' ? '//localhost:' + port + '/' : '//licia.liriliri.io/'
   site.env = env
 
   var metalsmith = require('metalsmith')(dirname)
