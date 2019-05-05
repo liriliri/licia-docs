@@ -18,7 +18,8 @@ block content
             li(title="All modules that can run on both browser and node.js.") all
             li(title='All browser modules.') allBrowser
             li(title='All node.js modules.') allNode
+            li(title='All miniprogram modules.') allMiniProgram
             each val, index in licia
-                li(title=val.description data-env=val.env)= index    
+                li(title=val.description data-env=val.env.join(' '))= index    
 
     script(src='#{site.baseUrl}static/js/builder.js')

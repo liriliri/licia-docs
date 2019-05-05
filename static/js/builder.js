@@ -69,18 +69,29 @@ _.ready(function() {
       name = $this.text(),
       val = ''
 
-    if (name === 'allBrowser' || name === 'allNode' || name === 'all') {
-      if (name !== 'all') {
-        var exclude = name === 'allBrowser' ? 'node' : 'browser'
+    if (
+      name === 'allBrowser' ||
+      name === 'allNode' ||
+      name === 'all' ||
+      name === 'allMiniProgram'
+    ) {
+      if (name === 'allBrowser') {
+        name = 'browser'
+      } else if (name === 'allNode') {
+        name = 'node'
+      } else if (name === 'allMiniProgram') {
+        name = 'miniprogram'
       }
       $buildModules.find('li').each(function() {
         var $this = _.$(this),
-          env = $this.data('env')
+          env = $this.data('env') || ''
+
+        env = env.split(/\s+/g)
         if (name === 'all') {
-          if (env === 'all') val += ' ' + $this.text()
+          if (env.length === 3) val += ' ' + $this.text()
           return
         }
-        if (env && env !== exclude) val += ' ' + $this.text()
+        if (env.indexOf(name) > -1) val += ' ' + $this.text()
       })
     } else {
       val = $input.val()
