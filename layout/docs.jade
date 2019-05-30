@@ -23,7 +23,7 @@ block content
             $tocList.each(function () {
                 originList.push(_.$(this).text());    
             });
-            var displayList = _.clone(originList);
+            var displayList = originList;
             function renderList() {
                 const html = displayList.map(function (name) {
                     return '<li><a href="#' + name.replace(/\$/, 'dollar-').toLowerCase() + '">' + name + '</a></li>';
@@ -39,21 +39,9 @@ block content
                 $tocContainer.html('')
 
                 if (val === '') {
-                    displayList = _.clone(originList);
+                    displayList = originList;
                 } else {
-                    displayList.sort(function (a, b) {
-                        a = a.toLowerCase();
-                        b = b.toLowerCase();
-                        if (a === val) return -1;
-                        if (b === val) return 1;
-                        if (a.indexOf(val) > -1) return -1;
-                        if (b.indexOf(val) > -1) return 1;
-                        a = _.levenshtein(val, a);
-                        b = _.levenshtein(val, b);
-                        if (a < b) return -1;
-                        if (a > b) return 1;
-                        return 0;
-                    });
+                    displayList = _.fuzzySearch(val, originList);
                 }
 
                 renderList();

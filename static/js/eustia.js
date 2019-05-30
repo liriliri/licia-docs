@@ -1019,6 +1019,105 @@ window._ = (function()
         return exports;
     })({});
 
+    /* ------------------------------ levenshtein ------------------------------ */
+
+    var levenshtein = _.levenshtein = (function (exports) {
+        /* Levenshtein distance implementation.
+         *
+         * |Name  |Type  |Desc                                |
+         * |------|------|------------------------------------|
+         * |a     |string|First string                        |
+         * |b     |string|Second string                       |
+         * |return|number|Levenshtein distance between a and b|
+         */
+
+        /* demo
+         * levenshtein('cat', 'cake'); // -> 2
+         */
+
+        /* typescript
+         * export declare function levenshtein(a: string, b: string): number;
+         */
+        var vector = [];
+        var bChars = []; // https://github.com/Yomguithereal/talisman/
+
+        exports = function exports(a, b) {
+            if (a === b) return 0; // Make a is the shorter one
+
+            if (a.length > b.length) {
+                var tmp = a;
+                a = b;
+                b = tmp;
+            }
+
+            var aLen = a.length;
+            var bLen = b.length;
+            if (!aLen) return bLen;
+            if (!bLen) return aLen; // Ignore common suffix
+
+            while (aLen > 0 && a.charCodeAt(aLen - 1) === b.charCodeAt(bLen - 1)) {
+                aLen--;
+                bLen--;
+            }
+
+            if (!aLen) return bLen; // Ignore common prefix
+
+            var start = 0;
+
+            while (start < aLen && a.charCodeAt(start) === b.charCodeAt(start)) {
+                start++;
+            }
+
+            aLen -= start;
+            bLen -= start;
+            if (!aLen) return bLen;
+            var current = 0;
+            var left;
+            var above;
+            var charA;
+            var i = 0;
+
+            while (i < bLen) {
+                bChars[i] = b.charCodeAt(start + i);
+                vector[i] = ++i;
+            }
+            /* | | |o|a|
+             * | |0|1|2|
+             * |r|1|1|2|←
+             * |o|2|1|2|
+             * |a|3|2|1|
+             *      ↑
+             * a: oa
+             * b: roa
+             * row: [1, 2, 3]
+             */
+
+            for (var _i = 0; _i < aLen; _i++) {
+                left = _i;
+                current = _i + 1;
+                charA = a.charCodeAt(start + _i);
+
+                for (var j = 0; j < bLen; j++) {
+                    above = current;
+                    current = left;
+                    left = vector[j];
+
+                    if (charA !== bChars[j]) {
+                        if (left < current) current = left;
+                        if (above < current) current = above;
+                        current++;
+                    }
+
+                    vector[j] = current;
+                }
+            }
+
+            return current;
+        };
+
+        return exports;
+    })({});
+
     /* ------------------------------ identity ------------------------------ */
 
     var identity = _.identity = (function (exports) {
@@ -1688,38 +1787,6 @@ window._ = (function()
         return exports;
     })({});
 
-    /* ------------------------------ clone ------------------------------ */
-    _.clone = (function (exports) {
-        /* Create a shallow-copied clone of the provided plain object.
-         *
-         * Any nested objects or arrays will be copied by reference, not duplicated.
-         *
-         * |Name  |Type|Desc          |
-         * |------|----|--------------|
-         * |val   |*   |Value to clone|
-         * |return|*   |Cloned value  |
-         */
-
-        /* example
-         * clone({name: 'eustia'}); // -> {name: 'eustia'}
-         */
-
-        /* typescript
-         * export declare function clone<T>(val: T): T;
-         */
-
-        /* dependencies
-         * isObj isArr extend 
-         */
-
-        exports = function exports(obj) {
-            if (!isObj(obj)) return obj;
-            return isArr(obj) ? obj.slice() : extend({}, obj);
-        };
-
-        return exports;
-    })({});
-
     /* ------------------------------ extendOwn ------------------------------ */
 
     var extendOwn = _.extendOwn = (function (exports) {
@@ -2196,104 +2263,6 @@ window._ = (function()
             }
 
             return true;
-        };
-
-        return exports;
-    })({});
-
-    /* ------------------------------ levenshtein ------------------------------ */
-    _.levenshtein = (function (exports) {
-        /* Levenshtein distance implementation.
-         *
-         * |Name  |Type  |Desc                                |
-         * |------|------|------------------------------------|
-         * |a     |string|First string                        |
-         * |b     |string|Second string                       |
-         * |return|number|Levenshtein distance between a and b|
-         */
-
-        /* demo
-         * levenshtein('cat', 'cake'); // -> 2
-         */
-
-        /* typescript
-         * export declare function levenshtein(a: string, b: string): number;
-         */
-        var vector = [];
-        var bChars = []; // https://github.com/Yomguithereal/talisman/
-
-        exports = function exports(a, b) {
-            if (a === b) return 0; // Make a is the shorter one
-
-            if (a.length > b.length) {
-                var tmp = a;
-                a = b;
-                b = tmp;
-            }
-
-            var aLen = a.length;
-            var bLen = b.length;
-            if (!aLen) return bLen;
-            if (!bLen) return aLen; // Ignore common suffix
-
-            while (aLen > 0 && a.charCodeAt(aLen - 1) === b.charCodeAt(bLen - 1)) {
-                aLen--;
-                bLen--;
-            }
-
-            if (!aLen) return bLen; // Ignore common prefix
-
-            var start = 0;
-
-            while (start < aLen && a.charCodeAt(start) === b.charCodeAt(start)) {
-                start++;
-            }
-
-            aLen -= start;
-            bLen -= start;
-            if (!aLen) return bLen;
-            var current = 0;
-            var left;
-            var above;
-            var charA;
-            var i = 0;
-
-            while (i < bLen) {
-                bChars[i] = b.charCodeAt(start + i);
-                vector[i] = ++i;
-            }
-            /* | | |o|a|
-             * | |0|1|2|
-             * |r|1|1|2|←
-             * |o|2|1|2|
-             * |a|3|2|1|
-             *      ↑
-             * a: oa
-             * b: roa
-             * row: [1, 2, 3]
-             */
-
-            for (var _i = 0; _i < aLen; _i++) {
-                left = _i;
-                current = _i + 1;
-                charA = a.charCodeAt(start + _i);
-
-                for (var j = 0; j < bLen; j++) {
-                    above = current;
-                    current = left;
-                    left = vector[j];
-
-                    if (charA !== bChars[j]) {
-                        if (left < current) current = left;
-                        if (above < current) current = above;
-                        current++;
-                    }
-
-                    vector[j] = current;
-                }
-            }
-
-            return current;
         };
 
         return exports;
@@ -4979,6 +4948,191 @@ window._ = (function()
                 return this._state.is('pause');
             }
         });
+
+        return exports;
+    })({});
+
+    /* ------------------------------ property ------------------------------ */
+
+    var property = _.property = (function (exports) {
+        /* Return a function that will itself return the key property of any passed-in object.
+         *
+         * |Name  |Type        |Desc                       |
+         * |------|------------|---------------------------|
+         * |path  |string array|Path of the property to get|
+         * |return|function    |New accessor function      |
+         */
+
+        /* example
+         * var obj = {a: {b: 1}};
+         * property('a')(obj); // -> {b: 1}
+         * property(['a', 'b'])(obj); // -> 1
+         */
+
+        /* typescript
+         * export declare function property(path: string | string[]): Function;
+         */
+
+        /* dependencies
+         * isArr safeGet 
+         */
+
+        exports = function exports(path) {
+            if (!isArr(path)) return shallowProperty(path);
+            return function(obj) {
+                return safeGet(obj, path);
+            };
+        };
+
+        function shallowProperty(key) {
+            return function(obj) {
+                return obj == null ? void 0 : obj[key];
+            };
+        }
+
+        return exports;
+    })({});
+
+    /* ------------------------------ pluck ------------------------------ */
+
+    var pluck = _.pluck = (function (exports) {
+        /* Extract a list of property values.
+         *
+         * |Name  |Type        |Desc                           |
+         * |------|------------|-------------------------------|
+         * |obj   |object array|Collection to iterate over     |
+         * |key   |string array|Property path                  |
+         * |return|array       |New array of specified property|
+         */
+
+        /* example
+         * var stooges = [
+         *     {name: 'moe', age: 40},
+         *     {name: 'larry', age: 50},
+         *     {name: 'curly', age: 60}
+         * ];
+         * pluck(stooges, 'name'); // -> ['moe', 'larry', 'curly']
+         */
+
+        /* typescript
+         * export declare function pluck(object: any, key: string | string[]): any[];
+         */
+
+        /* dependencies
+         * map property 
+         */
+
+        exports = function exports(obj, key) {
+            return map(obj, property(key));
+        };
+
+        return exports;
+    })({});
+
+    /* ------------------------------ fuzzySearch ------------------------------ */
+    _.fuzzySearch = (function (exports) {
+        /* Simple fuzzy search.
+         *
+         * |Name     |Type  |Desc            |
+         * |---------|------|----------------|
+         * |needle   |string|String to search|
+         * |haystacks|array |Search list     |
+         * |options  |object|Search options  |
+         *
+         * Available options:
+         *
+         * |Name               |Type        |Desc                                        |
+         * |-------------------|------------|--------------------------------------------|
+         * |caseSensitive=false|boolean     |Whether comparisons should be case sensitive|
+         * |[key]             |string array|Object key path if item is object            |
+         */
+
+        /* example
+         * fuzzySearch('lic', ['licia', 'll', 'lic']); // -> ['lic', 'licia']
+         * fuzzySearch('alpha-test', [{
+         *     name: 'alpha-test-1'
+         * }, {
+         *     name: 'beta-test'
+         * }], {
+         *     key: 'name'
+         * }); // -> [{ name: 'alpha-test-1' }]
+         */
+
+        /* typescript
+         * export declare namespace fuzzySearch {
+         *     interface IOptions {
+         *         caseSensitive?: boolean;
+         *         key?: string | string[];
+         *     }
+         * }
+         * export declare function fuzzySearch(
+         *     needle: string,
+         *     haystack: any[],
+         *     options: fuzzySearch.IOptions
+         * ): any[];
+         */
+
+        /* dependencies
+         * filter map isStr safeGet levenshtein pluck 
+         */
+
+        exports = function exports(needle, haystacks) {
+            var options =
+                arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+            if (!options.caseSensitive) {
+                needle = needle.toLowerCase();
+            }
+
+            haystacks = map(haystacks, function(haystack) {
+                var string = toStr(haystack, options);
+
+                if (!options.caseSensitive) {
+                    string = string.toLowerCase();
+                }
+
+                return {
+                    value: haystack,
+                    levenshtein: levenshtein(needle, string),
+                    string: string
+                };
+            });
+            haystacks = filter(haystacks, function(haystack) {
+                return hasAllLetters(needle, haystack.string, options);
+            });
+            haystacks.sort(function(a, b) {
+                return a.levenshtein - b.levenshtein;
+            });
+            return pluck(haystacks, 'value');
+        };
+
+        function toStr(haystack, options) {
+            if (isStr(haystack)) return haystack;
+            return safeGet(haystack, options.key) || '';
+        }
+
+        function hasAllLetters(needle, haystack) {
+            var hLen = haystack.length;
+            var nLen = needle.length;
+            if (nLen > hLen) return false;
+            if (nLen === hLen) return needle === haystack;
+
+            for (var i = 0, j = 0; i < nLen; i++) {
+                var c = needle.charCodeAt(i);
+                var has = false;
+
+                while (j < hLen) {
+                    if (haystack.charCodeAt(j++) === c) {
+                        has = true;
+                        break;
+                    }
+                }
+
+                if (!has) return false;
+            }
+
+            return true;
+        }
 
         return exports;
     })({});
