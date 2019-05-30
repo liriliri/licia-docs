@@ -1,6 +1,7 @@
 // Built by eustia.
 window._ = (function()
 {
+    /* eslint-disable */
     "use strict";
 
     var _ = {};
@@ -9,69 +10,77 @@ window._ = (function()
 
     /* ------------------------------ last ------------------------------ */
 
-    var last = _.last = (function ()
-    {
+    var last = _.last = (function (exports) {
         /* Get the last element of array.
          *
          * |Name  |Type |Desc                     |
          * |------|-----|-------------------------|
          * |arr   |array|The array to query       |
          * |return|*    |The last element of array|
-         *
-         * ```javascript
+         */
+
+        /* example
          * last([1, 2]); // -> 2
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function last(arr: any[]): any;
          */
-
-        function exports(arr)
-        {
+        exports = function exports(arr) {
             var len = arr ? arr.length : 0;
-
             if (len) return arr[len - 1];
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isUndef ------------------------------ */
 
-    var isUndef = _.isUndef = (function ()
-    {
+    var isUndef = _.isUndef = (function (exports) {
         /* Check if value is undefined.
          *
          * |Name  |Type   |Desc                      |
          * |------|-------|--------------------------|
          * |val   |*      |Value to check            |
          * |return|boolean|True if value is undefined|
-         *
-         * ```javascript
+         */
+
+        /* example
          * isUndef(void 0); // -> true
          * isUndef(null); // -> false
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function isUndef(val: any): boolean;
          */
-
-        function exports(val)
-        {
+        exports = function exports(val) {
             return val === void 0;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isObj ------------------------------ */
 
-    var isObj = _.isObj = (function ()
-    {
+    var isObj = _.isObj = (function (exports) {
+        function _typeof(obj) {
+            if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+                _typeof = function _typeof(obj) {
+                    return typeof obj;
+                };
+            } else {
+                _typeof = function _typeof(obj) {
+                    return obj &&
+                        typeof Symbol === 'function' &&
+                        obj.constructor === Symbol &&
+                        obj !== Symbol.prototype
+                        ? 'symbol'
+                        : typeof obj;
+                };
+            }
+            return _typeof(obj);
+        }
+
         /* Check if value is the language type of Object.
          *
          * |Name  |Type   |Desc                      |
@@ -80,114 +89,72 @@ window._ = (function()
          * |return|boolean|True if value is an object|
          *
          * [Language Spec](http://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-language-types)
-         *
-         * ```javascript
+         */
+
+        /* example
          * isObj({}); // -> true
          * isObj([]); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function isObj(val: any): boolean;
          */
-
-        function exports(val)
-        {
-            var type = typeof val;
+        exports = function exports(val) {
+            var type = _typeof(val);
 
             return !!val && (type === 'function' || type === 'object');
-        }
+        };
 
         return exports;
-    })();
-
-    /* ------------------------------ startWith ------------------------------ */
-
-    var startWith = _.startWith = (function ()
-    {
-        /* Check if string starts with the given target string.
-         *
-         * |Name  |Type   |Desc                             |
-         * |------|-------|---------------------------------|
-         * |str   |string |String to search                 |
-         * |prefix|string |String prefix                    |
-         * |return|boolean|True if string starts with prefix|
-         *
-         * ```javascript
-         * startWith('ab', 'a'); // -> true
-         * ```
-         */
-
-        /* module
-         * env: all
-         * test: all
-         */
-
-        function exports(str, prefix)
-        {
-            return str.indexOf(prefix) === 0;
-        }
-
-        return exports;
-    })();
+    })({});
 
     /* ------------------------------ inherits ------------------------------ */
 
-    var inherits = _.inherits = (function ()
-    {
+    var inherits = _.inherits = (function (exports) {
         /* Inherit the prototype methods from one constructor into another.
          *
          * |Name      |Type    |Desc       |
          * |----------|--------|-----------|
          * |Class     |function|Child Class|
          * |SuperClass|function|Super Class|
-         *
-         * ```javascript
-         * function People(name)
-         * {
+         */
+
+        /* example
+         * function People(name) {
          *     this._name = name;
          * }
          * People.prototype = {
-         *     getName: function ()
-         *     {
+         *     getName: function () {
          *         return this._name;
          *     }
          * };
-         * function Student(name)
-         * {
+         * function Student(name) {
          *     this._name = name;
          * }
          * inherits(Student, People);
          * var s = new Student('RedHood');
          * s.getName(); // -> 'RedHood'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function inherits(Class: Function, SuperClass: Function): void;
          */
-
-        function exports(Class, SuperClass)
-        {
-            if (objCreate) return Class.prototype = objCreate(SuperClass.prototype);
-
+        exports = function exports(Class, SuperClass) {
+            if (objCreate) return (Class.prototype = objCreate(SuperClass.prototype));
             noop.prototype = SuperClass.prototype;
             Class.prototype = new noop();
-        }
+        };
 
         var objCreate = Object.create;
 
         function noop() {}
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ has ------------------------------ */
 
-    var has = _.has = (function ()
-    {
+    var has = _.has = (function (exports) {
         /* Checks if key is a direct property.
          *
          * |Name  |Type   |Desc                            |
@@ -195,31 +162,27 @@ window._ = (function()
          * |obj   |object |Object to query                 |
          * |key   |string |Path to check                   |
          * |return|boolean|True if key is a direct property|
-         *
-         * ```javascript
+         */
+
+        /* example
          * has({one: 1}, 'one'); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function has(obj: {}, key: string): boolean;
          */
-
         var hasOwnProp = Object.prototype.hasOwnProperty;
 
-        function exports(obj, key)
-        {
+        exports = function exports(obj, key) {
             return hasOwnProp.call(obj, key);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ slice ------------------------------ */
 
-    var slice = _.slice = (function ()
-    {
+    var slice = _.slice = (function (exports) {
         /* Create slice of source array or array-like object.
          *
          * |Name              |Type  |Desc                      |
@@ -227,56 +190,67 @@ window._ = (function()
          * |array             |array |Array to slice            |
          * |[start=0]         |number|Start position            |
          * |[end=array.length]|number|End position, not included|
-         *
-         * ```javascript
+         */
+
+        /* example
          * slice([1, 2, 3, 4], 1, 2); // -> [2]
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function slice(array: any[], start?: number, end?: number): any[];
          */
-
-        function exports(arr, start, end)
-        {
+        exports = function exports(arr, start, end) {
             var len = arr.length;
 
-            if (start == null)
-            {
+            if (start == null) {
                 start = 0;
-            } else if (start < 0)
-            {
+            } else if (start < 0) {
                 start = Math.max(len + start, 0);
-            } else
-            {
+            } else {
                 start = Math.min(start, len);
             }
 
-            if (end == null)
-            {
+            if (end == null) {
                 end = len;
-            } else if (end < 0)
-            {
+            } else if (end < 0) {
                 end = Math.max(len + end, 0);
-            } else
-            {
+            } else {
                 end = Math.min(end, len);
             }
 
             var ret = [];
-            while (start < end) ret.push(arr[start++]);
+
+            while (start < end) {
+                ret.push(arr[start++]);
+            }
 
             return ret;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ nextTick ------------------------------ */
 
-    var nextTick = _.nextTick = (function (exports)
-    {
+    var nextTick = _.nextTick = (function (exports) {
+        function _typeof(obj) {
+            if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+                _typeof = function _typeof(obj) {
+                    return typeof obj;
+                };
+            } else {
+                _typeof = function _typeof(obj) {
+                    return obj &&
+                        typeof Symbol === 'function' &&
+                        obj.constructor === Symbol &&
+                        obj !== Symbol.prototype
+                        ? 'symbol'
+                        : typeof obj;
+                };
+            }
+            return _typeof(obj);
+        }
+
         /* Next tick for both node and browser.
          *
          * |Name|Type    |Desc            |
@@ -286,35 +260,36 @@ window._ = (function()
          * Use process.nextTick if available.
          *
          * Otherwise setImmediate or setTimeout is used as fallback.
-         *
-         * ```javascript
-         * nextTick(function ()
-         * {
+         */
+
+        /* example
+         * nextTick(function () {
          *     // Do something...
          * });
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function nextTick(cb: Function): void;
          */
-
-        if (typeof process === 'object' && process.nextTick)
-        {
+        if (
+            (typeof process === 'undefined' ? 'undefined' : _typeof(process)) ===
+                'object' &&
+            process.nextTick
+        ) {
             exports = process.nextTick;
-        } else if (typeof setImmediate === 'function')
-        {
-            exports = function (cb) { setImmediate(ensureCallable(cb)); };
-        } else
-        {
-            exports = function (cb) { setTimeout(ensureCallable(cb), 0); };
+        } else if (typeof setImmediate === 'function') {
+            exports = function exports(cb) {
+                setImmediate(ensureCallable(cb));
+            };
+        } else {
+            exports = function exports(cb) {
+                setTimeout(ensureCallable(cb), 0);
+            };
         }
 
-        function ensureCallable(fn)
-        {
-            if (typeof fn !== 'function') throw new TypeError(fn + ' is not a function');
-
+        function ensureCallable(fn) {
+            if (typeof fn !== 'function')
+                throw new TypeError(fn + ' is not a function');
             return fn;
         }
 
@@ -323,93 +298,106 @@ window._ = (function()
 
     /* ------------------------------ noop ------------------------------ */
 
-    var noop = _.noop = (function ()
-    {
+    var noop = _.noop = (function (exports) {
         /* A no-operation function.
-         *
-         * ```javascript
+         */
+
+        /* example
          * noop(); // Does nothing
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function noop(): void;
          */
-
-        function exports() {}
+        exports = function exports() {};
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ now ------------------------------ */
 
-    var now = _.now = (function (exports)
-    {
+    var now = _.now = (function (exports) {
         /* Gets the number of milliseconds that have elapsed since the Unix epoch.
-         *
-         * ```javascript
+         */
+
+        /* example
          * now(); // -> 1468826678701
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function now(): number;
          */
-
-        exports = Date.now || function ()
-        {
-            return new Date().getTime();
-        };
+        exports =
+            Date.now ||
+            function() {
+                return new Date().getTime();
+            };
 
         return exports;
     })({});
 
     /* ------------------------------ isBrowser ------------------------------ */
 
-    var isBrowser = _.isBrowser = (function (exports)
-    {
+    var isBrowser = _.isBrowser = (function (exports) {
+        function _typeof(obj) {
+            if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+                _typeof = function _typeof(obj) {
+                    return typeof obj;
+                };
+            } else {
+                _typeof = function _typeof(obj) {
+                    return obj &&
+                        typeof Symbol === 'function' &&
+                        obj.constructor === Symbol &&
+                        obj !== Symbol.prototype
+                        ? 'symbol'
+                        : typeof obj;
+                };
+            }
+            return _typeof(obj);
+        }
+
         /* Check if running in a browser.
-         *
-         * ```javascript
+         */
+
+        /* example
          * console.log(isBrowser); // -> true if running in a browser
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare const isBrowser: boolean;
          */
-
-        exports = typeof window === 'object' &&
-                  typeof document === 'object' &&
-                  document.nodeType === 9;
+        exports =
+            (typeof window === 'undefined' ? 'undefined' : _typeof(window)) ===
+                'object' &&
+            (typeof document === 'undefined' ? 'undefined' : _typeof(document)) ===
+                'object' &&
+            document.nodeType === 9;
 
         return exports;
     })({});
 
     /* ------------------------------ raf ------------------------------ */
 
-    var raf = _.raf = (function (exports)
-    {
+    var raf = _.raf = (function (exports) {
         /* Shortcut for requestAnimationFrame.
          *
          * Use setTimeout if native requestAnimationFrame is not supported.
-         *
-         * ```javascript
-         * var id = raf(function tick()
-         * {
+         */
+
+        /* example
+         * var id = raf(function tick() {
          *     // Animation stuff
          *     raf(tick);
          * });
          * raf.cancel(id);
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare namespace raf {
+         *     function cancel(id: number);
+         * }
+         * export declare function raf(cb: Function): number;
          */
 
         /* dependencies
@@ -418,38 +406,39 @@ window._ = (function()
 
         var raf, cancel;
 
-        if (isBrowser)
-        {
+        if (isBrowser) {
             raf = window.requestAnimationFrame;
             cancel = window.cancelAnimationFrame;
-
             var lastTime = 0,
                 vendors = ['ms', 'moz', 'webkit', 'o'];
 
-            for (var i = 0, len = vendors.length; i < len && !raf; i++)
-            {
+            for (var i = 0, len = vendors.length; i < len && !raf; i++) {
                 raf = window[vendors[i] + 'RequestAnimationFrame'];
-                cancel = window[vendors[i] + 'CancelAnimationFrame'] ||
-                         window[vendors[i] + 'CancelRequestAnimationFrame'];
+                cancel =
+                    window[vendors[i] + 'CancelAnimationFrame'] ||
+                    window[vendors[i] + 'CancelRequestAnimationFrame'];
             }
         }
 
-        raf = raf || function(cb)
-        {
-            var curTime = now();
+        raf =
+            raf ||
+            function(cb) {
+                var curTime = now();
+                var timeToCall = Math.max(0, 16 - (curTime - lastTime)),
+                    id = setTimeout(function() {
+                        cb(curTime + timeToCall);
+                    }, timeToCall);
+                lastTime = curTime + timeToCall;
+                return id;
+            };
 
-            var timeToCall = Math.max(0, 16 - (curTime - lastTime)),
-                id = setTimeout(function() { cb(curTime + timeToCall); }, timeToCall);
-
-            lastTime = curTime + timeToCall;
-
-            return id;
-        };
-
-        cancel = cancel || function(id) { clearTimeout(id); };
+        cancel =
+            cancel ||
+            function(id) {
+                clearTimeout(id);
+            };
 
         raf.cancel = cancel;
-
         exports = raf;
 
         return exports;
@@ -457,13 +446,11 @@ window._ = (function()
 
     /* ------------------------------ root ------------------------------ */
 
-    var root = _.root = (function (exports)
-    {
+    var root = _.root = (function (exports) {
         /* Root object reference, `global` in nodeJs, `window` in browser. */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare const root: any;
          */
 
         /* dependencies
@@ -477,8 +464,7 @@ window._ = (function()
 
     /* ------------------------------ allKeys ------------------------------ */
 
-    var allKeys = _.allKeys = (function ()
-    {
+    var allKeys = _.allKeys = (function (exports) {
         /* Retrieve all the names of object's own and inherited properties.
          *
          * |Name  |Type  |Desc                       |
@@ -486,36 +472,35 @@ window._ = (function()
          * |obj   |object|Object to query            |
          * |return|array |Array of all property names|
          *
-         * > Members of Object's prototype won't be retrieved.
-         *
-         * ```javascript
+         * Members of Object's prototype won't be retrieved.
+         */
+
+        /* example
          * var obj = Object.create({zero: 0});
          * obj.one = 1;
          * allKeys(obj) // -> ['zero', 'one']
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function allKeys(obj: any): string[];
          */
+        exports = function exports(obj) {
+            var ret = [],
+                key;
 
-        function exports(obj)
-        {
-            var ret = [], key;
-
-            for (key in obj) ret.push(key);
+            for (key in obj) {
+                ret.push(key);
+            }
 
             return ret;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ before ------------------------------ */
 
-    var before = _.before = (function ()
-    {
+    var before = _.before = (function (exports) {
         /* Create a function that invokes less than n times.
          *
          * |Name  |Type    |Desc                                            |
@@ -525,125 +510,114 @@ window._ = (function()
          * |return|function|New restricted function                         |
          *
          * Subsequent calls to the created function return the result of the last fn invocation.
-         *
-         * ```javascript
-         * $(element).on('click', before(5, function() {}));
-         * // -> allow function to be call 4 times at last.
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * const fn = before(5, function() {});
+         * fn(); // Allow function to be call 4 times at last.
          */
 
-        function exports(n, fn)
-        {
+        /* typescript
+         * export declare function before(n: number, fn: Function): Function;
+         */
+        exports = function exports(n, fn) {
             var memo;
-
-            return function ()
-            {
+            return function() {
                 if (--n > 0) memo = fn.apply(this, arguments);
                 if (n <= 1) fn = null;
-
                 return memo;
             };
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ restArgs ------------------------------ */
 
-    var restArgs = _.restArgs = (function ()
-    {
+    var restArgs = _.restArgs = (function (exports) {
         /* This accumulates the arguments passed into an array, after a given index.
          *
-         * |Name      |Type    |Desc                                   |
-         * |----------|--------|---------------------------------------|
-         * |function  |function|Function that needs rest parameters    |
-         * |startIndex|number  |The start index to accumulates         |
-         * |return    |function|Generated function with rest parameters|
-         *
-         * ```javascript
+         * |Name        |Type    |Desc                                   |
+         * |------------|--------|---------------------------------------|
+         * |function    |function|Function that needs rest parameters    |
+         * |[startIndex]|number  |The start index to accumulates         |
+         * |return      |function|Generated function with rest parameters|
+         */
+
+        /* example
          * var paramArr = restArgs(function (rest) { return rest });
          * paramArr(1, 2, 3, 4); // -> [1, 2, 3, 4]
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function restArgs(fn: Function, startIndex?: number): Function;
          */
-
-        function exports(fn, startIdx)
-        {
+        exports = function exports(fn, startIdx) {
             startIdx = startIdx == null ? fn.length - 1 : +startIdx;
-
-            return function ()
-            {
+            return function() {
                 var len = Math.max(arguments.length - startIdx, 0),
                     rest = new Array(len),
                     i;
 
-                for (i = 0; i < len; i++) rest[i] = arguments[i + startIdx];
+                for (i = 0; i < len; i++) {
+                    rest[i] = arguments[i + startIdx];
+                } // Call runs faster than apply.
 
-                // Call runs faster than apply.
-                switch (startIdx)
-                {
-                    case 0: return fn.call(this, rest);
-                    case 1: return fn.call(this, arguments[0], rest);
-                    case 2: return fn.call(this, arguments[0], arguments[1], rest);
+                switch (startIdx) {
+                    case 0:
+                        return fn.call(this, rest);
+
+                    case 1:
+                        return fn.call(this, arguments[0], rest);
+
+                    case 2:
+                        return fn.call(this, arguments[0], arguments[1], rest);
                 }
 
                 var args = new Array(startIdx + 1);
 
-                for (i = 0; i < startIdx; i++) args[i] = arguments[i];
+                for (i = 0; i < startIdx; i++) {
+                    args[i] = arguments[i];
+                }
 
                 args[startIdx] = rest;
-
                 return fn.apply(this, args);
             };
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ bind ------------------------------ */
 
-    var bind = _.bind = (function (exports)
-    {
+    var bind = _.bind = (function (exports) {
         /* Create a function bound to a given object.
          *
-         * |Name     |Type    |Desc                    |
-         * |---------|--------|------------------------|
-         * |fn       |function|Function to bind        |
-         * |ctx      |*       |This binding of given fn|
-         * |[...rest]|*       |Optional arguments      |
-         * |return   |function|New bound function      |
-         *
-         * ```javascript
-         * var fn = bind(function (msg)
-         * {
+         * |Name   |Type    |Desc                    |
+         * |-------|--------|------------------------|
+         * |fn     |function|Function to bind        |
+         * |ctx    |*       |This binding of given fn|
+         * |...rest|*       |Optional arguments      |
+         * |return |function|New bound function      |
+         */
+
+        /* example
+         * var fn = bind(function (msg) {
          *     console.log(this.name + ':' + msg);
          * }, {name: 'eustia'}, 'I am a utility library.');
          * fn(); // -> 'eustia: I am a utility library.'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function bind(fn: Function, ctx: any, ...rest: any[]): Function;
          */
 
         /* dependencies
          * restArgs 
          */
 
-        exports = restArgs(function (fn, ctx, rest)
-        {
-            return restArgs(function (callArgs)
-            {
+        exports = restArgs(function(fn, ctx, rest) {
+            return restArgs(function(callArgs) {
                 return fn.apply(ctx, rest.concat(callArgs));
             });
         });
@@ -653,139 +627,123 @@ window._ = (function()
 
     /* ------------------------------ splitCase ------------------------------ */
 
-    var splitCase = _.splitCase = (function ()
-    {
+    var splitCase = _.splitCase = (function (exports) {
         /* Split different string case to an array.
          *
          * |Name  |Type  |Desc           |
          * |------|------|---------------|
          * |str   |string|String to split|
          * |return|array |Result array   |
-         *
-         * ```javascript
+         */
+
+        /* example
          * splitCase('foo-bar'); // -> ['foo', 'bar']
          * splitCase('foo bar'); // -> ['foo', 'bar']
          * splitCase('foo_bar'); // -> ['foo', 'bar']
          * splitCase('foo.bar'); // -> ['foo', 'bar']
          * splitCase('fooBar'); // -> ['foo', 'bar']
          * splitCase('foo-Bar'); // -> ['foo', 'bar']
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function splitCase(str: string): string[];
          */
-
         var regUpperCase = /([A-Z])/g,
             regSeparator = /[_.\- ]+/g,
             regTrim = /(^-)|(-$)/g;
 
-        function exports(str)
-        {
-            str = str.replace(regUpperCase, '-$1')
-                     .toLowerCase()
-                     .replace(regSeparator, '-')
-                     .replace(regTrim, '');
-
+        exports = function exports(str) {
+            str = str
+                .replace(regUpperCase, '-$1')
+                .toLowerCase()
+                .replace(regSeparator, '-')
+                .replace(regTrim, '');
             return str.split('-');
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ camelCase ------------------------------ */
 
-    var camelCase = _.camelCase = (function ()
-    {
+    var camelCase = _.camelCase = (function (exports) {
         /* Convert string to "camelCase".
          *
          * |Name  |Type  |Desc              |
          * |------|------|------------------|
          * |str   |string|String to convert |
          * |return|string|Camel cased string|
-         *
-         * ```javascript
+         */
+
+        /* example
          * camelCase('foo-bar'); // -> fooBar
          * camelCase('foo bar'); // -> fooBar
          * camelCase('foo_bar'); // -> fooBar
          * camelCase('foo.bar'); // -> fooBar
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function camelCase(str: string): string;
          */
 
         /* dependencies
          * splitCase 
          */
 
-        function exports(str)
-        {
+        exports = function exports(str) {
             var arr = splitCase(str);
-
             var ret = arr[0];
             arr.shift();
-
             arr.forEach(capitalize, arr);
             ret += arr.join('');
-
             return ret;
-        }
+        };
 
-        function capitalize(val, idx)
-        {
-            this[idx] = val.replace(/\w/, function (match)
-            {
+        function capitalize(val, idx) {
+            this[idx] = val.replace(/\w/, function(match) {
                 return match.toUpperCase();
             });
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ kebabCase ------------------------------ */
 
-    var kebabCase = _.kebabCase = (function ()
-    {
+    var kebabCase = _.kebabCase = (function (exports) {
         /* Convert string to "kebabCase".
          *
          * |Name  |Type  |Desc              |
          * |------|------|------------------|
          * |str   |string|String to convert |
          * |return|string|Kebab cased string|
-         *
-         * ```javascript
+         */
+
+        /* example
          * kebabCase('fooBar'); // -> foo-bar
          * kebabCase('foo bar'); // -> foo-bar
          * kebabCase('foo_bar'); // -> foo-bar
          * kebabCase('foo.bar'); // -> foo-bar
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function kebabCase(str: string): string;
          */
 
         /* dependencies
          * splitCase 
          */
 
-        function exports(str)
-        {
+        exports = function exports(str) {
             return splitCase(str).join('-');
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ idxOf ------------------------------ */
 
-    var idxOf = _.idxOf = (function ()
-    {
+    var idxOf = _.idxOf = (function (exports) {
         /* Get the index at which the first occurrence of value.
          *
          * |Name     |Type  |Desc                |
@@ -793,257 +751,302 @@ window._ = (function()
          * |arr      |array |Array to search     |
          * |val      |*     |Value to search for |
          * |fromIdx=0|number|Index to search from|
-         *
-         * ```javascript
+         * |return   |number|Value index         |
+         */
+
+        /* example
          * idxOf([1, 2, 1, 2], 2, 2); // -> 3
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function idxOf(arr: any[], val: any, fromIdx?: number): number;
          */
-
-        function exports(arr, val, fromIdx)
-        {
+        exports = function exports(arr, val, fromIdx) {
             return Array.prototype.indexOf.call(arr, val, fromIdx);
-        }
+        };
 
         return exports;
-    })();
+    })({});
+
+    /* ------------------------------ detectMocha ------------------------------ */
+
+    var detectMocha = _.detectMocha = (function (exports) {
+        /* Detect if mocha is running.
+         */
+
+        /* example
+         * detectMocha(); // -> True if mocha is running.
+         */
+
+        /* typescript
+         * export declare function detectMocha(): boolean;
+         */
+
+        /* dependencies
+         * root 
+         */
+
+        exports = function exports() {
+            for (var i = 0, len = methods.length; i < len; i++) {
+                var method = methods[i];
+                if (typeof root[method] !== 'function') return false;
+            }
+
+            return true;
+        };
+
+        var methods = ['afterEach', 'after', 'beforeEach', 'before', 'describe', 'it'];
+
+        return exports;
+    })({});
 
     /* ------------------------------ keys ------------------------------ */
 
-    var keys = _.keys = (function (exports)
-    {
+    var keys = _.keys = (function (exports) {
         /* Create an array of the own enumerable property names of object.
          *
          * |Name  |Type  |Desc                   |
          * |------|------|-----------------------|
          * |obj   |object|Object to query        |
          * |return|array |Array of property names|
-         * 
-         * ```javascript
-         * keys({a: 1}); // -> ['a']
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * keys({a: 1}); // -> ['a']
+         */
+
+        /* typescript
+         * export declare function keys(obj: any): string[];
          */
 
         /* dependencies
-         * has 
+         * has detectMocha 
          */
 
-        exports = Object.keys || function (obj)
-        {
-            var ret = [], key;
+        if (Object.keys && !detectMocha()) {
+            exports = Object.keys;
+        } else {
+            exports = function exports(obj) {
+                var ret = [],
+                    key;
 
-            for (key in obj)
-            {
-                if (has(obj, key)) ret.push(key);
-            }
+                for (key in obj) {
+                    if (has(obj, key)) ret.push(key);
+                }
 
-            return ret;
-        };
+                return ret;
+            };
+        }
 
         return exports;
     })({});
 
     /* ------------------------------ optimizeCb ------------------------------ */
 
-    var optimizeCb = _.optimizeCb = (function ()
-    {
+    var optimizeCb = _.optimizeCb = (function (exports) {
         /* Used for function context binding.
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function optimizeCb(fn: Function, ctx: any, argCount?: number): Function;
          */
 
         /* dependencies
          * isUndef 
          */
 
-        function exports(fn, ctx, argCount)
-        {
+        exports = function exports(fn, ctx, argCount) {
             if (isUndef(ctx)) return fn;
 
-            switch (argCount == null ? 3 : argCount)
-            {
-                case 1: return function (val)
-                {
-                    return fn.call(ctx, val);
-                };
-                case 3: return function (val, idx, collection)
-                {
-                    return fn.call(ctx, val, idx, collection);
-                };
-                case 4: return function (accumulator, val, idx, collection)
-                {
-                    return fn.call(ctx, accumulator, val, idx, collection);
-                };
+            switch (argCount == null ? 3 : argCount) {
+                case 1:
+                    return function(val) {
+                        return fn.call(ctx, val);
+                    };
+
+                case 3:
+                    return function(val, idx, collection) {
+                        return fn.call(ctx, val, idx, collection);
+                    };
+
+                case 4:
+                    return function(accumulator, val, idx, collection) {
+                        return fn.call(ctx, accumulator, val, idx, collection);
+                    };
             }
 
-            return function ()
-            {
+            return function() {
                 return fn.apply(ctx, arguments);
             };
-        }
+        };
 
         return exports;
-    })();
+    })({});
+
+    /* ------------------------------ types ------------------------------ */
+
+    var types = _.types = (function (exports) {
+        /* Used for typescript definitions only.
+         */
+
+        /* typescript
+         * export declare namespace types {
+         *     interface Collection<T> {}
+         *     interface List<T> extends Collection<T> {
+         *         [index: number]: T;
+         *         length: number;
+         *     }
+         *     interface ListIterator<T, TResult> {
+         *         (value: T, index: number, list: List<T>): TResult;
+         *     }
+         *     interface Dictionary<T> extends Collection<T> {
+         *         [index: string]: T;
+         *     }
+         *     interface ObjectIterator<T, TResult> {
+         *         (element: T, key: string, list: Dictionary<T>): TResult;
+         *     }
+         *     interface MemoIterator<T, TResult> {
+         *         (prev: TResult, curr: T, index: number, list: List<T>): TResult;
+         *     }
+         *     interface MemoObjectIterator<T, TResult> {
+         *         (prev: TResult, curr: T, key: string, list: Dictionary<T>): TResult;
+         *     }
+         * }
+         * export declare const types: {}
+         */
+        exports = {};
+
+        return exports;
+    })({});
 
     /* ------------------------------ upperFirst ------------------------------ */
 
-    var upperFirst = _.upperFirst = (function ()
-    {
+    var upperFirst = _.upperFirst = (function (exports) {
         /* Convert the first character of string to upper case.
          *
          * |Name  |Type  |Desc             |
          * |------|------|-----------------|
          * |str   |string|String to convert|
          * |return|string|Converted string |
-         *
-         * ```javascript
+         */
+
+        /* example
          * upperFirst('red'); // -> Red
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function upperFirst(str: string): string;
          */
-
-        function exports(str)
-        {
+        exports = function exports(str) {
             if (str.length < 1) return str;
-
             return str[0].toUpperCase() + str.slice(1);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ escape ------------------------------ */
 
-    var escape = _.escape = (function ()
-    {
+    var escape = _.escape = (function (exports) {
         /* Escapes a string for insertion into HTML, replacing &, <, >, ", `, and ' characters.
          *
          * |Name  |Type  |Desc            |
          * |------|------|----------------|
          * |str   |string|String to escape|
          * |return|string|Escaped string  |
-         *
-         * ```javascript
-         * escape('You & Me'); -> // -> 'You &amp; Me'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * escape('You & Me'); // -> 'You &amp; Me'
+         */
+
+        /* typescript
+         * export declare function escape(str: string): string;
          */
 
         /* dependencies
          * keys 
          */
 
-        function exports(str)
-        {
+        exports = function exports(str) {
             return regTest.test(str) ? str.replace(regReplace, replaceFn) : str;
-        }
+        };
 
-        var map = exports.map = {
+        var map = (exports.map = {
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',
             '"': '&quot;',
-            '\'': '&#x27;',
+            "'": '&#x27;',
             '`': '&#x60;'
-        };
-
+        });
         var regSrc = '(?:' + keys(map).join('|') + ')',
             regTest = new RegExp(regSrc),
             regReplace = new RegExp(regSrc, 'g');
 
-        function replaceFn(match)
-        {
+        function replaceFn(match) {
             return map[match];
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ toStr ------------------------------ */
 
-    var toStr = _.toStr = (function ()
-    {
+    var toStr = _.toStr = (function (exports) {
         /* Convert value to a string.
          *
          * |Name  |Type  |Desc            |
          * |------|------|----------------|
          * |val   |*     |Value to convert|
          * |return|string|Resulted string |
-         *
-         * ```javascript
+         */
+
+        /* example
          * toStr(null); // -> ''
          * toStr(1); // -> '1'
          * toStr(false); // -> 'false'
          * toStr([1, 2, 3]); // -> '1,2,3'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function toStr(val: any): string;
          */
-
-        function exports(val)
-        {
+        exports = function exports(val) {
             return val == null ? '' : val.toString();
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ identity ------------------------------ */
 
-    var identity = _.identity = (function ()
-    {
+    var identity = _.identity = (function (exports) {
         /* Return the first argument given.
          *
          * |Name  |Type|Desc       |
          * |------|----|-----------|
          * |val   |*   |Any value  |
          * |return|*   |Given value|
-         *
-         * ```javascript
+         */
+
+        /* example
          * identity('a'); // -> 'a'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function identity<T>(val: T): T;
          */
-
-        function exports(val)
-        {
+        exports = function exports(val) {
             return val;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ repeat ------------------------------ */
 
-    var repeat = _.repeat = (function (exports)
-    {
+    var repeat = _.repeat = (function (exports) {
         /* Repeat string n-times.
          *
          * |Name  |Type  |Desc            |
@@ -1051,27 +1054,22 @@ window._ = (function()
          * |str   |string|String to repeat|
          * |n     |number|Repeat times    |
          * |return|string|Repeated string |
-         *
-         * ```javascript
+         */
+
+        /* example
          * repeat('a', 3); // -> 'aaa'
          * repeat('ab', 2); // -> 'abab'
          * repeat('*', 0); // -> ''
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function repeat(str: string, n: number): string;
          */
-
-        exports = function (str, n)
-        {
+        exports = function exports(str, n) {
             var ret = '';
-
             if (n < 1) return '';
 
-            while (n > 0)
-            {
+            while (n > 0) {
                 if (n & 1) ret += str;
                 n >>= 1;
                 str += str;
@@ -1085,159 +1083,142 @@ window._ = (function()
 
     /* ------------------------------ objToStr ------------------------------ */
 
-    var objToStr = _.objToStr = (function ()
-    {
+    var objToStr = _.objToStr = (function (exports) {
         /* Alias of Object.prototype.toString.
          *
          * |Name  |Type  |Desc                                |
          * |------|------|------------------------------------|
-         * |value |*     |Source value                        |
+         * |val   |*     |Source value                        |
          * |return|string|String representation of given value|
-         * 
-         * ```javascript
+         */
+
+        /* example
          * objToStr(5); // -> '[object Number]'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function objToStr(val: any): string;
          */
-
         var ObjToStr = Object.prototype.toString;
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             return ObjToStr.call(val);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isArgs ------------------------------ */
 
-    var isArgs = _.isArgs = (function ()
-    {
+    var isArgs = _.isArgs = (function (exports) {
         /* Check if value is classified as an arguments object.
          *
          * |Name  |Type   |Desc                                |
          * |------|-------|------------------------------------|
          * |val   |*      |Value to check                      |
          * |return|boolean|True if value is an arguments object|
-         *
-         * ```javascript
+         */
+
+        /* example
          * (function () {
          *     isArgs(arguments); // -> true
          * })();
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function isArgs(val: any): boolean;
          */
 
         /* dependencies
          * objToStr 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             return objToStr(val) === '[object Arguments]';
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isArr ------------------------------ */
 
-    var isArr = _.isArr = (function (exports)
-    {
+    var isArr = _.isArr = (function (exports) {
         /* Check if value is an `Array` object.
          *
          * |Name  |Type   |Desc                              |
          * |------|-------|----------------------------------|
          * |val   |*      |Value to check                    |
          * |return|boolean|True if value is an `Array` object|
-         *
-         * ```javascript
-         * isArr([]); // -> true
-         * isArr({}); // -> false
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * isArr([]); // -> true
+         * isArr({}); // -> false
+         */
+
+        /* typescript
+         * export declare function isArr(val: any): boolean;
          */
 
         /* dependencies
          * objToStr 
          */
 
-        exports = Array.isArray || function (val)
-        {
-            return objToStr(val) === '[object Array]';
-        };
+        exports =
+            Array.isArray ||
+            function(val) {
+                return objToStr(val) === '[object Array]';
+            };
 
         return exports;
     })({});
 
     /* ------------------------------ castPath ------------------------------ */
 
-    var castPath = _.castPath = (function ()
-    {
+    var castPath = _.castPath = (function (exports) {
         /* Cast value into a property path array.
          *
-         * |Name  |Type  |Desc               |
-         * |------|------|-------------------|
-         * |str   |*     |Value to inspect   |
-         * |[obj] |object|Object to query    |
-         * |return|array |Property path array|
-         * 
-         * ```javascript
+         * |Name  |Type        |Desc               |
+         * |------|------------|-------------------|
+         * |path  |string array|Value to inspect   |
+         * |[obj] |object      |Object to query    |
+         * |return|array       |Property path array|
+         */
+
+        /* example
          * castPath('a.b.c'); // -> ['a', 'b', 'c']
          * castPath(['a']); // -> ['a']
          * castPath('a[0].b'); // -> ['a', '0', 'b']
          * castPath('a.b.c', {'a.b.c': true}); // -> ['a.b.c']
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function castPath(path: string | string[], obj?: any): string[];
          */
 
         /* dependencies
          * has isArr 
          */
 
-        function exports(str, obj) 
-        {
+        exports = function exports(str, obj) {
             if (isArr(str)) return str;
             if (obj && has(obj, str)) return [str];
-
             var ret = [];
-
-            str.replace(regPropName, function(match, number, quote, str) 
-            {
-                ret.push(quote ? str.replace(regEscapeChar, '$1') : (number || match));
+            str.replace(regPropName, function(match, number, quote, str) {
+                ret.push(quote ? str.replace(regEscapeChar, '$1') : number || match);
             });
-
             return ret;
-        }
+        }; // Lodash _stringToPath
 
-        // Lodash _stringToPath
         var regPropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,
             regEscapeChar = /\\(\\)?/g;
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ safeGet ------------------------------ */
 
-    var safeGet = _.safeGet = (function ()
-    {
+    var safeGet = _.safeGet = (function (exports) {
         /* Get object property, don't throw undefined error.
          *
          * |Name  |Type        |Desc                     |
@@ -1245,114 +1226,104 @@ window._ = (function()
          * |obj   |object      |Object to query          |
          * |path  |array string|Path of property to get  |
          * |return|*           |Target value or undefined|
-         *
-         * ```javascript
+         */
+
+        /* example
          * var obj = {a: {aa: {aaa: 1}}};
          * safeGet(obj, 'a.aa.aaa'); // -> 1
          * safeGet(obj, ['a', 'aa']); // -> {aaa: 1}
          * safeGet(obj, 'a.b'); // -> undefined
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function safeGet(obj: any, path: string | string[]): any;
          */
 
         /* dependencies
          * isUndef castPath 
          */
 
-        function exports(obj, path)
-        {
+        exports = function exports(obj, path) {
             path = castPath(path, obj);
-
             var prop;
+            prop = path.shift();
 
-            /* eslint-disable no-cond-assign */
-            while (prop = path.shift())
-            {
+            while (!isUndef(prop)) {
                 obj = obj[prop];
-                if (isUndef(obj)) return;
+                if (obj == null) return;
+                prop = path.shift();
             }
 
             return obj;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isBlob ------------------------------ */
 
-    var isBlob = _.isBlob = (function ()
-    {
+    var isBlob = _.isBlob = (function (exports) {
         /* Check if value is a Blob.
          *
          * |Name  |Type   |Desc                   |
          * |------|-------|-----------------------|
          * |val   |*      |Value to check         |
          * |return|boolean|True if value is a Blob|
-         * 
-         * ```javascript
-         * isBlob(new Blob([])); // -> true;
-         * isBlob([]); // -> false
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * isBlob(new Blob([])); // -> true;
+         * isBlob([]); // -> false
+         */
+
+        /* typescript
+         * export declare function isBlob(val: any): boolean;
          */
 
         /* dependencies
          * objToStr 
          */
 
-        function exports(val) 
-        {
+        exports = function exports(val) {
             return objToStr(val) === '[object Blob]';
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isFile ------------------------------ */
 
-    var isFile = _.isFile = (function ()
-    {
+    var isFile = _.isFile = (function (exports) {
         /* Check if value is a file.
          *
          * |Name  |Type   |Desc                   |
          * |------|-------|-----------------------|
          * |val   |*      |Value to check         |
          * |return|boolean|True if value is a file|
-         * 
-         * ```javascript
-         * isFile(new File(['test'], "test.txt", {type: "text/plain"})); // -> true
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * isFile(new File(['test'], "test.txt", {type: "text/plain"})); // -> true
+         */
+
+        /* typescript
+         * export declare function isFile(val: any): boolean;
          */
 
         /* dependencies
          * objToStr 
          */
 
-        function exports(val) 
-        {
+        exports = function exports(val) {
             return objToStr(val) === '[object File]';
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isFn ------------------------------ */
 
-    var isFn = _.isFn = (function ()
-    {
+    var isFn = _.isFn = (function (exports) {
         /* Check if value is a function.
          *
          * |Name  |Type   |Desc                       |
@@ -1361,53 +1332,51 @@ window._ = (function()
          * |return|boolean|True if value is a function|
          *
          * Generator function is also classified as true.
-         *
-         * ```javascript
-         * isFn(function() {}); // -> true
-         * isFn(function*() {}); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * isFn(function() {}); // -> true
+         * isFn(function*() {}); // -> true
+         */
+
+        /* typescript
+         * export declare function isFn(val: any): boolean;
          */
 
         /* dependencies
          * objToStr 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             var objStr = objToStr(val);
-
-            return objStr === '[object Function]' || objStr === '[object GeneratorFunction]';
-        }
+            return (
+                objStr === '[object Function]' ||
+                objStr === '[object GeneratorFunction]'
+            );
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isMiniProgram ------------------------------ */
 
-    var isMiniProgram = _.isMiniProgram = (function (exports)
-    {
+    var isMiniProgram = _.isMiniProgram = (function (exports) {
         /* Check if running in wechat mini program.
-         *
-         * ```javascript
-         * console.log(isMiniProgram); // -> true if running in mini program.
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * console.log(isMiniProgram); // -> true if running in mini program.
+         */
+
+        /* typescript
+         * export declare const isMiniProgram: boolean;
          */
 
         /* dependencies
          * isFn 
-         */ 
-
+         */
         /* eslint-disable no-undef */
+
         exports = typeof wx !== 'undefined' && isFn(wx.openLocation);
 
         return exports;
@@ -1415,43 +1384,38 @@ window._ = (function()
 
     /* ------------------------------ isNum ------------------------------ */
 
-    var isNum = _.isNum = (function ()
-    {
+    var isNum = _.isNum = (function (exports) {
         /* Check if value is classified as a Number primitive or object.
          *
          * |Name  |Type   |Desc                                 |
          * |------|-------|-------------------------------------|
          * |val   |*      |Value to check                       |
          * |return|boolean|True if value is correctly classified|
-         * 
-         * ```javascript
+         */
+
+        /* example
          * isNum(5); // -> true
          * isNum(5.1); // -> true
          * isNum({}); // -> false
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function isNum(val: any): boolean;
          */
 
         /* dependencies
          * objToStr 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             return objToStr(val) === '[object Number]';
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ indent ------------------------------ */
-
-    _.indent = (function ()
-    {
+    _.indent = (function (exports) {
         /* Indent each line in a string.
          *
          * |Name  |Type  |Desc                |
@@ -1460,45 +1424,40 @@ window._ = (function()
          * |[char]|string|Character to prepend|
          * |[len] |number|Indent length       |
          * |return|string|Indented string     |
-         *
-         * ```javascript
-         * indent('foo\nbar', ' ', 4); // -> 'foo\n    bar'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * indent('foo\nbar', ' ', 4); // -> 'foo\n    bar'
+         */
+
+        /* typescript
+         * export declare function indent(str: string, char?: string, len?: number): string;
          */
 
         /* dependencies
          * isNum isUndef repeat 
          */
 
-        var regLineBegin = /^(?!\s*$)/mg;
+        var regLineBegin = /^(?!\s*$)/gm;
 
-        function exports(str, char, len)
-        {
-            if (isNum(char))
-            {
-                len = char;
-                char = ' ';
+        exports = function exports(str, _char, len) {
+            if (isNum(_char)) {
+                len = _char;
+                _char = ' ';
             }
+
             if (isUndef(len)) len = 4;
-            if (isUndef(char)) char = ' ';
-
-            char = repeat(char, len);
-
-            return str.replace(regLineBegin, char);
-        }
+            if (isUndef(_char)) _char = ' ';
+            _char = repeat(_char, len);
+            return str.replace(regLineBegin, _char);
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isArrLike ------------------------------ */
 
-    var isArrLike = _.isArrLike = (function ()
-    {
+    var isArrLike = _.isArrLike = (function (exports) {
         /* Check if value is array-like.
          *
          * |Name  |Type   |Desc                       |
@@ -1506,18 +1465,17 @@ window._ = (function()
          * |val   |*      |Value to check             |
          * |return|boolean|True if value is array like|
          *
-         * > Function returns false.
-         *
-         * ```javascript
+         * Function returns false.
+         */
+
+        /* example
          * isArrLike('test'); // -> true
          * isArrLike(document.body.children); // -> true;
          * isArrLike([1, 2, 3]); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function isArrLike(val: any): boolean;
          */
 
         /* dependencies
@@ -1526,121 +1484,119 @@ window._ = (function()
 
         var MAX_ARR_IDX = Math.pow(2, 53) - 1;
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             if (!val) return false;
-
             var len = val.length;
-
             return isNum(len) && len >= 0 && len <= MAX_ARR_IDX && !isFn(val);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ each ------------------------------ */
 
-    var each = _.each = (function ()
-    {
-        /* Iterate over elements of collection and invokes iteratee for each element.
+    var each = _.each = (function (exports) {
+        /* Iterate over elements of collection and invokes iterator for each element.
          *
          * |Name    |Type        |Desc                          |
          * |--------|------------|------------------------------|
          * |obj     |object array|Collection to iterate over    |
-         * |iteratee|function    |Function invoked per iteration|
+         * |iterator|function    |Function invoked per iteration|
          * |[ctx]   |*           |Function context              |
-         *
-         * ```javascript
-         * each({'a': 1, 'b': 2}, function (val, key) {});
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * each({'a': 1, 'b': 2}, function (val, key) {});
+         */
+
+        /* typescript
+         * export declare function each<T>(
+         *     list: types.List<T>,
+         *     iterator: types.ListIterator<T, void>,
+         *     ctx?: any
+         * ): types.List<T>;
+         * export declare function each<T>(
+         *     object: types.Dictionary<T>,
+         *     iterator: types.ObjectIterator<T, void>,
+         *     ctx?: any
+         * ): types.Collection<T>;
          */
 
         /* dependencies
-         * isArrLike keys optimizeCb 
+         * isArrLike keys optimizeCb types 
          */
 
-        function exports(obj, iteratee, ctx)
-        {
-            iteratee = optimizeCb(iteratee, ctx);
-
+        exports = function exports(obj, iterator, ctx) {
+            iterator = optimizeCb(iterator, ctx);
             var i, len;
 
-            if (isArrLike(obj))
-            {
-                for (i = 0, len = obj.length; i < len; i++) iteratee(obj[i], i, obj);
-            } else
-            {
+            if (isArrLike(obj)) {
+                for (i = 0, len = obj.length; i < len; i++) {
+                    iterator(obj[i], i, obj);
+                }
+            } else {
                 var _keys = keys(obj);
-                for (i = 0, len = _keys.length; i < len; i++)
-                {
-                    iteratee(obj[_keys[i]], _keys[i], obj);
+
+                for (i = 0, len = _keys.length; i < len; i++) {
+                    iterator(obj[_keys[i]], _keys[i], obj);
                 }
             }
 
             return obj;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ Blob ------------------------------ */
 
-    var Blob = _.Blob = (function (exports)
-    {
+    var Blob = _.Blob = (function (exports) {
         /* Use Blob when available, otherwise BlobBuilder.
-         * 
+         *
          * ### constructor
-         * 
+         *
          * |Name  |Type  |Desc      |
          * |------|------|----------|
          * |parts |array |Blob parts|
          * |[opts]|object|Options   |
-         * 
-         * ```javascript
-         * var blob = new Blob([]);
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * var blob = new Blob([]);
+         */
+
+        /* typescript
          */
 
         /* dependencies
          * root each 
-         */ 
+         */
 
-        exports = root.Blob || function Blob(parts, opts) 
-        {
-            opts = opts || {};
+        exports =
+            root.Blob ||
+            function Blob(parts, opts) {
+                opts = opts || {};
+                var blobBuilder = new BlobBuilder();
+                each(parts, function(part) {
+                    blobBuilder.append(part);
+                });
+                return opts.type
+                    ? blobBuilder.getBlob(opts.type)
+                    : blobBuilder.getBlob();
+            };
 
-            var blobBuilder = new BlobBuilder();
-
-            each(parts, function (part) 
-            { 
-                blobBuilder.append(part); 
-            });
-
-            return opts.type ? blobBuilder.getBlob(opts.type) : blobBuilder.getBlob();
-        };
-
-        var BlobBuilder = root.BlobBuilder || 
-                          root.WebKitBlobBuilder || 
-                          root.MSBlobBuilder || 
-                          root.MozBlobBuilder;
+        var BlobBuilder =
+            root.BlobBuilder ||
+            root.WebKitBlobBuilder ||
+            root.MSBlobBuilder ||
+            root.MozBlobBuilder;
 
         return exports;
     })({});
 
     /* ------------------------------ createAssigner ------------------------------ */
 
-    var createAssigner = _.createAssigner = (function ()
-    {
+    var createAssigner = _.createAssigner = (function (exports) {
         /* Used to create extend, extendOwn and defaults.
          *
          * |Name    |Type    |Desc                          |
@@ -1650,42 +1606,33 @@ window._ = (function()
          * |return  |function|Result function, extend...    |
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function createAssigner(keysFn: Function, defaults: boolean): Function;
          */
 
         /* dependencies
          * isUndef each 
          */
 
-        function exports(keysFn, defaults)
-        {
-            return function (obj)
-            {
-                each(arguments, function (src, idx)
-                {
+        exports = function exports(keysFn, defaults) {
+            return function(obj) {
+                each(arguments, function(src, idx) {
                     if (idx === 0) return;
-
                     var keys = keysFn(src);
-
-                    each(keys, function (key)
-                    {
+                    each(keys, function(key) {
                         if (!defaults || isUndef(obj[key])) obj[key] = src[key];
                     });
                 });
-
                 return obj;
             };
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ defaults ------------------------------ */
 
-    var defaults = _.defaults = (function (exports)
-    {
+    var defaults = _.defaults = (function (exports) {
         /* Fill in undefined properties in object with the first value present in the following list of defaults objects.
          *
          * |Name  |Type  |Desc              |
@@ -1693,15 +1640,14 @@ window._ = (function()
          * |obj   |object|Destination object|
          * |*src  |object|Sources objects   |
          * |return|object|Destination object|
-         *
-         * ```javascript
-         * defaults({name: 'RedHood'}, {name: 'Unknown', age: 24}); // -> {name: 'RedHood', age: 24}
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * defaults({name: 'RedHood'}, {name: 'Unknown', age: 24}); // -> {name: 'RedHood', age: 24}
+         */
+
+        /* typescript
+         * export declare function defaults(obj: any, ...src: any[]): any;
          */
 
         /* dependencies
@@ -1715,24 +1661,22 @@ window._ = (function()
 
     /* ------------------------------ extend ------------------------------ */
 
-    var extend = _.extend = (function (exports)
-    {
+    var extend = _.extend = (function (exports) {
         /* Copy all of the properties in the source objects over to the destination object.
          *
-         * |Name  |Type  |Desc              |
-         * |------|------|------------------|
-         * |obj   |object|Destination object|
-         * |...src|object|Sources objects   |
-         * |return|object|Destination object|
-         *
-         * ```javascript
-         * extend({name: 'RedHood'}, {age: 24}); // -> {name: 'RedHood', age: 24}
-         * ```
+         * |Name       |Type  |Desc              |
+         * |-----------|------|------------------|
+         * |destination|object|Destination object|
+         * |...sources |object|Sources objects   |
+         * |return     |object|Destination object|
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * extend({name: 'RedHood'}, {age: 24}); // -> {name: 'RedHood', age: 24}
+         */
+
+        /* typescript
+         * export declare function extend(destination: any, ...sources: any[]): any;
          */
 
         /* dependencies
@@ -1744,26 +1688,56 @@ window._ = (function()
         return exports;
     })({});
 
-    /* ------------------------------ extendOwn ------------------------------ */
-
-    var extendOwn = _.extendOwn = (function (exports)
-    {
-        /* Like extend, but only copies own properties over to the destination object.
+    /* ------------------------------ clone ------------------------------ */
+    _.clone = (function (exports) {
+        /* Create a shallow-copied clone of the provided plain object.
          *
-         * |Name  |Type  |Desc              |
-         * |------|------|------------------|
-         * |obj   |object|Destination object|
-         * |*src  |object|Sources objects   |
-         * |return|object|Destination object|
+         * Any nested objects or arrays will be copied by reference, not duplicated.
          *
-         * ```javascript
-         * extendOwn({name: 'RedHood'}, {age: 24}); // -> {name: 'RedHood', age: 24}
-         * ```
+         * |Name  |Type|Desc          |
+         * |------|----|--------------|
+         * |val   |*   |Value to clone|
+         * |return|*   |Cloned value  |
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * clone({name: 'eustia'}); // -> {name: 'eustia'}
+         */
+
+        /* typescript
+         * export declare function clone<T>(val: T): T;
+         */
+
+        /* dependencies
+         * isObj isArr extend 
+         */
+
+        exports = function exports(obj) {
+            if (!isObj(obj)) return obj;
+            return isArr(obj) ? obj.slice() : extend({}, obj);
+        };
+
+        return exports;
+    })({});
+
+    /* ------------------------------ extendOwn ------------------------------ */
+
+    var extendOwn = _.extendOwn = (function (exports) {
+        /* Like extend, but only copies own properties over to the destination object.
+         *
+         * |Name       |Type  |Desc              |
+         * |-----------|------|------------------|
+         * |destination|object|Destination object|
+         * |...sources |object|Sources objects   |
+         * |return     |object|Destination object|
+         */
+
+        /* example
+         * extendOwn({name: 'RedHood'}, {age: 24}); // -> {name: 'RedHood', age: 24}
+         */
+
+        /* typescript
+         * export declare function extendOwn(destination: any, ...sources: any[]): any;
          */
 
         /* dependencies
@@ -1777,31 +1751,57 @@ window._ = (function()
 
     /* ------------------------------ easing ------------------------------ */
 
-    var easing = _.easing = (function (exports)
-    {
-        /* Easing functions adapted from http://jqueryui.com/
+    var easing = _.easing = (function (exports) {
+        /* Easing functions adapted from http://jqueryui.com/ .
          *
          * |Name   |Type  |Desc                  |
          * |-------|------|----------------------|
          * |percent|number|Number between 0 and 1|
          * |return |number|Calculated number     |
-         *
-         * ```javascript
-         * easing.linear(0.5); // -> 0.5
-         * easing.inElastic(0.5, 500); // -> 0.03125
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * easing.linear(0.5); // -> 0.5
+         * easing.inElastic(0.5, 500); // -> 0.03125
+         */
+
+        /* typescript
+         * export declare const easing: {
+         *     linear(percent: number): number;
+         *     inQuad(percent: number): number;
+         *     outQuad(percent: number): number;
+         *     inOutQuad(percent: number): number;
+         *     outInQuad(percent: number): number;
+         *     inCubic(percent: number): number;
+         *     outCubic(percent: number): number;
+         *     inQuart(percent: number): number;
+         *     outQuart(percent: number): number;
+         *     inQuint(percent: number): number;
+         *     outQuint(percent: number): number;
+         *     inExpo(percent: number): number;
+         *     outExpo(percent: number): number;
+         *     inSine(percent: number): number;
+         *     outSine(percent: number): number;
+         *     inCirc(percent: number): number;
+         *     outCirc(percent: number): number;
+         *     inElastic(percent: number, elasticity?: number): number;
+         *     outElastic(percent: number, elasticity?: number): number;
+         *     inBack(percent: number): number;
+         *     outBack(percent: number): number;
+         *     inOutBack(percent: number): number;
+         *     outInBack(percent: number): number;
+         *     inBounce(percent: number): number;
+         *     outBounce(percent: number): number;
+         * };
          */
 
         /* dependencies
          * each upperFirst 
          */
 
-        exports.linear = function (t) { return t; };
+        exports.linear = function(t) {
+            return t;
+        };
 
         var pow = Math.pow,
             sqrt = Math.sqrt,
@@ -1809,66 +1809,59 @@ window._ = (function()
             min = Math.min,
             asin = Math.asin,
             PI = Math.PI;
-
         var fns = {
-            sine: function(t)
-            {
-                return 1 + sin(PI / 2 * t - PI / 2);
+            sine: function sine(t) {
+                return 1 + sin((PI / 2) * t - PI / 2);
             },
-            circ: function(t)
-            {
+            circ: function circ(t) {
                 return 1 - sqrt(1 - t * t);
             },
-            elastic: function(t, m)
-            {
+            elastic: function elastic(t, m) {
                 m = m || DEFAULT_ELASTICITY;
-
-                if(t === 0 || t === 1) return t;
-
-                var p = (1 - min(m, 998) / 1000), st = t / 1, st1 = st - 1, s = p / (2 * PI) * asin(1);
-
-                return -(pow(2, 10 * st1) * sin((st1 - s) * (2 * PI) / p));
+                if (t === 0 || t === 1) return t;
+                var p = 1 - min(m, 998) / 1000,
+                    st = t / 1,
+                    st1 = st - 1,
+                    s = (p / (2 * PI)) * asin(1);
+                return -(pow(2, 10 * st1) * sin(((st1 - s) * (2 * PI)) / p));
             },
-            back: function(t)
-            {
+            back: function back(t) {
                 return t * t * (3 * t - 2);
             },
-            bounce: function(t)
-            {
-                var pow2, bounce = 4;
-
+            bounce: function bounce(t) {
+                var pow2,
+                    bounce = 4;
                 /* eslint-disable no-empty */
+
                 while (t < ((pow2 = pow(2, --bounce)) - 1) / 11) {}
 
-                return 1 / pow(4, 3 - bounce) - 7.5625 * pow((pow2 * 3 - 2) / 22 - t, 2);
+                return (
+                    1 / pow(4, 3 - bounce) - 7.5625 * pow((pow2 * 3 - 2) / 22 - t, 2)
+                );
             }
         };
-
-        each(['quad', 'cubic', 'quart', 'quint', 'expo'], function (name, i)
-        {
-            fns[name] = function (t)
-            {
+        each(['quad', 'cubic', 'quart', 'quint', 'expo'], function(name, i) {
+            fns[name] = function(t) {
                 return pow(t, i + 2);
             };
         });
-
         var DEFAULT_ELASTICITY = 400;
-
-        each(fns, function (fn, name)
-        {
+        each(fns, function(fn, name) {
             name = upperFirst(name);
             exports['in' + name] = fn;
-            exports['out' + name] = function(t, m)
-            {
+
+            exports['out' + name] = function(t, m) {
                 return 1 - fn(1 - t, m);
             };
-            exports['inOut' + name] = function(t, m)
-            {
+
+            exports['inOut' + name] = function(t, m) {
                 return t < 0.5 ? fn(t * 2, m) / 2 : 1 - fn(t * -2 + 2, m) / 2;
             };
-            exports['outIn' + name] = function(t, m)
-            {
-                return t < 0.5 ? (1 - fn(1 - 2 * t, m)) / 2 : (fn(t * 2 - 1, m) + 1) / 2;
+
+            exports['outIn' + name] = function(t, m) {
+                return t < 0.5
+                    ? (1 - fn(1 - 2 * t, m)) / 2
+                    : (fn(t * 2 - 1, m) + 1) / 2;
             };
         });
 
@@ -1877,190 +1870,171 @@ window._ = (function()
 
     /* ------------------------------ values ------------------------------ */
 
-    var values = _.values = (function ()
-    {
+    var values = _.values = (function (exports) {
         /* Create an array of the own enumerable property values of object.
          *
          * |Name  |Type  |Desc                    |
          * |------|------|------------------------|
          * |obj   |object|Object to query         |
          * |return|array |Array of property values|
-         *
-         * ```javascript
-         * values({one: 1, two: 2}); // -> [1, 2]
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * values({one: 1, two: 2}); // -> [1, 2]
+         */
+
+        /* typescript
+         * export declare function values(obj: any): any[];
          */
 
         /* dependencies
          * each 
          */
 
-        function exports(obj)
-        {
+        exports = function exports(obj) {
             var ret = [];
-
-            each(obj, function (val) { ret.push(val); });
-
+            each(obj, function(val) {
+                ret.push(val);
+            });
             return ret;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ contain ------------------------------ */
 
-    var contain = _.contain = (function ()
-    {
+    var contain = _.contain = (function (exports) {
         /* Check if the value is present in the list.
          *
          * |Name  |Type        |Desc                                |
          * |------|------------|------------------------------------|
-         * |array |array object|Target list                         |
+         * |target|array object|Target object                       |
          * |value |*           |Value to check                      |
          * |return|boolean     |True if value is present in the list|
-         *
-         * ```javascript
-         * contain([1, 2, 3], 1); // -> true
-         * contain({a: 1, b: 2}, 1); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * contain([1, 2, 3], 1); // -> true
+         * contain({a: 1, b: 2}, 1); // -> true
+         */
+
+        /* typescript
+         * export declare function contain(arr: any[] | {}, val: any): boolean;
          */
 
         /* dependencies
          * idxOf isArrLike values 
          */
 
-        function exports(arr, val)
-        {
+        exports = function exports(arr, val) {
             if (!isArrLike(arr)) arr = values(arr);
-
             return idxOf(arr, val) >= 0;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isStr ------------------------------ */
 
-    var isStr = _.isStr = (function ()
-    {
+    var isStr = _.isStr = (function (exports) {
         /* Check if value is a string primitive.
          *
          * |Name  |Type   |Desc                               |
          * |------|-------|-----------------------------------|
          * |val   |*      |Value to check                     |
          * |return|boolean|True if value is a string primitive|
-         *
-         * ```javascript
-         * isStr('licia'); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * isStr('licia'); // -> true
+         */
+
+        /* typescript
+         * export declare function isStr(val: any): boolean;
          */
 
         /* dependencies
          * objToStr 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             return objToStr(val) === '[object String]';
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ isEmpty ------------------------------ */
 
-    var isEmpty = _.isEmpty = (function ()
-    {
+    var isEmpty = _.isEmpty = (function (exports) {
         /* Check if value is an empty object or array.
          *
          * |Name  |Type   |Desc                  |
          * |------|-------|----------------------|
          * |val   |*      |Value to check        |
          * |return|boolean|True if value is empty|
-         *
-         * ```javascript
+         */
+
+        /* example
          * isEmpty([]); // -> true
          * isEmpty({}); // -> true
          * isEmpty(''); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function isEmpty(val: any): boolean;
          */
 
         /* dependencies
          * isArrLike isArr isStr isArgs keys 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             if (val == null) return true;
 
-            if (isArrLike(val) && (isArr(val) || isStr(val) || isArgs(val)))
-            {
+            if (isArrLike(val) && (isArr(val) || isStr(val) || isArgs(val))) {
                 return val.length === 0;
             }
 
             return keys(val).length === 0;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ toNum ------------------------------ */
 
-    var toNum = _.toNum = (function (exports)
-    {
+    var toNum = _.toNum = (function (exports) {
         /* Convert value to a number.
          *
          * |Name  |Type  |Desc            |
          * |------|------|----------------|
          * |val   |*     |Value to process|
          * |return|number|Resulted number |
-         *
-         * ```javascript
-         * toNum('5'); // -> 5
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * toNum('5'); // -> 5
+         */
+
+        /* typescript
+         * export declare function toNum(val: any): number;
          */
 
         /* dependencies
          * isNum isObj isFn isStr 
          */
 
-        exports = function (val)
-        {
+        exports = function exports(val) {
             if (isNum(val)) return val;
 
-            if (isObj(val))
-            {
+            if (isObj(val)) {
                 var temp = isFn(val.valueOf) ? val.valueOf() : val;
-                val = isObj(temp) ? (temp + '') : temp;
+                val = isObj(temp) ? temp + '' : temp;
             }
 
             if (!isStr(val)) return val === 0 ? val : +val;
-
             return +val;
         };
 
@@ -2069,46 +2043,39 @@ window._ = (function()
 
     /* ------------------------------ toInt ------------------------------ */
 
-    var toInt = _.toInt = (function ()
-    {
+    var toInt = _.toInt = (function (exports) {
         /* Convert value to an integer.
          *
          * |Name  |Type  |Desc             |
          * |------|------|-----------------|
          * |val   |*     |Value to convert |
          * |return|number|Converted integer|
-         *
-         * ```javascript
-         * toInt(1.1); // -> 1
-         * toInt(undefined); // -> 0
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * toInt(1.1); // -> 1
+         * toInt(undefined); // -> 0
+         */
+
+        /* typescript
+         * export declare function toInt(val: any): number;
          */
 
         /* dependencies
          * toNum 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             if (!val) return val === 0 ? val : 0;
-
             val = toNum(val);
-
-            return val - val % 1;
-        }
+            return val - (val % 1);
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ format ------------------------------ */
-
-    _.format = (function (exports)
-    {
+    _.format = (function (exports) {
         /* Format string in a printf-like format.
          *
          * |Name     |Type  |Desc                               |
@@ -2125,71 +2092,66 @@ window._ = (function()
          * |%d, %i   |Integer             |
          * |%f       |Floating point value|
          * |%o       |Object              |
-         *
-         * ```javascript
-         * format('%s_%s', 'foo', 'bar'); // -> 'foo bar'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * format('%s_%s', 'foo', 'bar'); // -> 'foo bar'
+         */
+
+        /* typescript
+         * export declare function format(str: string, ...values: any[]): string;
          */
 
         /* dependencies
          * restArgs toInt toNum toStr 
          */
 
-        exports = restArgs(function (str, values)
-        {
+        exports = restArgs(function(str, values) {
             var ret = '';
 
-            for (var i = 0, len = str.length; i < len; i++)
-            {
-                 var c = str[i];
+            for (var i = 0, len = str.length; i < len; i++) {
+                var c = str[i];
 
-                 if (c !== '%' || values.length === 0)
-                 {
+                if (c !== '%' || values.length === 0) {
                     ret += c;
                     continue;
-                 }
+                }
 
-                 i++;
+                i++;
+                var val = values.shift();
 
-                 var val = values.shift();
+                switch (str[i]) {
+                    case 'i':
+                    case 'd':
+                        ret += toInt(val);
+                        break;
 
-                 switch (str[i])
-                 {
-                     case 'i':
-                     case 'd':
-                         ret += toInt(val);
-                         break;
-                     case 'f':
-                         ret += toNum(val);
-                         break;
-                     case 's':
-                         ret += toStr(val);
-                         break;
-                     case 'o':
-                         ret += tryStringify(val);
-                         break;
-                     default:
-                         i--;
-                         values.unshift(val);
-                         ret += c;
-                 }
+                    case 'f':
+                        ret += toNum(val);
+                        break;
+
+                    case 's':
+                        ret += toStr(val);
+                        break;
+
+                    case 'o':
+                        ret += tryStringify(val);
+                        break;
+
+                    default:
+                        i--;
+                        values.unshift(val);
+                        ret += c;
+                }
             }
 
             return ret;
         });
 
-        function tryStringify(obj)
-        {
-            try
-            {
+        function tryStringify(obj) {
+            try {
                 return JSON.stringify(obj);
-            } catch (err)
-            {
+            } catch (err) {
                 return '[Error Stringify]';
             }
         }
@@ -2199,8 +2161,7 @@ window._ = (function()
 
     /* ------------------------------ isMatch ------------------------------ */
 
-    var isMatch = _.isMatch = (function ()
-    {
+    var isMatch = _.isMatch = (function (exports) {
         /* Check if keys and values in src are contained in obj.
          *
          * |Name  |Type   |Desc                              |
@@ -2208,88 +2169,175 @@ window._ = (function()
          * |obj   |object |Object to inspect                 |
          * |src   |object |Object of property values to match|
          * |return|boolean|True if object is match           |
-         *
-         * ```javascript
-         * isMatch({a: 1, b: 2}, {a: 1}); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * isMatch({a: 1, b: 2}, {a: 1}); // -> true
+         */
+
+        /* typescript
+         * export declare function isMatch(obj: any, src: any): boolean;
          */
 
         /* dependencies
          * keys 
          */
 
-        function exports(obj, src)
-        {
+        exports = function exports(obj, src) {
             var _keys = keys(src),
                 len = _keys.length;
 
             if (obj == null) return !len;
-
             obj = Object(obj);
 
-            for (var i = 0; i < len; i++)
-            {
+            for (var i = 0; i < len; i++) {
                 var key = _keys[i];
                 if (src[key] !== obj[key] || !(key in obj)) return false;
             }
 
             return true;
-        }
+        };
 
         return exports;
-    })();
+    })({});
+
+    /* ------------------------------ levenshtein ------------------------------ */
+    _.levenshtein = (function (exports) {
+        /* Levenshtein distance implementation.
+         *
+         * |Name  |Type  |Desc                                |
+         * |------|------|------------------------------------|
+         * |a     |string|First string                        |
+         * |b     |string|Second string                       |
+         * |return|number|Levenshtein distance between a and b|
+         */
+
+        /* demo
+         * levenshtein('cat', 'cake'); // -> 2
+         */
+
+        /* typescript
+         * export declare function levenshtein(a: string, b: string): number;
+         */
+        var vector = [];
+        var bChars = []; // https://github.com/Yomguithereal/talisman/
+
+        exports = function exports(a, b) {
+            if (a === b) return 0; // Make a is the shorter one
+
+            if (a.length > b.length) {
+                var tmp = a;
+                a = b;
+                b = tmp;
+            }
+
+            var aLen = a.length;
+            var bLen = b.length;
+            if (!aLen) return bLen;
+            if (!bLen) return aLen; // Ignore common suffix
+
+            while (aLen > 0 && a.charCodeAt(aLen - 1) === b.charCodeAt(bLen - 1)) {
+                aLen--;
+                bLen--;
+            }
+
+            if (!aLen) return bLen; // Ignore common prefix
+
+            var start = 0;
+
+            while (start < aLen && a.charCodeAt(start) === b.charCodeAt(start)) {
+                start++;
+            }
+
+            aLen -= start;
+            bLen -= start;
+            if (!aLen) return bLen;
+            var current = 0;
+            var left;
+            var above;
+            var charA;
+            var i = 0;
+
+            while (i < bLen) {
+                bChars[i] = b.charCodeAt(start + i);
+                vector[i] = ++i;
+            }
+            /* | | |o|a|
+             * | |0|1|2|
+             * |r|1|1|2|←
+             * |o|2|1|2|
+             * |a|3|2|1|
+             *      ↑
+             * a: oa
+             * b: roa
+             * row: [1, 2, 3]
+             */
+
+            for (var _i = 0; _i < aLen; _i++) {
+                left = _i;
+                current = _i + 1;
+                charA = a.charCodeAt(start + _i);
+
+                for (var j = 0; j < bLen; j++) {
+                    above = current;
+                    current = left;
+                    left = vector[j];
+
+                    if (charA !== bChars[j]) {
+                        if (left < current) current = left;
+                        if (above < current) current = above;
+                        current++;
+                    }
+
+                    vector[j] = current;
+                }
+            }
+
+            return current;
+        };
+
+        return exports;
+    })({});
 
     /* ------------------------------ ltrim ------------------------------ */
 
-    var ltrim = _.ltrim = (function ()
-    {
+    var ltrim = _.ltrim = (function (exports) {
         /* Remove chars or white-spaces from beginning of string.
          *
-         * |Name  |Type        |Desc              |
-         * |------|------------|------------------|
-         * |str   |string      |String to trim    |
-         * |chars |string array|Characters to trim|
-         * |return|string      |Trimmed string    |
-         *
-         * ```javascript
+         * |Name   |Type        |Desc              |
+         * |-------|------------|------------------|
+         * |str    |string      |String to trim    |
+         * |[chars]|string array|Characters to trim|
+         * |return |string      |Trimmed string    |
+         */
+
+        /* example
          * ltrim(' abc  '); // -> 'abc  '
          * ltrim('_abc_', '_'); // -> 'abc_'
          * ltrim('_abc_', ['a', '_']); // -> 'bc_'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function ltrim(str: string, chars?: string | string[]): string;
          */
-
         var regSpace = /^\s+/;
 
-        function exports(str, chars)
-        {
+        exports = function exports(str, chars) {
             if (chars == null) return str.replace(regSpace, '');
-
             var start = 0,
                 len = str.length,
                 charLen = chars.length,
                 found = true,
-                i, c;
+                i,
+                c;
 
-            while (found && start < len)
-            {
+            while (found && start < len) {
                 found = false;
                 i = -1;
                 c = str.charAt(start);
 
-                while (++i < charLen)
-                {
-                    if (c === chars[i])
-                    {
+                while (++i < charLen) {
+                    if (c === chars[i]) {
                         found = true;
                         start++;
                         break;
@@ -2298,81 +2346,68 @@ window._ = (function()
             }
 
             return start >= len ? '' : str.substr(start, len);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ matcher ------------------------------ */
 
-    var matcher = _.matcher = (function ()
-    {
+    var matcher = _.matcher = (function (exports) {
         /* Return a predicate function that checks if attrs are contained in an object.
          *
          * |Name  |Type    |Desc                              |
          * |------|--------|----------------------------------|
          * |attrs |object  |Object of property values to match|
          * |return|function|New predicate function            |
-         *
-         * ```javascript
-         * var objects = [
+         */
+
+        /* example
+         * const objects = [
          *     {a: 1, b: 2, c: 3 },
          *     {a: 4, b: 5, c: 6 }
          * ];
-         * filter(objects, matcher({a: 4, c: 6 })); // -> [{a: 4, b: 5, c: 6 }]
-         * ```
+         * // filter(objects, matcher({a: 4, c: 6 }));
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function matcher(attrs: any): Function;
          */
 
         /* dependencies
          * extendOwn isMatch 
          */
 
-        function exports(attrs)
-        {
+        exports = function exports(attrs) {
             attrs = extendOwn({}, attrs);
-
-            return function (obj)
-            {
+            return function(obj) {
                 return isMatch(obj, attrs);
             };
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ safeCb ------------------------------ */
 
-    var safeCb = _.safeCb = (function (exports)
-    {
+    var safeCb = _.safeCb = (function (exports) {
         /* Create callback based on input value.
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function safeCb(val?: any, ctx?: any, argCount?: number): Function;
          */
 
         /* dependencies
          * isFn isObj optimizeCb matcher identity 
          */
 
-        exports = function (val, ctx, argCount)
-        {
+        exports = function exports(val, ctx, argCount) {
             if (val == null) return identity;
-
             if (isFn(val)) return optimizeCb(val, ctx, argCount);
-
             if (isObj(val)) return matcher(val);
-
-            return function (key)
-            {
-                return function (obj)
-                {
+            return function(key) {
+                return function(obj) {
                     return obj == null ? undefined : obj[key];
                 };
             };
@@ -2383,8 +2418,7 @@ window._ = (function()
 
     /* ------------------------------ filter ------------------------------ */
 
-    var filter = _.filter = (function ()
-    {
+    var filter = _.filter = (function (exports) {
         /* Iterates over elements of collection, returning an array of all the values that pass a truth test.
          *
          * |Name     |Type    |Desc                                   |
@@ -2393,134 +2427,134 @@ window._ = (function()
          * |predicate|function|Function invoked per iteration         |
          * |[ctx]    |*       |Predicate context                      |
          * |return   |array   |Array of all values that pass predicate|
-         *
-         * ```javascript
-         * filter([1, 2, 3, 4, 5], function (val)
-         * {
-         *     return val % 2 === 0;
-         * }); // -> [2, 4]
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * filter([1, 2, 3, 4, 5], function (val) {
+         *     return val % 2 === 0;
+         * }); // -> [2, 4]
+         */
+
+        /* typescript
+         * export declare function filter<T>(
+         *     list: types.List<T>,
+         *     iterator: types.ListIterator<T, boolean>,
+         *     context?: any
+         * ): T[];
+         * export declare function filter<T>(
+         *     object: types.Dictionary<T>,
+         *     iterator: types.ObjectIterator<T, boolean>,
+         *     context?: any
+         * ): T[];
          */
 
         /* dependencies
-         * safeCb each 
+         * safeCb each types 
          */
 
-        function exports(obj, predicate, ctx)
-        {
+        exports = function exports(obj, predicate, ctx) {
             var ret = [];
-
             predicate = safeCb(predicate, ctx);
-
-            each(obj, function (val, idx, list)
-            {
+            each(obj, function(val, idx, list) {
                 if (predicate(val, idx, list)) ret.push(val);
             });
-
             return ret;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ map ------------------------------ */
 
-    var map = _.map = (function ()
-    {
+    var map = _.map = (function (exports) {
         /* Create an array of values by running each element in collection through iteratee.
          *
-         * |Name    |Type        |Desc                          |
-         * |--------|------------|------------------------------|
-         * |obj     |array object|Collection to iterate over    |
-         * |iteratee|function    |Function invoked per iteration|
-         * |[ctx]   |*           |Function context              |
-         * |return  |array       |New mapped array              |
-         *
-         * ```javascript
-         * map([4, 8], function (n) { return n * n; }); // -> [16, 64]
-         * ```
+         * |Name     |Type        |Desc                          |
+         * |---------|------------|------------------------------|
+         * |object   |array object|Collection to iterate over    |
+         * |iterator |function    |Function invoked per iteration|
+         * |[context]|*           |Function context              |
+         * |return   |array       |New mapped array              |
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * map([4, 8], function (n) { return n * n; }); // -> [16, 64]
+         */
+
+        /* typescript
+         * export declare function map<T, TResult>(
+         *     list: types.List<T>,
+         *     iterator: types.ListIterator<T, TResult>,
+         *     context?: any
+         * ): TResult[];
+         * export declare function map<T, TResult>(
+         *     object: types.Dictionary<T>,
+         *     iterator: types.ObjectIterator<T, TResult>,
+         *     context?: any
+         * ): TResult[];
          */
 
         /* dependencies
-         * safeCb keys isArrLike 
+         * safeCb keys isArrLike types 
          */
 
-        function exports(obj, iteratee, ctx)
-        {
-            iteratee = safeCb(iteratee, ctx);
+        exports = function exports(obj, iterator, ctx) {
+            iterator = safeCb(iterator, ctx);
 
             var _keys = !isArrLike(obj) && keys(obj),
                 len = (_keys || obj).length,
                 results = Array(len);
 
-            for (var i = 0; i < len; i++)
-            {
+            for (var i = 0; i < len; i++) {
                 var curKey = _keys ? _keys[i] : i;
-                results[i] = iteratee(obj[curKey], curKey, obj);
+                results[i] = iterator(obj[curKey], curKey, obj);
             }
 
             return results;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ toArr ------------------------------ */
 
-    var toArr = _.toArr = (function ()
-    {
+    var toArr = _.toArr = (function (exports) {
         /* Convert value to an array.
          *
          * |Name  |Type |Desc            |
          * |------|-----|----------------|
          * |val   |*    |Value to convert|
          * |return|array|Converted array |
-         *
-         * ```javascript
+         */
+
+        /* example
          * toArr({a: 1, b: 2}); // -> [{a: 1, b: 2}]
          * toArr('abc'); // -> ['abc']
          * toArr(1); // -> [1]
          * toArr(null); // -> []
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function toArr(val: any): any[];
          */
 
         /* dependencies
          * isArrLike map isArr isStr 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             if (!val) return [];
-
             if (isArr(val)) return val;
-
             if (isArrLike(val) && !isStr(val)) return map(val);
-
             return [val];
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ Class ------------------------------ */
 
-    var Class = _.Class = (function ()
-    {
+    var Class = _.Class = (function (exports) {
         /* Create JavaScript class.
          *
          * |Name     |Type    |Desc                             |
@@ -2528,34 +2562,30 @@ window._ = (function()
          * |methods  |object  |Public methods                   |
          * |[statics]|object  |Static methods                   |
          * |return   |function|Function used to create instances|
-         *
-         * ```javascript
+         */
+
+        /* example
          * var People = Class({
-         *     initialize: function People(name, age)
-         *     {
+         *     initialize: function People(name, age) {
          *         this.name = name;
          *         this.age = age;
          *     },
-         *     introduce: function ()
-         *     {
+         *     introduce: function () {
          *         return 'I am ' + this.name + ', ' + this.age + ' years old.';
          *     }
          * });
          *
          * var Student = People.extend({
-         *     initialize: function Student(name, age, school)
-         *     {
+         *     initialize: function Student(name, age, school) {
          *         this.callSuper(People, 'initialize', arguments);
          *
          *         this.school = school;
          *     },
-         *     introduce: function ()
-         *     {
+         *     introduce: function () {
          *         return this.callSuper(People, 'introduce') + '\n I study at ' + this.school + '.';
          *     }
          * }, {
-         *     is: function (obj)
-         *     {
+         *     is: function (obj) {
          *         return obj instanceof Student;
          *     }
          * });
@@ -2563,94 +2593,102 @@ window._ = (function()
          * var a = new Student('allen', 17, 'Hogwarts');
          * a.introduce(); // -> 'I am allen, 17 years old. \n I study at Hogwarts.'
          * Student.is(a); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare namespace Class {
+         *     class Base {
+         *         toString(): string;
+         *     }
+         *     class IConstructor extends Base {
+         *         constructor(...args: any[]);
+         *         static extend(methods: any, statics: any): IConstructor;
+         *         static inherits(Class: Function): void;
+         *         static methods(methods: any): IConstructor;
+         *         static statics(statics: any): IConstructor;
+         *         [method: string]: any;
+         *     }
+         * }
+         * export declare function Class(methods: any, statics?: any): Class.IConstructor;
          */
 
         /* dependencies
-         * extend toArr inherits has safeGet isMiniProgram 
+         * extend toArr inherits safeGet isMiniProgram 
          */
 
-        function exports(methods, statics)
-        {
+        exports = function exports(methods, statics) {
             return Base.extend(methods, statics);
-        }
+        };
 
-        function makeClass(parent, methods, statics)
-        {
+        function makeClass(parent, methods, statics) {
             statics = statics || {};
-            var className = methods.className || safeGet(methods, 'initialize.name') || '';
+            var className =
+                methods.className || safeGet(methods, 'initialize.name') || '';
             delete methods.className;
-
             var ctor;
-            if (isMiniProgram) 
-            {
-                ctor = function () 
-                {
+
+            if (isMiniProgram) {
+                ctor = function ctor() {
                     var args = toArr(arguments);
-                    return this.initialize ? this.initialize.apply(this, args) || this : this;
+                    return this.initialize
+                        ? this.initialize.apply(this, args) || this
+                        : this;
                 };
-            } else 
-            {
-                ctor = new Function('toArr', 'return function ' + className + '()' + 
-                '{' +
-                    'var args = toArr(arguments);' +
-                    'return this.initialize ? this.initialize.apply(this, args) || this : this;' +
-                '};')(toArr);
+            } else {
+                ctor = new Function(
+                    'toArr',
+                    'return function ' +
+                        className +
+                        '()' +
+                        '{' +
+                        'var args = toArr(arguments);' +
+                        'return this.initialize ? this.initialize.apply(this, args) || this : this;' +
+                        '};'
+                )(toArr);
             }
 
             inherits(ctor, parent);
             ctor.prototype.constructor = ctor;
 
-            ctor.extend = function (methods, statics)
-            {
+            ctor.extend = function(methods, statics) {
                 return makeClass(ctor, methods, statics);
             };
-            ctor.inherits = function (Class)
-            {
+
+            ctor.inherits = function(Class) {
                 inherits(ctor, Class);
             };
-            ctor.methods = function (methods)
-            {
+
+            ctor.methods = function(methods) {
                 extend(ctor.prototype, methods);
                 return ctor;
             };
-            ctor.statics = function (statics)
-            {
+
+            ctor.statics = function(statics) {
                 extend(ctor, statics);
                 return ctor;
             };
 
             ctor.methods(methods).statics(statics);
-
             return ctor;
         }
 
-        var Base = exports.Base = makeClass(Object, {
+        var Base = (exports.Base = makeClass(Object, {
             className: 'Base',
-            callSuper: function (parent, name, args)
-            {
+            callSuper: function callSuper(parent, name, args) {
                 var superMethod = parent.prototype[name];
-
                 return superMethod.apply(this, args);
             },
-            toString: function ()
-            {
+            toString: function toString() {
                 return this.constructor.name;
             }
-        });
+        }));
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ Select ------------------------------ */
 
-    var Select = _.Select = (function (exports)
-    {
+    var Select = _.Select = (function (exports) {
         /* Simple wrapper of querySelectorAll to make dom selection easier.
          *
          * ### constructor
@@ -2674,19 +2712,21 @@ window._ = (function()
          * |Name|Type    |Desc                                |
          * |----|--------|------------------------------------|
          * |fn  |function|Function to execute for each element|
-         *
-         * ```javascript
-         * var $test = new Select('#test');
-         * $test.find('.test').each(function (idx, element)
-         * {
-         *     // Manipulate dom nodes
-         * });
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * var $test = new Select('#test');
+         * $test.find('.test').each(function (idx, element) {
+         *     // Manipulate dom nodes
+         * });
+         */
+
+        /* typescript
+         * export declare class Select {
+         *     constructor(selector: string | Element);
+         *     find(selector: string): Select;
+         *     each(fn: Function): Select;
+         * }
          */
 
         /* dependencies
@@ -2695,53 +2735,51 @@ window._ = (function()
 
         exports = Class({
             className: 'Select',
-            initialize: function (selector)
-            {
+            initialize: function initialize(selector) {
                 this.length = 0;
-
                 if (!selector) return this;
-
                 if (isStr(selector)) return rootSelect.find(selector);
 
-                if (selector.nodeType)
-                {
+                if (selector.nodeType) {
                     this[0] = selector;
                     this.length = 1;
                 }
             },
-            find: function (selector)
-            {
-                var ret = new Select;
-
-                this.each(function ()
-                {
+            find: function find(selector) {
+                var ret = new Select();
+                this.each(function() {
                     mergeArr(ret, this.querySelectorAll(selector));
                 });
-
                 return ret;
             },
-            each: function (fn)
-            {
-                each(this, function (element, idx)
-                {
+            each: (function(_each) {
+                function each(_x) {
+                    return _each.apply(this, arguments);
+                }
+
+                each.toString = function() {
+                    return _each.toString();
+                };
+
+                return each;
+            })(function(fn) {
+                each(this, function(element, idx) {
                     fn.call(element, idx, element);
                 });
-
                 return this;
-            }
+            })
         });
-
         var rootSelect = new exports(document);
 
-        function mergeArr(first, second)
-        {
+        function mergeArr(first, second) {
             var len = second.length,
                 i = first.length;
 
-            for (var j = 0; j < len; j++) first[i++] = second[j];
+            for (var j = 0; j < len; j++) {
+                first[i++] = second[j];
+            }
 
             first.length = i;
-
             return first;
         }
 
@@ -2750,41 +2788,42 @@ window._ = (function()
 
     /* ------------------------------ $safeEls ------------------------------ */
 
-    var $safeEls = _.$safeEls = (function ()
-    {
+    var $safeEls = _.$safeEls = (function (exports) {
         /* Convert value into an array, if it's a string, do querySelector.
          *
          * |Name  |Type                |Desc             |
          * |------|--------------------|-----------------|
          * |value |element array string|Value to convert |
          * |return|array               |Array of elements|
-         *
-         * ```javascript
-         * $safeEls('.test'); // -> Array of elements with test class
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * $safeEls(document.querySelector('.test'));
+         * $safeEls(document.querySelectorAll('.test'));
+         * $safeEls('.test'); // -> Array of elements with test class
+         */
+
+        /* typescript
+         * export declare namespace $safeEls {
+         *     type El = Element | Element[] | NodeListOf<Element> | string;
+         * }
+         * export declare function $safeEls(value: $safeEls.El): Element[];
          */
 
         /* dependencies
          * isStr toArr Select 
          */
 
-        function exports(val)
-        {
+        exports = function exports(val) {
             return toArr(isStr(val) ? new Select(val) : val);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ $attr ------------------------------ */
 
-    var $attr = _.$attr = (function ()
-    {
+    var $attr = _.$attr = (function (exports) {
         /* Element attribute manipulation.
          *
          * Get the value of an attribute for the first element in the set of matched elements.
@@ -2816,8 +2855,9 @@ window._ = (function()
          * |-------|--------------------|----------------------|
          * |element|string array element|Elements to manipulate|
          * |name   |string              |Attribute name        |
-         *
-         * ```javascript
+         */
+
+        /* example
          * $attr('#test', 'attr1', 'test');
          * $attr('#test', 'attr1'); // -> test
          * $attr.remove('#test', 'attr1');
@@ -2825,112 +2865,108 @@ window._ = (function()
          *     'attr1': 'test',
          *     'attr2': 'test'
          * });
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare namespace $attr {
+         *     interface IAttr {
+         *         (element: $safeEls.El, name: string, value: string): void;
+         *         (element: $safeEls.El, attributes: { [name: string]: string }): void;
+         *         (element: $safeEls.El, name: string): string;
+         *         remove(element: $safeEls.El, name: string): void;
+         *     }
+         * }
+         * export declare const $attr: $attr.IAttr;
          */
 
         /* dependencies
          * toArr isObj isStr each isUndef $safeEls 
          */
 
-        function exports(els, name, val)
-        {
+        exports = function exports(els, name, val) {
             els = $safeEls(els);
-
             var isGetter = isUndef(val) && isStr(name);
             if (isGetter) return getAttr(els[0], name);
-
             var attrs = name;
-            if (!isObj(attrs))
-            {
+
+            if (!isObj(attrs)) {
                 attrs = {};
                 attrs[name] = val;
             }
 
             setAttr(els, attrs);
-        }
+        };
 
-        exports.remove = function (els, names)
-        {
+        exports.remove = function(els, names) {
             els = $safeEls(els);
             names = toArr(names);
-
-            each(els, function (node)
-            {
-                each(names, function (name)
-                {
+            each(els, function(node) {
+                each(names, function(name) {
                     node.removeAttribute(name);
                 });
             });
         };
 
-        function getAttr(el, name)
-        {
+        function getAttr(el, name) {
             return el.getAttribute(name);
         }
 
-        function setAttr(els, attrs)
-        {
-            each(els, function (el)
-            {
-                each(attrs, function (val, name)
-                {
+        function setAttr(els, attrs) {
+            each(els, function(el) {
+                each(attrs, function(val, name) {
                     el.setAttribute(name, val);
                 });
             });
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ $data ------------------------------ */
 
-    var $data = _.$data = (function ()
-    {
+    var $data = _.$data = (function (exports) {
         /* Wrapper of $attr, adds data- prefix to keys.
-         *
-         * ```javascript
-         * $data('#test', 'attr1', 'eustia');
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * $data('#test', 'attr1', 'eustia');
+         */
+
+        /* typescript
+         * export declare namespace $data {
+         *     interface IData {
+         *         (element: $safeEls.El, name: string, value: string): void;
+         *         (element: $safeEls.El, attributes: { [name: string]: string }): void;
+         *         (element: $safeEls.El, name: string): string;
+         *     }
+         * }
+         * export declare const $data: $data.IData;
          */
 
         /* dependencies
-         * $attr isStr isObj each 
+         * $attr isStr isObj each $safeEls 
          */
 
-        function exports(nodes, name, val)
-        {
+        exports = function exports(nodes, name, val) {
             var dataName = name;
-
             if (isStr(name)) dataName = 'data-' + name;
-            if (isObj(name))
-            {
+
+            if (isObj(name)) {
                 dataName = {};
-                each(name, function (val, key)
-                {
+                each(name, function(val, key) {
                     dataName['data-' + key] = val;
                 });
             }
 
             return $attr(nodes, dataName, val);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ $insert ------------------------------ */
 
-    var $insert = _.$insert = (function (exports)
-    {
+    var $insert = _.$insert = (function (exports) {
         /* Insert html on different position.
          *
          * ### before
@@ -2953,8 +2989,9 @@ window._ = (function()
          * |-------|--------------------|----------------------|
          * |element|string array element|Elements to manipulate|
          * |content|string              |Html strings          |
-         *
-         * ```javascript
+         */
+
+        /* example
          * // <div id="test"><div class="mark"></div></div>
          * $insert.before('#test', '<div>licia</div>');
          * // -> <div>licia</div><div id="test"><div class="mark"></div></div>
@@ -2964,12 +3001,20 @@ window._ = (function()
          * // -> <div id="test"><div>licia</div><div class="mark"></div></div>
          * $insert.append('#test', '<div>licia</div>');
          * // -> <div id="test"><div class="mark"></div><div>licia</div></div>
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare namespace $insert {
+         *     interface IInsert {
+         *         (element: $safeEls.El, content: string): void;
+         *     }
+         * }
+         * export declare const $insert: {
+         *     before: $insert.IInsert;
+         *     after: $insert.IInsert;
+         *     append: $insert.IInsert;
+         *     prepend: $insert.IInsert;
+         * };
          */
 
         /* dependencies
@@ -2983,14 +3028,10 @@ window._ = (function()
             prepend: insertFactory('afterbegin')
         };
 
-        function insertFactory(type)
-        {
-            return function (nodes, val)
-            {
+        function insertFactory(type) {
+            return function(nodes, val) {
                 nodes = $safeEls(nodes);
-
-                each(nodes, function (node)
-                {
+                each(nodes, function(node) {
                     node.insertAdjacentHTML(type, val);
                 });
             };
@@ -3001,51 +3042,52 @@ window._ = (function()
 
     /* ------------------------------ $offset ------------------------------ */
 
-    var $offset = _.$offset = (function ()
-    {
+    var $offset = _.$offset = (function (exports) {
         /* Get the position of the element in document.
          *
          * |Name   |Type                |Desc                  |
          * |-------|--------------------|----------------------|
          * |element|string array element|Elements to get offset|
-         *
-         * ```javascript
-         * $offset('#test'); // -> {left: 0, top: 0, width: 0, height: 0}
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * $offset('#test'); // -> {left: 0, top: 0, width: 0, height: 0}
+         */
+
+        /* typescript
+         * export declare namespace $offset {
+         *     interface IOffset {
+         *         left: number;
+         *         top: number;
+         *         width: number;
+         *         height: number;
+         *     }
+         * }
+         * export declare function $offset(element: $safeEls.El): $offset.IOffset;
          */
 
         /* dependencies
          * $safeEls 
          */
 
-        function exports(els)
-        {
+        exports = function exports(els) {
             els = $safeEls(els);
-
             var el = els[0];
-
             var clientRect = el.getBoundingClientRect();
-
             return {
                 left: clientRect.left + window.pageXOffset,
                 top: clientRect.top + window.pageYOffset,
                 width: Math.round(clientRect.width),
                 height: Math.round(clientRect.height)
             };
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ $property ------------------------------ */
 
-    var $property = _.$property = (function (exports)
-    {
+    var $property = _.$property = (function (exports) {
         /* Element property html, text, val getter and setter.
          *
          * ### html
@@ -3063,16 +3105,25 @@ window._ = (function()
          *
          * Get the current value of the first element in the set of matched elements or
          * set the value of every matched element.
-         *
-         * ```javascript
-         * $property.html('#test', 'licia');
-         * $property.html('#test'); // -> licia
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * $property.html('#test', 'licia');
+         * $property.html('#test'); // -> licia
+         */
+
+        /* typescript
+         * export declare namespace $property {
+         *     interface IProperty {
+         *         (element: $safeEls.El, value: string): void;
+         *         (element: $safeEls.El): string;
+         *     }
+         * }
+         * export declare const $property: {
+         *     html: $property.IProperty;
+         *     val: $property.IProperty;
+         *     text: $property.IProperty;
+         * };
          */
 
         /* dependencies
@@ -3085,16 +3136,11 @@ window._ = (function()
             val: propFactory('value')
         };
 
-        function propFactory(name)
-        {
-            return function (nodes, val)
-            {
+        function propFactory(name) {
+            return function(nodes, val) {
                 nodes = $safeEls(nodes);
-
                 if (isUndef(val)) return nodes[0][name];
-
-                each(nodes, function (node)
-                {
+                each(nodes, function(node) {
                     node[name] = val;
                 });
             };
@@ -3105,93 +3151,78 @@ window._ = (function()
 
     /* ------------------------------ $remove ------------------------------ */
 
-    var $remove = _.$remove = (function ()
-    {
+    var $remove = _.$remove = (function (exports) {
         /* Remove the set of matched elements from the DOM.
          *
          * |Name   |Type                |Desc              |
          * |-------|--------------------|------------------|
          * |element|string array element|Elements to delete|
-         *
-         * ```javascript
-         * $remove('#test');
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * $remove('#test');
+         */
+
+        /* typescript
+         * export declare function $remove(element: $safeEls.El);
          */
 
         /* dependencies
          * each $safeEls 
          */
 
-        function exports(els)
-        {
+        exports = function exports(els) {
             els = $safeEls(els);
-
-            each(els, function (el)
-            {
+            each(els, function(el) {
                 var parent = el.parentNode;
-
                 if (parent) parent.removeChild(el);
             });
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ $show ------------------------------ */
 
-    var $show = _.$show = (function ()
-    {
+    var $show = _.$show = (function (exports) {
         /* Show elements.
          *
          * |Name   |Type                |Desc            |
          * |-------|--------------------|----------------|
          * |element|string array element|Elements to show|
-         *
-         * ```javascript
-         * $show('#test');
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* example
+         * $show('#test');
+         */
+
+        /* typescript
+         * export declare function $show(element: $safeEls.El): void;
          */
 
         /* dependencies
          * each $safeEls 
          */
 
-        function exports(els)
-        {
+        exports = function exports(els) {
             els = $safeEls(els);
-
-            each(els, function (el)
-            {
-                if (isHidden(el))
-                {
+            each(els, function(el) {
+                if (isHidden(el)) {
                     el.style.display = getDefDisplay(el.nodeName);
                 }
             });
-        }
+        };
 
-        function isHidden(el)
-        {
+        function isHidden(el) {
             return getComputedStyle(el, '').getPropertyValue('display') == 'none';
         }
 
         var elDisplay = {};
 
-        function getDefDisplay(elName)
-        {
+        function getDefDisplay(elName) {
             var el, display;
 
-            if (!elDisplay[elName])
-            {
+            if (!elDisplay[elName]) {
                 el = document.createElement(elName);
                 document.documentElement.appendChild(el);
                 display = getComputedStyle(el, '').getPropertyValue('display');
@@ -3204,12 +3235,11 @@ window._ = (function()
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ delegate ------------------------------ */
 
-    var delegate = _.delegate = (function (exports)
-    {
+    var delegate = _.delegate = (function (exports) {
         /* Event delegation.
          *
          * ### add
@@ -3226,50 +3256,57 @@ window._ = (function()
          * ### remove
          *
          * Remove event delegation.
-         *
-         * ```javascript
+         */
+
+        /* example
          * var container = document.getElementById('container');
-         * function clickHandler()
-         * {
+         * function clickHandler() {
          *     // Do something...
          * }
          * delegate.add(container, 'click', '.children', clickHandler);
          * delegate.remove(container, 'click', '.children', clickHandler);
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare const delegate: {
+         *     add(el: Element, type: string, selector: string, cb: Function): void;
+         *     remove(el: Element, type: string, selector: string, cb: Function): void;
+         * };
          */
 
         /* dependencies
          * Class contain 
          */
 
-        function retTrue()  { return true; }
-        function retFalse() { return false; }
+        function retTrue() {
+            return true;
+        }
 
-        function trigger(e)
-        {
+        function retFalse() {
+            return false;
+        }
+
+        function trigger(e) {
             var handlers = this.events[e.type],
                 handler,
                 handlerQueue = formatHandlers.call(this, e, handlers);
-
             e = new exports.Event(e);
+            var i = 0,
+                j,
+                matched,
+                ret;
 
-            var i = 0, j, matched, ret;
-
-            while ((matched = handlerQueue[i++]) && !e.isPropagationStopped())
-            {
+            while ((matched = handlerQueue[i++]) && !e.isPropagationStopped()) {
                 e.curTarget = matched.el;
                 j = 0;
-                while ((handler = matched.handlers[j++]) && !e.isImmediatePropagationStopped())
-                {
+
+                while (
+                    (handler = matched.handlers[j++]) &&
+                    !e.isImmediatePropagationStopped()
+                ) {
                     ret = handler.handler.apply(matched.el, [e]);
 
-                    if (ret === false)
-                    {
+                    if (ret === false) {
                         e.preventDefault();
                         e.stopPropagation();
                     }
@@ -3277,34 +3314,42 @@ window._ = (function()
             }
         }
 
-        function formatHandlers(e, handlers)
-        {
+        function formatHandlers(e, handlers) {
             var current = e.target,
                 ret = [],
                 delegateCount = handlers.delegateCount,
-                selector, matches, handler, i;
+                selector,
+                matches,
+                handler,
+                i;
 
-            if (current.nodeType)
-            {
-                for (; current !== this; current = current.parentNode || this)
-                {
+            if (current.nodeType) {
+                for (; current !== this; current = current.parentNode || this) {
                     matches = [];
-                    for (i = 0; i < delegateCount; i++)
-                    {
+
+                    for (i = 0; i < delegateCount; i++) {
                         handler = handlers[i];
                         selector = handler.selector + ' ';
-                        if (matches[selector] === undefined)
-                        {
-                            matches[selector] = contain(this.querySelectorAll(selector), current);
+
+                        if (matches[selector] === undefined) {
+                            matches[selector] = contain(
+                                this.querySelectorAll(selector),
+                                current
+                            );
                         }
+
                         if (matches[selector]) matches.push(handler);
                     }
-                    if (matches.length) ret.push({ el: current, handlers: matches});
+
+                    if (matches.length)
+                        ret.push({
+                            el: current,
+                            handlers: matches
+                        });
                 }
             }
 
-            if (delegateCount < handlers.length)
-            {
+            if (delegateCount < handlers.length) {
                 ret.push({
                     el: this,
                     handlers: handlers.slice(delegateCount)
@@ -3315,48 +3360,47 @@ window._ = (function()
         }
 
         exports = {
-            add: function (el, type, selector, fn)
-            {
+            add: function add(el, type, selector, fn) {
                 var handler = {
                         selector: selector,
                         handler: fn
                     },
                     handlers;
-
                 if (!el.events) el.events = {};
 
-                if (!(handlers = el.events[type]))
-                {
+                if (!(handlers = el.events[type])) {
                     handlers = el.events[type] = [];
                     handlers.delegateCount = 0;
-                    el.addEventListener(type, function (e)
-                    {
-                        trigger.apply(el, arguments);
-                    }, false);
+                    el.addEventListener(
+                        type,
+                        function() {
+                            trigger.apply(el, arguments);
+                        },
+                        false
+                    );
                 }
 
-                selector ? handlers.splice(handlers.delegateCount++, 0, handler)
-                         : handlers.push(handler);
+                selector
+                    ? handlers.splice(handlers.delegateCount++, 0, handler)
+                    : handlers.push(handler);
             },
-            remove: function (el, type, selector, fn)
-            {
+            remove: function remove(el, type, selector, fn) {
                 var events = el.events;
-
                 if (!events || !events[type]) return;
-
                 var handlers = events[type],
                     i = handlers.length,
                     handler;
 
-                while (i--)
-                {
+                while (i--) {
                     handler = handlers[i];
 
-                    if ((!selector || handler.selector == selector) && handler.handler == fn)
-                    {
+                    if (
+                        (!selector || handler.selector == selector) &&
+                        handler.handler == fn
+                    ) {
                         handlers.splice(i, 1);
-                        if (handler.selector)
-                        {
+
+                        if (handler.selector) {
                             handlers.delegateCount--;
                         }
                     }
@@ -3364,28 +3408,24 @@ window._ = (function()
             },
             Event: Class({
                 className: 'Event',
-                initialize: function Event(e) { this.origEvent = e; },
+                initialize: function Event(e) {
+                    this.origEvent = e;
+                },
                 isDefaultPrevented: retFalse,
                 isPropagationStopped: retFalse,
                 isImmediatePropagationStopped: retFalse,
-                preventDefault: function ()
-                {
+                preventDefault: function preventDefault() {
                     var e = this.origEvent;
-
                     this.isDefaultPrevented = retTrue;
                     if (e && e.preventDefault) e.preventDefault();
                 },
-                stopPropagation: function ()
-                {
+                stopPropagation: function stopPropagation() {
                     var e = this.origEvent;
-
                     this.isPropagationStopped = retTrue;
                     if (e && e.stopPropagation) e.stopPropagation();
                 },
-                stopImmediatePropagation: function ()
-                {
+                stopImmediatePropagation: function stopImmediatePropagation() {
                     var e = this.origEvent;
-
                     this.isImmediatePropagationStopped = retTrue;
                     if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
                     this.stopPropagation();
@@ -3398,23 +3438,35 @@ window._ = (function()
 
     /* ------------------------------ $event ------------------------------ */
 
-    var $event = _.$event = (function (exports)
-    {
+    var $event = _.$event = (function (exports) {
         /* bind events to certain dom elements.
-         *
-         * ```javascript
-         * function clickHandler()
-         * {
+         */
+
+        /* example
+         * function clickHandler() {
          *     // Do something...
          * }
          * $event.on('#test', 'click', clickHandler);
          * $event.off('#test', 'click', clickHandler);
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare const $event: {
+         *     on(
+         *         element: $safeEls.El,
+         *         event: string,
+         *         selector: string,
+         *         handler: Function
+         *     ): void;
+         *     on(element: $safeEls.El, event: string, handler: Function): void;
+         *     off(
+         *         element: $safeEls.El,
+         *         event: string,
+         *         selector: string,
+         *         handler: Function
+         *     ): void;
+         *     off(element: $safeEls.El, event: string, handler: Function): void;
+         * };
          */
 
         /* dependencies
@@ -3426,20 +3478,16 @@ window._ = (function()
             off: eventFactory('remove')
         };
 
-        function eventFactory(type)
-        {
-            return function (nodes, event, selector, handler)
-            {
+        function eventFactory(type) {
+            return function(nodes, event, selector, handler) {
                 nodes = $safeEls(nodes);
 
-                if (isUndef(handler))
-                {
+                if (isUndef(handler)) {
                     handler = selector;
                     selector = undefined;
                 }
 
-                each(nodes, function (node)
-                {
+                each(nodes, function(node) {
                     delegate[type](node, event, selector, handler);
                 });
             };
@@ -3449,58 +3497,57 @@ window._ = (function()
     })({});
 
     /* ------------------------------ createUrl ------------------------------ */
-
-    _.createUrl = (function ()
-    {
+    _.createUrl = (function (exports) {
         /* CreateObjectURL wrapper.
          *
          * |Name   |Type                  |Desc                                |
          * |-------|----------------------|------------------------------------|
-         * |data   |File Blob string array|Url data                            | 
+         * |data   |File Blob string array|Url data                            |
          * |[opts] |object                |Used when data is not a File or Blob|
          * |return |string                |Blob url                            |
-         * 
-         * ```javascript
+         */
+
+        /* example
          * createUrl('test', {type: 'text/plain'}); // -> Blob url
          * createUrl(['test', 'test']);
          * createUrl(new Blob([]));
          * createUrl(new File(['test'], 'test.txt'));
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare namespace createUrl {
+         *     interface IOptions {
+         *         type?: string
+         *     }
+         * }
+         * export declare function createUrl(data: any, options?: createUrl.IOptions): string;
          */
 
         /* dependencies
          * defaults isBlob isFile Blob toArr 
          */
 
-        function exports(data, opts) 
-        {
+        exports = function exports(data, opts) {
             opts = opts || {};
             defaults(opts, defOpts);
 
-            if (!isBlob(data) && !isFile(data)) 
-            {
+            if (!isBlob(data) && !isFile(data)) {
                 data = new Blob(toArr(data), opts);
             }
 
-            return URL.createObjectURL(data);        
-        } 
+            return URL.createObjectURL(data);
+        };
 
         var defOpts = {
             type: 'text/plain'
         };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ some ------------------------------ */
 
-    var some = _.some = (function ()
-    {
+    var some = _.some = (function (exports) {
         /* Check if predicate return truthy for any element.
          *
          * |Name     |Type        |Desc                                          |
@@ -3509,47 +3556,51 @@ window._ = (function()
          * |predicate|function    |Function to invoked per iteration             |
          * |ctx      |*           |Predicate context                             |
          * |return   |boolean     |True if any element passes the predicate check|
-         *
-         * ```javascript
-         * some([2, 5], function (val)
-         * {
-         *     return val % 2 === 0;
-         * }); // -> true
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * some([2, 5], function (val) {
+         *     return val % 2 === 0;
+         * }); // -> true
+         */
+
+        /* typescript
+         * export declare function some<T>(
+         *     list: types.List<T>,
+         *     iterator?: types.ListIterator<T, boolean>,
+         *     context?: any
+         * ): boolean;
+         * export declare function some<T>(
+         *     object: types.Dictionary<T>,
+         *     iterator?: types.ObjectIterator<T, boolean>,
+         *     context?: any
+         * ): boolean;
          */
 
         /* dependencies
-         * safeCb isArrLike keys 
+         * safeCb isArrLike keys types 
          */
 
-        function exports(obj, predicate, ctx)
-        {
+        exports = function exports(obj, predicate, ctx) {
             predicate = safeCb(predicate, ctx);
 
             var _keys = !isArrLike(obj) && keys(obj),
-                len   = (_keys || obj).length;
+                len = (_keys || obj).length;
 
-            for (var i = 0; i < len; i++)
-            {
+            for (var i = 0; i < len; i++) {
                 var key = _keys ? _keys[i] : i;
                 if (predicate(obj[key], key, obj)) return true;
             }
 
             return false;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ $class ------------------------------ */
 
-    var $class = _.$class = (function (exports)
-    {
+    var $class = _.$class = (function (exports) {
         /* Element class manipulations.
          *
          * ### add
@@ -3587,9 +3638,10 @@ window._ = (function()
          * |Name   |Type                |Desc                  |
          * |-------|--------------------|----------------------|
          * |element|string array element|Elements to manipulate|
-         * |names  |string              |Class names to remove |
-         *
-         * ```javascript
+         * |name   |string              |Class names to remove |
+         */
+
+        /* example
          * $class.add('#test', 'class1');
          * $class.add('#test', ['class1', 'class2']);
          * $class.has('#test', 'class1'); // -> true
@@ -3597,12 +3649,15 @@ window._ = (function()
          * $class.has('#test', 'class1'); // -> false
          * $class.toggle('#test', 'class1');
          * $class.has('#test', 'class1'); // -> true
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare const $class: {
+         *     add(element: $safeEls.El, name: string | string[]): void;
+         *     has(element: $safeEls.El, name: string): boolean;
+         *     toggle(element: $safeEls.El, name: string): void;
+         *     remove(element: $safeEls.El, name: string): void;
+         * };
          */
 
         /* dependencies
@@ -3610,62 +3665,44 @@ window._ = (function()
          */
 
         exports = {
-            add: function (els, name)
-            {
+            add: function add(els, name) {
                 els = $safeEls(els);
                 var names = safeName(name);
-
-                each(els, function (el)
-                {
+                each(els, function(el) {
                     var classList = [];
-
-                    each(names, function (name)
-                    {
+                    each(names, function(name) {
                         if (!exports.has(el, name)) classList.push(name);
                     });
-
-                    if (classList.length !== 0) el.className += ' ' + classList.join(' ');
+                    if (classList.length !== 0)
+                        el.className += ' ' + classList.join(' ');
                 });
             },
-            has: function (els, name)
-            {
+            has: function has(els, name) {
                 els = $safeEls(els);
-
                 var regName = new RegExp('(^|\\s)' + name + '(\\s|$)');
-
-                return some(els, function (el)
-                {
+                return some(els, function(el) {
                     return regName.test(el.className);
                 });
             },
-            toggle: function (els, name)
-            {
+            toggle: function toggle(els, name) {
                 els = $safeEls(els);
-
-                each(els, function (el)
-                {
+                each(els, function(el) {
                     if (!exports.has(el, name)) return exports.add(el, name);
-
                     exports.remove(el, name);
                 });
             },
-            remove: function (els, name)
-            {
+            remove: function remove(els, name) {
                 els = $safeEls(els);
                 var names = safeName(name);
-
-                each(els, function (el)
-                {
-                    each(names, function (name)
-                    {
+                each(els, function(el) {
+                    each(names, function(name) {
                         el.classList.remove(name);
                     });
                 });
             }
         };
 
-        function safeName(name)
-        {
+        function safeName(name) {
             return isStr(name) ? name.split(/\s+/) : toArr(name);
         }
 
@@ -3674,8 +3711,7 @@ window._ = (function()
 
     /* ------------------------------ memoize ------------------------------ */
 
-    var memoize = _.memoize = (function ()
-    {
+    var memoize = _.memoize = (function (exports) {
         /* Memoize a given function by caching the computed result.
          *
          * |Name    |Type    |Desc                                |
@@ -3683,99 +3719,89 @@ window._ = (function()
          * |fn      |function|Function to have its output memoized|
          * |[hashFn]|function|Function to create cache key        |
          * |return  |function|New memoized function               |
-         *
-         * ```javascript
-         * var fibonacci = memoize(function(n)
-         * {
-         *     return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
-         * });
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * var fibonacci = memoize(function(n) {
+         *     return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
+         * });
+         */
+
+        /* typescript
+         * export declare function memoize(fn: Function, hashFn?: Function): Function;
          */
 
         /* dependencies
          * has 
          */
 
-        function exports(fn, hashFn)
-        {
-            var memoize = function (key)
-            {
+        exports = function exports(fn, hashFn) {
+            var memoize = function memoize(key) {
                 var cache = memoize.cache,
                     address = '' + (hashFn ? hashFn.apply(this, arguments) : key);
-
                 if (!has(cache, address)) cache[address] = fn.apply(this, arguments);
-
                 return cache[address];
             };
 
             memoize.cache = {};
-
             return memoize;
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ prefix ------------------------------ */
 
-    var prefix = _.prefix = (function (exports)
-    {
+    var prefix = _.prefix = (function (exports) {
         /* Add vendor prefixes to a CSS attribute.
          *
          * |Name  |Type  |Desc                  |
          * |------|------|----------------------|
          * |name  |string|Property name         |
          * |return|string|Prefixed property name|
-         * 
+         *
          * ### dash
-         * 
+         *
          * Create a dasherize version.
-         * 
-         * ```javascript
+         */
+
+        /* example
          * prefix('text-emphasis'); // -> 'WebkitTextEmphasis'
          * prefix.dash('text-emphasis'); // -> '-webkit-text-emphasis'
          * prefix('color'); // -> 'color'
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare namespace prefix {
+         *     function dash(name: string): string;
+         * }
+         * export declare function prefix(name: string): string;
          */
 
         /* dependencies
          * memoize camelCase upperFirst has kebabCase 
-         */ 
+         */
 
-        exports = memoize(function (name) 
-        {
+        exports = memoize(function(name) {
             name = name.replace(regPrefixes, '');
             name = camelCase(name);
-
             if (has(style, name)) return name;
-
             var i = prefixes.length;
-            while (i--) 
-            {
+
+            while (i--) {
                 var prefixName = prefixes[i] + upperFirst(name);
                 if (has(style, prefixName)) return prefixName;
             }
 
             return name;
         });
-
-        exports.dash = memoize(function (name) 
-        {
+        exports.dash = memoize(function(name) {
             var camelCaseResult = exports(name);
-
-            return (regPrefixes.test(camelCaseResult) ? '-' : '') + kebabCase(camelCaseResult);
+            return (
+                (regPrefixes.test(camelCaseResult) ? '-' : '') +
+                kebabCase(camelCaseResult)
+            );
         });
-
         var prefixes = ['O', 'ms', 'Moz', 'Webkit'],
             regPrefixes = /^(O)|(ms)|(Moz)|(Webkit)|(-o-)|(-ms-)|(-moz-)|(-webkit-)/g,
             style = document.createElement('p').style;
@@ -3785,8 +3811,7 @@ window._ = (function()
 
     /* ------------------------------ $css ------------------------------ */
 
-    var $css = _.$css = (function ()
-    {
+    var $css = _.$css = (function (exports) {
         /* Element css manipulation.
          *
          * Get the computed style properties for the first element in the set of matched elements.
@@ -3809,55 +3834,55 @@ window._ = (function()
          * |----------|--------------------|--------------------------------|
          * |element   |string array element|Elements to manipulate          |
          * |properties|object              |Object of css-value pairs to set|
-         *
-         * ```javascript
+         */
+
+        /* example
          * $css('#test', {
-         *     'color': '#fff',
-         *     'background': 'black'
+         *     color: '#fff',
+         *     background: 'black'
          * });
          * $css('#test', 'display', 'block');
          * $css('#test', 'color'); // -> #fff
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare function $css(element: $safeEls.El, name: string): string;
+         * export declare function $css(element: $safeEls.El, name: string, value: string): void;
+         * export declare function $css(
+         *     element: $safeEls.El,
+         *     properties: { [name: string]: string }
+         * ): void;
          */
 
         /* dependencies
-         * isStr isObj kebabCase isUndef contain isNum $safeEls startWith prefix 
+         * isStr isObj kebabCase isUndef contain isNum $safeEls prefix 
          */
 
-        function exports(nodes, name, val)
-        {
+        exports = function exports(nodes, name, val) {
             nodes = $safeEls(nodes);
-
             var isGetter = isUndef(val) && isStr(name);
             if (isGetter) return getCss(nodes[0], name);
-
             var css = name;
-            if (!isObj(css))
-            {
+
+            if (!isObj(css)) {
                 css = {};
                 css[name] = val;
             }
 
             setCss(nodes, css);
+        };
+
+        function getCss(node, name) {
+            return (
+                node.style[prefix(name)] ||
+                getComputedStyle(node, '').getPropertyValue(name)
+            );
         }
 
-        function getCss(node, name)
-        {
-            return node.style[prefix(name)] || getComputedStyle(node, '').getPropertyValue(name);
-        }
-
-        function setCss(nodes, css)
-        {
-            each(nodes, function (node)
-            {
+        function setCss(nodes, css) {
+            each(nodes, function(node) {
                 var cssText = ';';
-                each(css, function (val, key)
-                {
+                each(css, function(val, key) {
                     key = prefix.dash(key);
                     cssText += key + ':' + addPx(key, val) + ';';
                 });
@@ -3875,20 +3900,16 @@ window._ = (function()
             'zoom'
         ];
 
-        function addPx(key, val)
-        {
+        function addPx(key, val) {
             var needPx = isNum(val) && !contain(cssNumProps, kebabCase(key));
-
             return needPx ? val + 'px' : val;
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ $ ------------------------------ */
-
-    _.$ = (function ()
-    {
+    _.$ = (function (exports) {
         /* jQuery like style dom manipulator.
          *
          * ### Available methods
@@ -3896,199 +3917,198 @@ window._ = (function()
          * offset, hide, show, first, last, get, eq, on, off, html, text, val, css, attr,
          * data, rmAttr, remove, addClass, rmClass, toggleClass, hasClass, append, prepend,
          * before, after
-         *
-         * ```javascript
+         */
+
+        /* example
          * var $btn = $('#btn');
          * $btn.html('eustia');
          * $btn.addClass('btn');
          * $btn.show();
-         * $btn.on('click', function ()
-         * {
+         * $btn.on('click', function () {
          *     // Do something...
          * });
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare namespace $ {
+         *     class $ extends Select {
+         *         find(selector: string): $;
+         *         each(fn: Function): $;
+         *         offset(): $offset.IOffset;
+         *         hide(): $;
+         *         show(): $;
+         *         first(): $;
+         *         last(): $;
+         *         get(index: number): Element;
+         *         eq(index: number): Element;
+         *         on(event: string, selector: string, handler: Function): $;
+         *         on(event: string, handler: Function): $;
+         *         off(event: string, selector: string, handler: Function): $;
+         *         off(event: string, handler: Function): $;
+         *         html(): string;
+         *         html(value: string): $;
+         *         text(): string;
+         *         text(value: string): $;
+         *         val(): string;
+         *         val(value: string): $;
+         *         css(name: string): string;
+         *         css(name: string, value: string): $;
+         *         css(properties: { [name: string]: string }): $;
+         *         attr(name: string): string;
+         *         attr(name: string, value: string): $;
+         *         attr(attributes: { [name: string]: string }): $;
+         *         data(name: string): string;
+         *         data(name: string, value: string): $;
+         *         data(attributes: { [name: string]: string }): $;
+         *         rmAttr(name: string): $;
+         *         remove(): $;
+         *         addClass(name: string | string[]): $;
+         *         rmClass(name: string): $;
+         *         toggleClass(name: string): $;
+         *         hasClass(name: string): boolean;
+         *         parent(): $;
+         *         append(content: string): $;
+         *         prepend(content: string): $;
+         *         before(content: string): $;
+         *         after(content: string): $;
+         *     }
+         * }
+         * declare function $(selector: string | Element): $.$;
          */
 
         /* dependencies
          * Select $offset $show $css $attr $property last $remove $data $event $class $insert isUndef isStr 
          */
 
-        function exports(selector)
-        {
+        exports = function exports(selector) {
             return new Select(selector);
-        }
+        };
 
         Select.methods({
-            offset: function ()
-            {
+            offset: function offset() {
                 return $offset(this);
             },
-            hide: function ()
-            {
+            hide: function hide() {
                 return this.css('display', 'none');
             },
-            show: function ()
-            {
+            show: function show() {
                 $show(this);
-
                 return this;
             },
-            first: function ()
-            {
+            first: function first() {
                 return exports(this[0]);
             },
-            last: function () {
+            last: (function(_last) {
+                function last() {
+                    return _last.apply(this, arguments);
+                }
+
+                last.toString = function() {
+                    return _last.toString();
+                };
+
+                return last;
+            })(function() {
                 return exports(last(this));
-            },
-            get: function (idx)
-            {
+            }),
+            get: function get(idx) {
                 return this[idx];
             },
-            eq: function (idx)
-            {
+            eq: function eq(idx) {
                 return exports(this[idx]);
             },
-            on: function (event, selector, handler)
-            {
+            on: function on(event, selector, handler) {
                 $event.on(this, event, selector, handler);
-
                 return this;
             },
-            off: function (event, selector, handler)
-            {
+            off: function off(event, selector, handler) {
                 $event.off(this, event, selector, handler);
-
                 return this;
             },
-            html: function (val)
-            {
+            html: function html(val) {
                 var result = $property.html(this, val);
-
                 if (isUndef(val)) return result;
-
                 return this;
             },
-            text: function (val)
-            {
+            text: function text(val) {
                 var result = $property.text(this, val);
-
                 if (isUndef(val)) return result;
-
                 return this;
             },
-            val: function (val)
-            {
-                var result = $property.val(this, val);
-
-                if (isUndef(val)) return result;
-
+            val: function val(_val) {
+                var result = $property.val(this, _val);
+                if (isUndef(_val)) return result;
                 return this;
             },
-            css: function (name, val)
-            {
+            css: function css(name, val) {
                 var result = $css(this, name, val);
-
                 if (isGetter(name, val)) return result;
-
                 return this;
             },
-            attr: function (name, val)
-            {
+            attr: function attr(name, val) {
                 var result = $attr(this, name, val);
-
                 if (isGetter(name, val)) return result;
-
                 return this;
             },
-            data: function (name, val)
-            {
+            data: function data(name, val) {
                 var result = $data(this, name, val);
-
                 if (isGetter(name, val)) return result;
-
                 return this;
             },
-            rmAttr: function (name)
-            {
+            rmAttr: function rmAttr(name) {
                 $attr.remove(this, name);
-
                 return this;
             },
-            remove: function ()
-            {
+            remove: function remove() {
                 $remove(this);
-
                 return this;
             },
-            addClass: function (name)
-            {
+            addClass: function addClass(name) {
                 $class.add(this, name);
-
                 return this;
             },
-            rmClass: function (name)
-            {
+            rmClass: function rmClass(name) {
                 $class.remove(this, name);
-
                 return this;
             },
-            toggleClass: function (name)
-            {
+            toggleClass: function toggleClass(name) {
                 $class.toggle(this, name);
-
                 return this;
             },
-            hasClass: function (name)
-            {
+            hasClass: function hasClass(name) {
                 return $class.has(this, name);
             },
-            parent: function ()
-            {
+            parent: function parent() {
                 return exports(this[0].parentNode);
             },
-            append: function (val)
-            {
+            append: function append(val) {
                 $insert.append(this, val);
-
                 return this;
             },
-            prepend: function (val)
-            {
+            prepend: function prepend(val) {
                 $insert.prepend(this, val);
-
                 return this;
             },
-            before: function (val)
-            {
+            before: function before(val) {
                 $insert.before(this, val);
-
                 return this;
             },
-            after: function (val)
-            {
+            after: function after(val) {
                 $insert.after(this, val);
-
                 return this;
             }
         });
 
-        function isGetter(name, val)
-        {
+        function isGetter(name, val) {
             return isUndef(val) && isStr(name);
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ partial ------------------------------ */
 
-    var partial = _.partial = (function (exports)
-    {
+    var partial = _.partial = (function (exports) {
         /* Partially apply a function by filling in given arguments.
          *
          * |Name       |Type    |Desc                                    |
@@ -4096,31 +4116,26 @@ window._ = (function()
          * |fn         |function|Function to partially apply arguments to|
          * |...partials|*       |Arguments to be partially applied       |
          * |return     |function|New partially applied function          |
-         *
-         * ```javascript
-         * var sub5 = partial(function (a, b) { return b - a }, 5);
-         * sub(20); // -> 15
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * var sub5 = partial(function (a, b) { return b - a }, 5);
+         * sub5(20); // -> 15
+         */
+
+        /* typescript
+         * export declare function partial(fn: Function, ...partials: any[]): Function;
          */
 
         /* dependencies
          * restArgs toArr 
          */
 
-        exports = restArgs(function (fn, partials)
-        {
-            return function ()
-            {
+        exports = restArgs(function(fn, partials) {
+            return function() {
                 var args = [];
-
                 args = args.concat(partials);
                 args = args.concat(toArr(arguments));
-
                 return fn.apply(this, args);
             };
         });
@@ -4130,26 +4145,24 @@ window._ = (function()
 
     /* ------------------------------ once ------------------------------ */
 
-    var once = _.once = (function (exports)
-    {
+    var once = _.once = (function (exports) {
         /* Create a function that invokes once.
          *
          * |Name  |Type    |Desc                   |
          * |------|--------|-----------------------|
          * |fn    |function|Function to restrict   |
          * |return|function|New restricted function|
-         *
-         * ```javascript
+         */
+
+        /* example
          * function init() {};
          * var initOnce = once(init);
          * initOnce();
          * initOnce(); // -> init is invoked once
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function once(fn: Function): Function;
          */
 
         /* dependencies
@@ -4163,8 +4176,7 @@ window._ = (function()
 
     /* ------------------------------ Emitter ------------------------------ */
 
-    var Emitter = _.Emitter = (function (exports)
-    {
+    var Emitter = _.Emitter = (function (exports) {
         /* Event emitter class which provides observer pattern.
          *
          * ### on
@@ -4200,82 +4212,96 @@ window._ = (function()
          * |Name|Type  |Desc           |
          * |----|------|---------------|
          * |obj |object|Object to mixin|
-         *
-         * ```javascript
+         */
+
+        /* example
          * var event = new Emitter();
          * event.on('test', function () { console.log('test') });
          * event.emit('test'); // Logs out 'test'.
          * Emitter.mixin({});
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare namespace Emitter {
+         *     function mixin(obj: any): any;
+         * }
+         * export declare class Emitter {
+         *     on(event: string, listener: Function): Emitter;
+         *     off(event: string, listener: Function): Emitter;
+         *     once(event: string, listener: Function): Emitter;
+         *     emit(event: string): Emitter;
+         * }
          */
 
         /* dependencies
          * Class has each slice once 
          */
 
-        exports = Class({
-            initialize: function Emitter()
+        exports = Class(
             {
-                this._events = this._events || {};
+                initialize: function Emitter() {
+                    this._events = this._events || {};
+                },
+                on: function on(event, listener) {
+                    this._events[event] = this._events[event] || [];
+
+                    this._events[event].push(listener);
+
+                    return this;
+                },
+                off: function off(event, listener) {
+                    if (!has(this._events, event)) return;
+
+                    this._events[event].splice(
+                        this._events[event].indexOf(listener),
+                        1
+                    );
+
+                    return this;
+                },
+                once: (function(_once) {
+                    function once(_x, _x2) {
+                        return _once.apply(this, arguments);
+                    }
+
+                    once.toString = function() {
+                        return _once.toString();
+                    };
+
+                    return once;
+                })(function(event, listener) {
+                    this.on(event, once(listener));
+                    return this;
+                }),
+                emit: function emit(event) {
+                    if (!has(this._events, event)) return;
+                    var args = slice(arguments, 1);
+                    each(
+                        this._events[event],
+                        function(val) {
+                            val.apply(this, args);
+                        },
+                        this
+                    );
+                    return this;
+                }
             },
-            on: function (event, listener)
             {
-                this._events[event] = this._events[event] || [];
-                this._events[event].push(listener);
-
-                return this;
-            },
-            off: function (event, listener)
-            {
-                if (!has(this._events, event)) return;
-
-                this._events[event].splice(this._events[event].indexOf(listener), 1);
-
-                return this;
-            },
-            once: function (event, listener)
-            {
-                this.on(event, once(listener));
-
-                return this;
-            },
-            emit: function (event)
-            {
-                if (!has(this._events, event)) return;
-
-                var args = slice(arguments, 1);
-
-                each(this._events[event], function (val)
-                {
-                    val.apply(this, args);
-                }, this);
-
-                return this;
+                mixin: function mixin(obj) {
+                    each(['on', 'off', 'once', 'emit'], function(val) {
+                        obj[val] = exports.prototype[val];
+                    });
+                    obj._events = obj._events || {};
+                }
             }
-        }, {
-            mixin: function (obj)
-            {
-                each(['on', 'off', 'once', 'emit'], function (val)
-                {
-                    obj[val] = exports.prototype[val];
-                });
-
-                obj._events = obj._events || {};
-            }
-        });
+        );
 
         return exports;
     })({});
 
     /* ------------------------------ State ------------------------------ */
 
-    var State = _.State = (function (exports)
-    {
+    var State = _.State = (function (exports) {
         /* Simple state machine.
          *
          * Extend from Emitter.
@@ -4285,7 +4311,7 @@ window._ = (function()
          * |Name   |Type  |Desc                  |
          * |-------|------|----------------------|
          * |initial|string|Initial state         |
-         * |events |string|Events to change state|
+         * |events |object|Events to change state|
          *
          * ### is
          *
@@ -4295,8 +4321,9 @@ window._ = (function()
          * |------|-------|----------------------------------------|
          * |value |string |State to check                          |
          * |return|boolean|True if current state equals given value|
-         *
-         * ```javascript
+         */
+
+        /* example
          * var state = new State('empty', {
          *     load: {from: 'empty', to: 'pause'},
          *     play: {from: 'pause', to: 'play'},
@@ -4307,70 +4334,65 @@ window._ = (function()
          * state.is('empty'); // -> true
          * state.load();
          * state.is('pause'); // -> true
-         * state.on('play', function (src)
-         * {
+         * state.on('play', function (src) {
          *     console.log(src); // -> 'eustia'
          * });
-         * state.on('error', function (err, event)
-         * {
+         * state.on('error', function (err, event) {
          *     // Error handler
          * });
          * state.play('eustia');
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare class State extends Emitter {
+         *     constructor(initial: string, events: any);
+         *     is(state: string): boolean;
+         *     [event: string]: any;
+         * }
          */
 
         /* dependencies
-         * Emitter each isArr some slice toArr 
+         * Emitter each some toArr 
          */
 
         exports = Emitter.extend({
             className: 'State',
-            initialize: function (initial, events)
-            {
+            initialize: function initialize(initial, events) {
                 this.callSuper(Emitter, 'initialize');
-
                 this.current = initial;
-
                 var self = this;
-
-                each(events, function (event, key)
-                {
+                each(events, function(event, key) {
                     self[key] = buildEvent(key, event);
                 });
             },
-            is: function (state)
-            {
+            is: function is(state) {
                 return this.current === state;
             }
         });
 
-        function buildEvent(name, event)
-        {
+        function buildEvent(name, event) {
             var from = toArr(event.from),
                 to = event.to;
-
-            return function ()
-            {
+            return function() {
                 var args = toArr(arguments);
                 args.unshift(name);
+                var hasEvent = some(
+                    from,
+                    function(val) {
+                        return this.current === val;
+                    },
+                    this
+                );
 
-                var hasEvent = some(from, function (val)
-                {
-                    return this.current === val;
-                }, this);
-
-                if (hasEvent)
-                {
+                if (hasEvent) {
                     this.current = to;
                     this.emit.apply(this, args);
-                } else
-                {
-                    this.emit('error', new Error(this.current + ' => ' + to + ' error'), name);
+                } else {
+                    this.emit(
+                        'error',
+                        new Error(this.current + ' => ' + to + ' error'),
+                        name
+                    );
                 }
             };
         }
@@ -4380,167 +4402,161 @@ window._ = (function()
 
     /* ------------------------------ Promise ------------------------------ */
 
-    var Promise = _.Promise = (function (exports)
-    {
+    var Promise = _.Promise = (function (exports) {
         /* Lightweight Promise implementation.
          *
          * [Promises spec](https://github.com/promises-aplus/promises-spec)
-         * 
-         * ```javascript
-         * function get(url) 
-         * {
-         *     return new Promise(function (resolve, reject)
-         *     {
+         */
+
+        /* example
+         * function get(url) {
+         *     return new Promise(function (resolve, reject) {
          *         var req = new XMLHttpRequest();
          *         req.open('GET', url);
-         *         req.onload = function () 
-         *         {
-         *             req.status == 200 ? resolve(req.reponse) : reject(Error(req.statusText));
+         *         req.onload = function () {
+         *             req.status == 200 ? resolve(req.response) : reject(Error(req.statusText));
          *         };
          *         req.onerror = function () { reject(Error('Network Error')) };
          *         req.send();
          *     });
          * }
-         * 
-         * get('test.json').then(function (result) 
-         * {
+         *
+         * get('test.json').then(function (result) {
          *     // Do something...
          * });
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: manual
+        /* typescript
          */
 
         /* dependencies
          * Class isObj isFn State bind nextTick noop 
          */
 
-        var Promise = exports = Class({
-            initialize: function Promise(fn) 
+        var Promise = (exports = Class(
             {
-                if (!isObj(this)) throw new TypeError('Promises must be constructed via new');      
-                if (!isFn(fn)) throw new TypeError(fn + ' is not a function');
-
-                var self = this;
-
-                this._state = new State('pending', {
-                    fulfill: {from: 'pending', to: 'fulfilled'},
-                    reject: {from: 'pending', to: 'rejected'},
-                    adopt: {from: 'pending', to: 'adopted'}
-                }).on('fulfill', assignVal).on('reject', assignVal).on('adopt', assignVal);
-
-                function assignVal(val) { self._value = val; }
-
-                this._handled = false;
-                this._value = undefined;
-                this._deferreds = [];
-
-                doResolve(fn, this);
-            },
-            'catch': function (onRejected) 
-            {
-                return this.then(null, onRejected);
-            },
-            then: function (onFulfilled, onRejected) 
-            {
-                var promise = new Promise(noop);
-
-                handle(this, new Handler(onFulfilled, onRejected, promise));
-
-                return promise;
-            }
-        }, {
-            all: function (arr) 
-            {
-                var args = toArr(arr);
-
-                return new Promise(function (resolve, reject) 
-                {
-                    if (args.length === 0) return resolve([]);
-
-                    var remaining = args.length;
-
-                    function res(i, val) 
-                    {
-                        try 
-                        {
-                            if (val && (isObj(val) || isFn(val))) 
-                            {
-                                var then = val.then;
-                                if (isFn(then)) 
-                                {
-                                    then.call(val, function (val) 
-                                    {
-                                        res(i, val);
-                                    }, reject);
-
-                                    return;
-                                }
-                            }
-
-                            args[i] = val;
-
-                            if (--remaining === 0) resolve(args);
-                        } catch (e) 
-                        {
-                            reject(e);
+                initialize: function Promise(fn) {
+                    if (!isObj(this))
+                        throw new TypeError('Promises must be constructed via new');
+                    if (!isFn(fn)) throw new TypeError(fn + ' is not a function');
+                    var self = this;
+                    this._state = new State('pending', {
+                        fulfill: {
+                            from: 'pending',
+                            to: 'fulfilled'
+                        },
+                        reject: {
+                            from: 'pending',
+                            to: 'rejected'
+                        },
+                        adopt: {
+                            from: 'pending',
+                            to: 'adopted'
                         }
+                    })
+                        .on('fulfill', assignVal)
+                        .on('reject', assignVal)
+                        .on('adopt', assignVal);
+
+                    function assignVal(val) {
+                        self._value = val;
                     }
 
-                    for (var i = 0; i < args.length; i++) res(i, args[i]);
-                });
+                    this._handled = false;
+                    this._value = undefined;
+                    this._deferreds = [];
+                    doResolve(fn, this);
+                },
+                catch: function _catch(onRejected) {
+                    return this.then(null, onRejected);
+                },
+                then: function then(onFulfilled, onRejected) {
+                    var promise = new Promise(noop);
+                    handle(this, new Handler(onFulfilled, onRejected, promise));
+                    return promise;
+                }
             },
-            resolve: function (val) 
             {
-                if (val && isObj(val) && val.constructor === Promise) return val;
+                all: function all(arr) {
+                    var args = toArr(arr);
+                    return new Promise(function(resolve, reject) {
+                        if (args.length === 0) return resolve([]);
+                        var remaining = args.length;
 
-                return new Promise(function (resolve) { resolve(val); });
-            },
-            reject: function (val) 
-            {
-                return new Promise(function (resolve, reject) { reject(val); });
-            },
-            race: function (values) 
-            {
-                return new Promise(function (resolve, reject)
-                {
-                    for (var i = 0, len = values.length; i < len; i++) 
-                    {
-                        values[i].then(resolve, reject);
-                    }
-                });
+                        function res(i, val) {
+                            try {
+                                if (val && (isObj(val) || isFn(val))) {
+                                    var then = val.then;
+
+                                    if (isFn(then)) {
+                                        then.call(
+                                            val,
+                                            function(val) {
+                                                res(i, val);
+                                            },
+                                            reject
+                                        );
+                                        return;
+                                    }
+                                }
+
+                                args[i] = val;
+                                if (--remaining === 0) resolve(args);
+                            } catch (e) {
+                                reject(e);
+                            }
+                        }
+
+                        for (var i = 0; i < args.length; i++) {
+                            res(i, args[i]);
+                        }
+                    });
+                },
+                resolve: function resolve(val) {
+                    if (val && isObj(val) && val.constructor === Promise) return val;
+                    return new Promise(function(resolve) {
+                        resolve(val);
+                    });
+                },
+                reject: function reject(val) {
+                    return new Promise(function(resolve, reject) {
+                        reject(val);
+                    });
+                },
+                race: function race(values) {
+                    return new Promise(function(resolve, reject) {
+                        for (var i = 0, len = values.length; i < len; i++) {
+                            values[i].then(resolve, reject);
+                        }
+                    });
+                }
             }
-        });
-
+        ));
         var Handler = Class({
-            initialize: function Handler(onFulfilled, onRejected, promise) 
-            {
+            initialize: function Handler(onFulfilled, onRejected, promise) {
                 this.onFulfilled = isFn(onFulfilled) ? onFulfilled : null;
                 this.onRejected = isFn(onRejected) ? onRejected : null;
                 this.promise = promise;
             }
         });
 
-        function reject(self, err) 
-        {
+        function reject(self, err) {
             self._state.reject(err);
+
             finale(self);
         }
 
-        function resolve(self, val) 
-        {
-            try 
-            {
-                if (val === self) throw new TypeError('A promise cannot be resolved with itself');
-                if (val && (isObj(val) || isFn(val))) 
-                {
+        function resolve(self, val) {
+            try {
+                if (val === self)
+                    throw new TypeError('A promise cannot be resolved with itself');
+
+                if (val && (isObj(val) || isFn(val))) {
                     var then = val.then;
-                    if (val instanceof Promise) 
-                    {
+
+                    if (val instanceof Promise) {
                         self._state.adopt(val);
+
                         return finale(self);
                     }
 
@@ -4548,46 +4564,42 @@ window._ = (function()
                 }
 
                 self._state.fulfill(val);
+
                 finale(self);
-            } catch (e) 
-            {
+            } catch (e) {
                 reject(self, e);
             }
         }
 
-        function finale(self) 
-        {
-            for (var i = 0, len = self._deferreds.length; i < len; i++) 
-            {
+        function finale(self) {
+            for (var i = 0, len = self._deferreds.length; i < len; i++) {
                 handle(self, self._deferreds[i]);
             }
 
             self._deferreds = null;
         }
 
-        function handle(self, deferred) 
-        {
-            while (self._state.is('adopted')) self = self._value;
+        function handle(self, deferred) {
+            while (self._state.is('adopted')) {
+                self = self._value;
+            }
 
             if (self._state.is('pending')) return self._deferreds.push(deferred);
-
-            self._handled = true;    
-
-            nextTick(function () 
-            {
+            self._handled = true;
+            nextTick(function() {
                 var isFulfilled = self._state.is('fulfilled');
 
                 var cb = isFulfilled ? deferred.onFulfilled : deferred.onRejected;
-
-                if (cb === null) return (isFulfilled ? resolve : reject)(deferred.promise, self._value);
-
+                if (cb === null)
+                    return (isFulfilled ? resolve : reject)(
+                        deferred.promise,
+                        self._value
+                    );
                 var ret;
 
-                try 
-                {
+                try {
                     ret = cb(self._value);
-                } catch (e) 
-                {
+                } catch (e) {
                     return reject(deferred.promise, e);
                 }
 
@@ -4595,25 +4607,23 @@ window._ = (function()
             });
         }
 
-        function doResolve(fn, self)
-        {
+        function doResolve(fn, self) {
             var done = false;
 
-            try 
-            {
-                fn(function (val) 
-                {
-                    if (done) return;
-                    done = true;
-                    resolve(self, val);
-                }, function (reason)
-                {
-                    if (done) return;
-                    done = true;
-                    reject(self, reason);
-                });
-            } catch (e) 
-            {
+            try {
+                fn(
+                    function(val) {
+                        if (done) return;
+                        done = true;
+                        resolve(self, val);
+                    },
+                    function(reason) {
+                        if (done) return;
+                        done = true;
+                        reject(self, reason);
+                    }
+                );
+            } catch (e) {
                 if (done) return;
                 done = true;
                 reject(self, e);
@@ -4624,79 +4634,102 @@ window._ = (function()
     })({});
 
     /* ------------------------------ fetch ------------------------------ */
-
-    _.fetch = (function ()
-    {
+    _.fetch = (function (exports) {
         /* Turn XMLHttpRequest into promise like.
-         * 
+         *
          * Note: This is not a complete fetch pollyfill.
-         * 
-         * |Name   |Type   |Desc           |
-         * |-------|-------|---------------|
-         * |url    |string |Request url    |
-         * |options|object |Request options|
-         * |return |promise|Request promise|
-         * 
-         * ```javascript
+         *
+         * |Name     |Type   |Desc           |
+         * |---------|-------|---------------|
+         * |url      |string |Request url    |
+         * |[options]|object |Request options|
+         * |return   |Promise|Request promise|
+         */
+
+        /* example
          * fetch('test.json', {
          *     method: 'GET',
          *     timeout: 3000,
          *     headers: {},
          *     body: ''
-         * }).then(function (res) 
-         * {
+         * }).then(function (res) {
          *     return res.json();
-         * }).then(function (data) 
-         * {
-         *     console.log(data);   
+         * }).then(function (data) {
+         *     console.log(data);
          * });
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: manual
+        /* typescript
+         * export declare namespace fetch {
+         *     interface IOptions {
+         *         method?: string;
+         *         timeout?: number;
+         *         headers?: { [name: string]: string };
+         *         body?: any;
+         *     }
+         *     interface IHeaders {
+         *         keys(): string[];
+         *         entries(): Array<string[]>;
+         *         get(name: string): string;
+         *         has(name: string): boolean;
+         *     }
+         *     interface IResult {
+         *         ok: boolean;
+         *         status: number;
+         *         statusText: string;
+         *         url: string;
+         *         clone(): IResult;
+         *         text(): Promise<string>;
+         *         json(): Promise<any>;
+         *         xml(): Promise<Document | null>;
+         *         blob(): Promise<Blob>;
+         *         headers: IHeaders;
+         *     }
+         * }
+         * export declare function fetch(
+         *     url: string,
+         *     options?: fetch.IOptions
+         * ): Promise<fetch.IResult>;
          */
 
         /* dependencies
          * Promise each defaults noop 
          */
 
-        function exports(url, options) 
-        {
+        exports = (function(_exports) {
+            function exports(_x, _x2) {
+                return _exports.apply(this, arguments);
+            }
+
+            exports.toString = function() {
+                return _exports.toString();
+            };
+
+            return exports;
+        })(function(url, options) {
             options = options || {};
-
             defaults(options, exports.setting);
-
-            return new Promise(function (resolve, reject) 
-            {
+            return new Promise(function(resolve, reject) {
                 var xhr = options.xhr(),
                     headers = options.headers,
                     body = options.body,
                     timeout = options.timeout,
                     abortTimer;
+                xhr.withCredentials = options.credentials == 'include';
 
-                xhr.withCredentials = options.credentials == 'include';     
-
-                xhr.onload = function () 
-                { 
+                xhr.onload = function() {
                     clearTimeout(abortTimer);
                     resolve(getRes(xhr));
                 };
 
                 xhr.onerror = reject;
-
                 xhr.open(options.method, url, true);
-
-                each(headers, function (val, key) 
-                {
+                each(headers, function(val, key) {
                     xhr.setRequestHeader(key, val);
                 });
 
-                if (timeout > 0) 
-                {
-                    setTimeout(function () 
-                    {
+                if (timeout > 0) {
+                    setTimeout(function() {
                         xhr.onload = noop;
                         xhr.abort();
                         reject(Error('timeout'));
@@ -4705,42 +4738,67 @@ window._ = (function()
 
                 xhr.send(body);
             });
-        }
+        });
 
         var regHeaders = /^(.*?):\s*([\s\S]*?)$/gm;
 
-        function getRes(xhr) 
-        {
-            var keys = [],
+        function getRes(xhr) {
+            var _keys = [],
                 all = [],
                 headers = {},
                 header;
-
-            xhr.getAllResponseHeaders().replace(regHeaders, function (m, key, val) 
-            {
+            xhr.getAllResponseHeaders().replace(regHeaders, function(m, key, val) {
                 key = key.toLowerCase();
-                keys.push(key);
-                // Duplicated headers is possible.
+
+                _keys.push(key); // Duplicated headers is possible.
+
                 all.push([key, val]);
                 header = headers[key];
                 headers[key] = header ? header + ',' + val : val;
-            });    
-
+            });
             return {
                 ok: xhr.status >= 200 && xhr.status < 400,
                 status: xhr.status,
                 statusText: xhr.statusText,
                 url: xhr.responseURL,
-                clone: function () { return getRes(xhr); },
-                text: function () { return Promise.resolve(xhr.responseText); },
-                json: function () { return Promise.resolve(xhr.responseText).then(JSON.parse); },
-                xml: function () { return Promise.resolve(xhr.responseXML); },
-                blob: function () { return Promise.resolve(new Blob([xhr.response])); },
+                clone: function clone() {
+                    return getRes(xhr);
+                },
+                text: function text() {
+                    return Promise.resolve(xhr.responseText);
+                },
+                json: function json() {
+                    return Promise.resolve(xhr.responseText).then(JSON.parse);
+                },
+                xml: function xml() {
+                    return Promise.resolve(xhr.responseXML);
+                },
+                blob: function blob() {
+                    return Promise.resolve(new Blob([xhr.response]));
+                },
                 headers: {
-                    keys: function () { return keys; },
-                    entries: function () { return all; },
-                    get: function (name) { return headers[name.toLowerCase()]; },
-                    has: function (name) { return has(headers, name); }
+                    keys: function keys() {
+                        return _keys;
+                    },
+                    entries: function entries() {
+                        return all;
+                    },
+                    get: function get(name) {
+                        return headers[name.toLowerCase()];
+                    },
+                    has: (function(_has) {
+                        function has(_x3) {
+                            return _has.apply(this, arguments);
+                        }
+
+                        has.toString = function() {
+                            return _has.toString();
+                        };
+
+                        return has;
+                    })(function(name) {
+                        return has(headers, name);
+                    })
                 }
             };
         }
@@ -4749,16 +4807,16 @@ window._ = (function()
             method: 'GET',
             headers: {},
             timeout: 0,
-            xhr: function () { return new XMLHttpRequest(); }
+            xhr: function xhr() {
+                return new XMLHttpRequest();
+            }
         };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ Tween ------------------------------ */
-
-    _.Tween = (function (exports)
-    {
+    _.Tween = (function (exports) {
         /* Tween engine for JavaScript animations.
          *
          * Extend from Emitter.
@@ -4796,25 +4854,30 @@ window._ = (function()
          * |Name      |Type  |Desc                  |
          * |----------|------|----------------------|
          * |[progress]|number|Number between 0 and 1|
-         *
-         * ```javascript
+         */
+
+        /* example
          * var pos = {x: 0, y: 0};
          *
          * var tween = new Tween(pos);
-         * tween.on('update', function (target)
-         * {
+         * tween.on('update', function (target) {
          *     console.log(target.x, target.y);
-         * }).on('end', function (target)
-         * {
+         * }).on('end', function (target) {
          *     console.log(target.x, target.y); // -> 100, 100
          * });
          * tween.to({x: 100, y: 100}, 1000, 'inElastic').play();
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare class Tween extends Emitter {
+         *     constructor(target: any);
+         *     to(props: any, duration?: number, ease?: string | Function): Tween;
+         *     progress(): number;
+         *     progress(progress: number): Tween;
+         *     play(): Tween;
+         *     pause(): Tween;
+         *     paused(): boolean;
+         * }
          */
 
         /* dependencies
@@ -4823,10 +4886,8 @@ window._ = (function()
 
         exports = Emitter.extend({
             className: 'Tween',
-            initialize: function (target)
-            {
+            initialize: function initialize(target) {
                 this.callSuper(Emitter, 'initialize', arguments);
-
                 this._target = target;
                 this._dest = {};
                 this._duration = 0;
@@ -4835,35 +4896,33 @@ window._ = (function()
                 this._diff = {};
                 this._ease = easing['linear'];
                 this._state = new State('pause', {
-                    play: {from: 'pause', to: 'play'},
-                    pause: {from: 'play', to: 'pause'}
+                    play: {
+                        from: 'pause',
+                        to: 'play'
+                    },
+                    pause: {
+                        from: 'play',
+                        to: 'pause'
+                    }
                 });
             },
-            to: function (props, duration, ease)
-            {
+            to: function to(props, duration, ease) {
                 var origin = {},
                     target = this._target,
                     diff = {};
-
                 ease = ease || this._ease;
-
                 this._dest = props;
                 this._duration = duration || this._duration;
                 this._ease = isFn(ease) ? ease : easing[ease];
-
-                each(props, function (val, key)
-                {
+                each(props, function(val, key) {
                     origin[key] = target[key];
                     diff[key] = val - origin[key];
                 });
-
                 this._origin = origin;
                 this._diff = diff;
-
                 return this;
             },
-            progress: function (progress)
-            {
+            progress: function progress(_progress) {
                 var ease = this._ease,
                     target = this._target,
                     origin = this._origin,
@@ -4871,47 +4930,34 @@ window._ = (function()
                     dest = this._dest,
                     self = this;
 
-                if (progress != null)
-                {
-                    progress = progress < 1 ? progress : 1;
-                    this._progress = progress;
-
-                    each(dest, function (val, key)
-                    {
-                        target[key] = origin[key] + diff[key] * ease(progress);
+                if (_progress != null) {
+                    _progress = _progress < 1 ? _progress : 1;
+                    this._progress = _progress;
+                    each(dest, function(val, key) {
+                        target[key] = origin[key] + diff[key] * ease(_progress);
                     });
-
                     self.emit('update', target);
-
                     return this;
                 }
 
                 return this._progress;
             },
-            play: function ()
-            {
+            play: function play() {
                 var state = this._state;
-
                 if (state.is('play')) return;
-
                 state.play();
-
                 var startTime = now(),
                     progress = this._progress,
                     duration = this._duration * (1 - progress),
                     target = this._target,
                     self = this;
 
-                function render()
-                {
+                function render() {
                     if (state.is('pause')) return;
-
                     var time = now();
-
                     self.progress(progress + (time - startTime) / duration);
 
-                    if (self._progress === 1)
-                    {
+                    if (self._progress === 1) {
                         state.pause();
                         self.emit('end', target);
                         return;
@@ -4921,20 +4967,15 @@ window._ = (function()
                 }
 
                 raf(render);
-
                 return this;
             },
-            pause: function ()
-            {
+            pause: function pause() {
                 var state = this._state;
-
                 if (state.is('pause')) return;
                 state.pause();
-
                 return this;
             },
-            paused: function ()
-            {
+            paused: function paused() {
                 return this._state.is('pause');
             }
         });
@@ -4943,99 +4984,90 @@ window._ = (function()
     })({});
 
     /* ------------------------------ ready ------------------------------ */
-
-    _.ready = (function ()
-    {
+    _.ready = (function (exports) {
         /* Invoke callback when dom is ready, similar to jQuery ready.
          *
          * |Name|Type    |Desc             |
          * |----|--------|-----------------|
          * |fn  |function|Callback function|
-         *
-         * ```javascript
-         * ready(function ()
-         * {
+         */
+
+        /* example
+         * ready(function () {
          *     // It's safe to manipulate dom here.
          * });
-         * ```
          */
 
-        /* module
-         * env: browser
-         * test: browser
+        /* typescript
+         * export declare function ready(fn: Function): void;
          */
-
         var fns = [],
-            listener,
+            _listener,
             doc = document,
             hack = doc.documentElement.doScroll,
             domContentLoaded = 'DOMContentLoaded',
             loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
 
-        if (!loaded)
-        {
-            doc.addEventListener(domContentLoaded, listener = function ()
-            {
-                doc.removeEventListener(domContentLoaded, listener);
-                loaded = 1;
-                /* eslint-disable no-cond-assign */
-                while (listener = fns.shift()) listener();
-            });
+        if (!loaded) {
+            doc.addEventListener(
+                domContentLoaded,
+                (_listener = function listener() {
+                    doc.removeEventListener(domContentLoaded, _listener);
+                    loaded = 1;
+                    /* eslint-disable no-cond-assign */
+
+                    while ((_listener = fns.shift())) {
+                        _listener();
+                    }
+                })
+            );
         }
 
-        function exports(fn)
-        {
+        exports = function exports(fn) {
             loaded ? setTimeout(fn, 0) : fns.push(fn);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ rtrim ------------------------------ */
 
-    var rtrim = _.rtrim = (function ()
-    {
+    var rtrim = _.rtrim = (function (exports) {
         /* Remove chars or white-spaces from end of string.
          *
-         * |Name  |Type        |Desc              |
-         * |------|------------|------------------|
-         * |str   |string      |String to trim    |
-         * |chars |string array|Characters to trim|
-         * |return|string      |Trimmed string    |
-         *
-         * ```javascript
+         * |Name   |Type        |Desc              |
+         * |-------|------------|------------------|
+         * |str    |string      |String to trim    |
+         * |[chars]|string array|Characters to trim|
+         * |return |string      |Trimmed string    |
+         */
+
+        /* example
          * rtrim(' abc  '); // -> ' abc'
          * rtrim('_abc_', '_'); // -> '_abc'
          * rtrim('_abc_', ['c', '_']); // -> '_ab'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function rtrim(str: string, chars?: string | string[]): string;
          */
-
         var regSpace = /\s+$/;
 
-        function exports(str, chars)
-        {
+        exports = function exports(str, chars) {
             if (chars == null) return str.replace(regSpace, '');
-
             var end = str.length - 1,
                 charLen = chars.length,
                 found = true,
-                i, c;
+                i,
+                c;
 
-            while (found && end >= 0)
-            {
+            while (found && end >= 0) {
                 found = false;
                 i = -1;
                 c = str.charAt(end);
 
-                while (++i < charLen)
-                {
-                    if (c === chars[i])
-                    {
+                while (++i < charLen) {
+                    if (c === chars[i]) {
                         found = true;
                         end--;
                         break;
@@ -5043,16 +5075,15 @@ window._ = (function()
                 }
             }
 
-            return (end >= 0) ? str.substring(0, end + 1) : '';
-        }
+            return end >= 0 ? str.substring(0, end + 1) : '';
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ trim ------------------------------ */
 
-    var trim = _.trim = (function ()
-    {
+    var trim = _.trim = (function (exports) {
         /* Remove chars or white-spaces from beginning end of string.
          *
          * |Name  |Type        |Desc              |
@@ -5060,17 +5091,16 @@ window._ = (function()
          * |str   |string      |String to trim    |
          * |chars |string array|Characters to trim|
          * |return|string      |Trimmed string    |
-         *
-         * ```javascript
+         */
+
+        /* example
          * trim(' abc  '); // -> 'abc'
          * trim('_abc_', '_'); // -> 'abc'
          * trim('_abc_', ['a', 'c', '_']); // -> 'b'
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function trim(str: string, chars?: string | string[]): string;
          */
 
         /* dependencies
@@ -5079,20 +5109,17 @@ window._ = (function()
 
         var regSpace = /^\s+|\s+$/g;
 
-        function exports(str, chars)
-        {
+        exports = function exports(str, chars) {
             if (chars == null) return str.replace(regSpace, '');
-
             return ltrim(rtrim(str, chars), chars);
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ query ------------------------------ */
 
-    var query = _.query = (function (exports)
-    {
+    var query = _.query = (function (exports) {
         /* Parse and stringify url query strings.
          *
          * ### parse
@@ -5112,17 +5139,19 @@ window._ = (function()
          * |------|------|------------|
          * |obj   |object|Query object|
          * |return|string|Query string|
-         *
-         * ```javascript
+         */
+
+        /* example
          * query.parse('foo=bar&eruda=true'); // -> {foo: 'bar', eruda: 'true'}
          * query.stringify({foo: 'bar', eruda: 'true'}); // -> 'foo=bar&eruda=true'
          * query.parse('name=eruda&name=eustia'); // -> {name: ['eruda', 'eustia']}
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare const query: {
+         *     parse(str: string): any;
+         *     stringify(object: any): string;
+         * };
          */
 
         /* dependencies
@@ -5130,60 +5159,52 @@ window._ = (function()
          */
 
         exports = {
-            parse: function (str)
-            {
+            parse: function parse(str) {
                 var ret = {};
-
                 str = trim(str).replace(regIllegalChars, '');
-
-                each(str.split('&'), function (param)
-                {
+                each(str.split('&'), function(param) {
                     var parts = param.split('=');
-
                     var key = parts.shift(),
                         val = parts.length > 0 ? parts.join('=') : null;
-
                     key = decodeURIComponent(key);
                     val = decodeURIComponent(val);
 
-                    if (isUndef(ret[key]))
-                    {
+                    if (isUndef(ret[key])) {
                         ret[key] = val;
-                    } else if (isArr(ret[key]))
-                    {
+                    } else if (isArr(ret[key])) {
                         ret[key].push(val);
-                    } else
-                    {
+                    } else {
                         ret[key] = [ret[key], val];
                     }
                 });
-
                 return ret;
             },
-            stringify: function (obj, arrKey)
-            {
-                return filter(map(obj, function (val, key)
-                {
-                    if (isObj(val) && isEmpty(val)) return '';
-                    if (isArr(val)) return exports.stringify(val, key);
-
-                    return (arrKey ? encodeURIComponent(arrKey) : encodeURIComponent(key)) + '=' + encodeURIComponent(val);
-                }), function (str)
-                {
-                    return str.length > 0;
-                }).join('&');
+            stringify: function stringify(obj, arrKey) {
+                return filter(
+                    map(obj, function(val, key) {
+                        if (isObj(val) && isEmpty(val)) return '';
+                        if (isArr(val)) return exports.stringify(val, key);
+                        return (
+                            (arrKey
+                                ? encodeURIComponent(arrKey)
+                                : encodeURIComponent(key)) +
+                            '=' +
+                            encodeURIComponent(val)
+                        );
+                    }),
+                    function(str) {
+                        return str.length > 0;
+                    }
+                ).join('&');
             }
         };
-
         var regIllegalChars = /^(\?|#|&)/g;
 
         return exports;
     })({});
 
     /* ------------------------------ Url ------------------------------ */
-
-    _.Url = (function (exports)
-    {
+    _.Url = (function (exports) {
         /* Simple url manipulator.
          *
          * ### constructor
@@ -5204,7 +5225,7 @@ window._ = (function()
          *
          * |Name  |Type  |Desc        |
          * |------|------|------------|
-         * |names |object|query object|
+         * |query |object|query object|
          * |return|Url   |this        |
          *
          * ### rmQuery
@@ -5246,164 +5267,173 @@ window._ = (function()
          * |pathname|URL path                                                                              |
          * |query   |Parsed object containing query string                                                 |
          * |hash    |The "fragment" portion of the URL including the pound-sign (#)                        |
-         *
-         * ```javascript
+         */
+
+        /* example
          * var url = new Url('http://example.com:8080?eruda=true');
          * console.log(url.port); // -> '8080'
          * url.query.foo = 'bar';
          * url.rmQuery('eruda');
-         * utl.toString(); // -> 'http://example.com:8080/?foo=bar'
-         * ```
+         * url.toString(); // -> 'http://example.com:8080/?foo=bar'
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare namespace Url {
+         *     interface IUrl {
+         *         protocol: string;
+         *         auth: string;
+         *         hostname: string;
+         *         hash: string;
+         *         query: any;
+         *         port: string;
+         *         pathname: string;
+         *         slashes: boolean;
+         *     }
+         * }
+         * export declare class Url {
+         *     protocol: string;
+         *     auth: string;
+         *     hostname: string;
+         *     hash: string;
+         *     query: any;
+         *     port: string;
+         *     pathname: string;
+         *     slashes: boolean;
+         *     constructor(url: string);
+         *     setQuery(name: string, value: string): Url;
+         *     setQuery(query: { [name: string]: string }): Url;
+         *     rmQuery(name: string | string[]): Url;
+         *     toString(): string;
+         *     static parse(url: string): Url.IUrl;
+         *     static stringify(object: Url.IUrl): string;
+         * }
          */
 
         /* dependencies
-         * Class extend trim query isEmpty each isArr toArr isBrowser 
+         * Class extend trim query isEmpty each isArr toArr isBrowser isObj 
          */
 
-        exports = Class({
-            className: 'Url',
-            initialize: function (url)
+        exports = Class(
             {
-                if (!url && isBrowser) url = window.location.href;
-                extend(this, exports.parse(url || ''));
-            },
-            setQuery: function (name, val)
-            {
-                var query = this.query;
+                className: 'Url',
+                initialize: function initialize(url) {
+                    if (!url && isBrowser) url = window.location.href;
+                    extend(this, exports.parse(url || ''));
+                },
+                setQuery: function setQuery(name, val) {
+                    var query = this.query;
 
-                if (isObj(name))
-                {
-                    each(name, function (val, key)
-                    {
-                        query[key] = val;
+                    if (isObj(name)) {
+                        each(name, function(val, key) {
+                            query[key] = val;
+                        });
+                    } else {
+                        query[name] = val;
+                    }
+
+                    return this;
+                },
+                rmQuery: function rmQuery(name) {
+                    var query = this.query;
+                    if (!isArr(name)) name = toArr(name);
+                    each(name, function(key) {
+                        delete query[key];
                     });
-                } else
-                {
-                    query[name] = val;
+                    return this;
+                },
+                toString: function toString() {
+                    return exports.stringify(this);
                 }
-
-                return this;
             },
-            rmQuery: function (name)
             {
-                var query = this.query;
+                parse: function parse(url) {
+                    var ret = {
+                            protocol: '',
+                            auth: '',
+                            hostname: '',
+                            hash: '',
+                            query: {},
+                            port: '',
+                            pathname: '',
+                            slashes: false
+                        },
+                        rest = trim(url);
+                    var proto = rest.match(regProto);
 
-                if (!isArr(name)) name = toArr(name);
-                each(name, function (key)
-                {
-                    delete query[key];
-                });
+                    if (proto) {
+                        proto = proto[0];
+                        ret.protocol = proto.toLowerCase();
+                        rest = rest.substr(proto.length);
+                    }
 
-                return this;
-            },
-            toString: function ()
-            {
-                return exports.stringify(this);
+                    if (proto) {
+                        var slashes = rest.substr(0, 2) === '//';
+
+                        if (slashes) {
+                            rest = rest.slice(2);
+                            ret.slashes = true;
+                        }
+                    }
+
+                    if (slashes) {
+                        var hostEnd = -1;
+
+                        for (var i = 0, len = hostEndingChars.length; i < len; i++) {
+                            var pos = rest.indexOf(hostEndingChars[i]);
+                            if (pos !== -1 && (hostEnd === -1 || pos < hostEnd))
+                                hostEnd = pos;
+                        }
+
+                        var host = rest.slice(0, hostEnd);
+                        rest = rest.slice(hostEnd);
+                        var atSign = host.lastIndexOf('@');
+
+                        if (atSign !== -1) {
+                            ret.auth = decodeURIComponent(host.slice(0, atSign));
+                            host = host.slice(atSign + 1);
+                        }
+
+                        ret.hostname = host;
+                        var port = host.match(regPort);
+
+                        if (port) {
+                            port = port[0];
+                            if (port !== ':') ret.port = port.substr(1);
+                            ret.hostname = host.substr(0, host.length - port.length);
+                        }
+                    }
+
+                    var hash = rest.indexOf('#');
+
+                    if (hash !== -1) {
+                        ret.hash = rest.substr(hash);
+                        rest = rest.slice(0, hash);
+                    }
+
+                    var queryMark = rest.indexOf('?');
+
+                    if (queryMark !== -1) {
+                        ret.query = query.parse(rest.substr(queryMark + 1));
+                        rest = rest.slice(0, queryMark);
+                    }
+
+                    ret.pathname = rest || '/';
+                    return ret;
+                },
+                stringify: function stringify(obj) {
+                    var ret =
+                        obj.protocol +
+                        (obj.slashes ? '//' : '') +
+                        (obj.auth ? encodeURIComponent(obj.auth) + '@' : '') +
+                        obj.hostname +
+                        (obj.port ? ':' + obj.port : '') +
+                        obj.pathname;
+                    if (!isEmpty(obj.query)) ret += '?' + query.stringify(obj.query);
+                    if (obj.hash) ret += obj.hash;
+                    return ret;
+                }
             }
-        }, {
-            parse: function (url)
-            {
-                var ret = {
-                        protocol: '',
-                        auth: '',
-                        hostname: '',
-                        hash: '',
-                        query: {},
-                        port: '',
-                        pathname: '',
-                        slashes: false
-                    },
-                    rest = trim(url);
-
-                var proto = rest.match(regProto);
-                if (proto)
-                {
-                    proto = proto[0];
-                    ret.protocol = proto.toLowerCase();
-                    rest = rest.substr(proto.length);
-                }
-
-                if (proto)
-                {
-                    var slashes = rest.substr(0, 2) === '//';
-                    if (slashes)
-                    {
-                        rest = rest.slice(2);
-                        ret.slashes = true;
-                    }
-                }
-
-                if (slashes)
-                {
-                    var hostEnd = -1;
-                    for (var i = 0, len = hostEndingChars.length; i < len; i++)
-                    {
-                        var pos = rest.indexOf(hostEndingChars[i]);
-                        if (pos !== -1 && (hostEnd === -1 || pos < hostEnd)) hostEnd = pos;
-                    }
-
-                    var host = rest.slice(0, hostEnd);
-                    rest = rest.slice(hostEnd);
-
-                    var atSign = host.lastIndexOf('@');
-
-                    if (atSign !== -1)
-                    {
-                        ret.auth = decodeURIComponent(host.slice(0, atSign));
-                        host = host.slice(atSign + 1);
-                    }
-
-                    ret.hostname = host;
-                    var port = host.match(regPort);
-                    if (port)
-                    {
-                        port = port[0];
-                        if (port !== ':') ret.port = port.substr(1);
-                        ret.hostname = host.substr(0, host.length - port.length);
-                    }
-                }
-
-                var hash = rest.indexOf('#');
-
-                if (hash !== -1)
-                {
-                    ret.hash = rest.substr(hash);
-                    rest = rest.slice(0, hash);
-                }
-
-                var queryMark = rest.indexOf('?');
-
-                if (queryMark !== -1)
-                {
-                    ret.query = query.parse(rest.substr(queryMark + 1));
-                    rest = rest.slice(0, queryMark);
-                }
-
-                ret.pathname = rest || '/';
-
-                return ret;
-            },
-            stringify: function (obj)
-            {
-                var ret = obj.protocol +
-                          (obj.slashes ? '//' : '') +
-                          (obj.auth ? encodeURIComponent(obj.auth) + '@' : '') +
-                          obj.hostname +
-                          (obj.port ? (':' + obj.port) : '') +
-                          obj.pathname;
-
-                if (!isEmpty(obj.query)) ret += '?' + query.stringify(obj.query);
-                if (obj.hash) ret += obj.hash;
-
-                return ret;
-            }
-        });
-
+        );
         var regProto = /^([a-z0-9.+-]+:)/i,
             regPort = /:[0-9]*$/,
             hostEndingChars = ['/', '?', '#'];
@@ -5412,42 +5442,63 @@ window._ = (function()
     })({});
 
     /* ------------------------------ template ------------------------------ */
+    _.template = (function (exports) {
+        function _typeof(obj) {
+            if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+                _typeof = function _typeof(obj) {
+                    return typeof obj;
+                };
+            } else {
+                _typeof = function _typeof(obj) {
+                    return obj &&
+                        typeof Symbol === 'function' &&
+                        obj.constructor === Symbol &&
+                        obj !== Symbol.prototype
+                        ? 'symbol'
+                        : typeof obj;
+                };
+            }
+            return _typeof(obj);
+        }
 
-    _.template = (function (exports)
-    {
         /* Compile JavaScript template into function that can be evaluated for rendering.
          *
-         * |Name  |Type    |String                    |
+         * |Name  |Type    |Desc                      |
          * |------|--------|--------------------------|
          * |str   |string  |Template string           |
+         * |[util]|object  |Utility functions         |
          * |return|function|Compiled template function|
-         *
-         * ```javascript
+         */
+
+        /* example
          * template('Hello <%= name %>!')({name: 'licia'}); // -> 'Hello licia!'
          * template('<p><%- name %></p>')({name: '<licia>'}); // -> '<p>&lt;licia&gt;</p>'
          * template('<%if (echo) {%>Hello licia!<%}%>')({echo: true}); // -> 'Hello licia!'
-         * ```
+         * template('<p><%= util["upperCase"](name) %></p>', {
+         *     upperCase: function (str) {
+         *         return str.toLocaleUpperCase();
+         *     }
+         * })({ name: 'licia' }); // -> '<p>LICIA</p>'
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function template(str: string, util?: any): Function;
          */
 
         /* dependencies
-         * escape 
+         * escape defaults 
          */
-
         /* eslint-disable quotes */
+
         var regEvaluate = /<%([\s\S]+?)%>/g,
             regInterpolate = /<%=([\s\S]+?)%>/g,
             regEscape = /<%-([\s\S]+?)%>/g,
-            regMatcher = RegExp([
-                regEscape.source,
-                regInterpolate.source,
-                regEvaluate.source
-            ].join('|') + '|$', 'g');
-
+            regMatcher = RegExp(
+                [regEscape.source, regInterpolate.source, regEvaluate.source].join(
+                    '|'
+                ) + '|$',
+                'g'
+            );
         var escapes = {
             "'": "'",
             '\\': '\\',
@@ -5456,49 +5507,58 @@ window._ = (function()
             '\u2028': 'u2028',
             '\u2029': 'u2029'
         };
-
         var regEscapeChar = /\\|'|\r|\n|\u2028|\u2029/g;
 
-        var escapeChar = function(match)
-        {
+        var escapeChar = function escapeChar(match) {
             return '\\' + escapes[match];
         };
 
-        exports = function (str)
-        {
+        exports = function exports(str, util) {
+            if (!util) {
+                util =
+                    (typeof _ === 'undefined' ? 'undefined' : _typeof(_)) === 'object'
+                        ? _
+                        : {
+                              escape: escape
+                          };
+            } else {
+                defaults(util, {
+                    escape: escape
+                });
+            }
+
             var index = 0,
                 src = "__p+='";
-
-            str.replace(regMatcher, function (match, escape, interpolate, evaluate, offset)
-            {
+            str.replace(regMatcher, function(
+                match,
+                escape,
+                interpolate,
+                evaluate,
+                offset
+            ) {
                 src += str.slice(index, offset).replace(regEscapeChar, escapeChar);
                 index = offset + match.length;
 
-                if (escape)
-                {
+                if (escape) {
                     src += "'+\n((__t=(" + escape + "))==null?'':util.escape(__t))+\n'";
-                } else if (interpolate)
-                {
+                } else if (interpolate) {
                     src += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
-                } else if (evaluate)
-                {
+                } else if (evaluate) {
                     src += "';\n" + evaluate + "\n__p+='";
                 }
 
                 return match;
             });
-
             src += "';\n";
             src = 'with(obj||{}){\n' + src + '}\n';
-            src = "var __t,__p='',__j=Array.prototype.join," +
-                  "print=function(){__p+=__j.call(arguments,'');};\n" +
-                  src + 'return __p;\n';
-
+            src =
+                "var __t,__p='',__j=Array.prototype.join," +
+                "print=function(){__p+=__j.call(arguments,'');};\n" +
+                src +
+                'return __p;\n';
             var render = new Function('obj', 'util', src);
-
-            return function (data)
-            {
-                return render.call(null, data, _);
+            return function(data) {
+                return render.call(null, data, util);
             };
         };
 
@@ -5506,37 +5566,30 @@ window._ = (function()
     })({});
 
     /* ------------------------------ topoSort ------------------------------ */
-
-    _.topoSort = (function ()
-    {
+    _.topoSort = (function (exports) {
         /* Topological sorting algorithm.
          *
          * |Name  |Type |Desc        |
          * |------|-----|------------|
          * |edges |array|Dependencies|
          * |return|array|Sorted order|
-         *
-         * ```javascript
+         */
+
+        /* example
          * topoSort([[1, 2], [1, 3], [3, 2]]); // -> [1, 3, 2]
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function topoSort(edges: any[]): any[];
          */
-
-        function exports(edges)
-        {
+        exports = function exports(edges) {
             return sort(uniqueNodes(edges), edges);
-        }
+        };
 
-        function uniqueNodes(arr)
-        {
+        function uniqueNodes(arr) {
             var ret = [];
 
-            for (var i = 0, len = arr.length; i < len; i++)
-            {
+            for (var i = 0, len = arr.length; i < len; i++) {
                 var edge = arr[i];
                 if (ret.indexOf(edge[0]) < 0) ret.push(edge[0]);
                 if (ret.indexOf(edge[1]) < 0) ret.push(edge[1]);
@@ -5545,34 +5598,31 @@ window._ = (function()
             return ret;
         }
 
-        function sort(nodes, edges)
-        {
+        function sort(nodes, edges) {
             var cursor = nodes.length,
                 sorted = new Array(cursor),
                 visited = {},
                 i = cursor;
 
-            while (i--)
-            {
+            while (i--) {
                 if (!visited[i]) visit(nodes[i], i, []);
             }
 
-            function visit(node, i, predecessors)
-            {
-                if(predecessors.indexOf(node) >= 0)
-                {
+            function visit(node, i, predecessors) {
+                if (predecessors.indexOf(node) >= 0) {
                     throw new Error('Cyclic dependency: ' + JSON.stringify(node));
                 }
 
                 if (visited[i]) return;
                 visited[i] = true;
-
-                var outgoing = edges.filter(function(edge) { return edge[0] === node; });
-
+                var outgoing = edges.filter(function(edge) {
+                    return edge[0] === node;
+                });
                 /* eslint-disable no-cond-assign */
-                if (i = outgoing.length)
-                {
+
+                if ((i = outgoing.length)) {
                     var preds = predecessors.concat(node);
+
                     do {
                         var child = outgoing[--i][1];
                         visit(child, nodes.indexOf(child), preds);
@@ -5586,12 +5636,10 @@ window._ = (function()
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ unique ------------------------------ */
-
-    _.unique = (function ()
-    {
+    _.unique = (function (exports) {
         /* Create duplicate-free version of an array.
          *
          * |Name     |Type    |Desc                         |
@@ -5599,114 +5647,101 @@ window._ = (function()
          * |arr      |array   |Array to inspect             |
          * |[compare]|function|Function for comparing values|
          * |return   |array   |New duplicate free array     |
-         *
-         * ```javascript
-         * unique([1, 2, 3, 1]); // -> [1, 2, 3]
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* example
+         * unique([1, 2, 3, 1]); // -> [1, 2, 3]
+         */
+
+        /* typescript
+         * export declare function unique(
+         *     arr: any[],
+         *     compare?: (a: any, b: any) => boolean | number
+         * ): any[];
          */
 
         /* dependencies
          * filter 
          */
 
-        function exports(arr, compare)
-        {
+        exports = function exports(arr, compare) {
             compare = compare || isEqual;
-
-            return filter(arr, function (item, idx, arr)
-            {
+            return filter(arr, function(item, idx, arr) {
                 var len = arr.length;
 
-                while (++idx < len)
-                {
+                while (++idx < len) {
                     if (compare(item, arr[idx])) return false;
                 }
 
                 return true;
             });
-        }
+        };
 
-        function isEqual(a, b)
-        {
+        function isEqual(a, b) {
             return a === b;
         }
 
         return exports;
-    })();
+    })({});
 
     /* ------------------------------ waterfall ------------------------------ */
-
-    _.waterfall = (function ()
-    {
+    _.waterfall = (function (exports) {
         /* Run an array of functions in series.
          *
          * |Name |Type    |Desc                   |
          * |-----|--------|-----------------------|
          * |tasks|array   |Array of functions     |
          * |[cb] |function|Callback once completed|
-         *
-         * ```javascript
+         */
+
+        /* example
          * waterfall([
-         *     function (cb)
-         *     {
+         *     function (cb) {
          *         cb(null, 'one');
          *     },
-         *     function (arg1, cb)
-         *     {
+         *     function (arg1, cb) {
          *         // arg1 -> 'one'
          *         cb(null, 'done');
          *     }
-         * ], function (err, result)
-         * {
+         * ], function (err, result) {
          *     // result -> 'done'
          * });
-         * ```
          */
 
-        /* module
-         * env: all
-         * test: all
+        /* typescript
+         * export declare function waterfall(tasks: Function[], cb?: Function): void;
          */
 
         /* dependencies
          * noop nextTick restArgs 
          */
 
-        function exports(tasks, cb)
-        {
+        exports = function exports(tasks, cb) {
             cb = cb || noop;
-
             var current = 0;
-
-            var taskCb = restArgs(function (err, args)
-            {
-                if (++current >= tasks.length || err)
-                {
+            var taskCb = restArgs(function(err, args) {
+                if (++current >= tasks.length || err) {
                     args.unshift(err);
-                    nextTick(function () { cb.apply(null, args); });
-                } else
-                {
+                    nextTick(function() {
+                        cb.apply(null, args);
+                    });
+                } else {
                     args.push(taskCb);
                     tasks[current].apply(null, args);
                 }
             });
 
-            if (tasks.length)
-            {
+            if (tasks.length) {
                 tasks[0](taskCb);
-            } else
-            {
-                nextTick(function () { cb(); });
+            } else {
+                nextTick(function() {
+                    cb();
+                });
             }
-        }
+        };
 
         return exports;
-    })();
+    })({});
 
     return _;
 })();

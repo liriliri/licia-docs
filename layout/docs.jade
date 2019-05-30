@@ -14,23 +14,55 @@ block content
         _.ready(function search() 
         {
             var $input = _.$('.search input'),
+                $tocContainer = _.$('.toc-container ul'),
                 $tocList = _.$('.toc-container ul li');
 
             $input.get(0).focus();    
 
+            var originList = [];
+            $tocList.each(function () {
+                originList.push(_.$(this).text());    
+            });
+            var displayList = _.clone(originList);
+            function renderList() {
+                const html = displayList.map(function (name) {
+                    return '<li><a href="#' + name.replace(/\$/, 'dollar-').toLowerCase() + '">' + name + '</a></li>';
+                }).join('');
+
+                $tocContainer.html(html)
+            }
+
             $input.on('input', function ()
             {
-                var val = _.$(this).val().toLowerCase();
+                var val = _.trim(_.$(this).val().toLowerCase());
 
-                $tocList.hide();
+                $tocContainer.html('')
 
-                $tocList.each(function () 
-                {
-                    var $this = _.$(this),
-                        name = $this.find('a').text().toLowerCase();
+                if (val === '') {
+                    displayList = _.clone(originList);
+                } else {
+                    displayList.sort(function (a, b) {
+                        a = a.toLowerCase();
+                        b = b.toLowerCase();
+                        if (a === val) return -1;
+                        if (b === val) return 1;
+                        if (a.indexOf(val) > -1) return -1;
+                        if (b.indexOf(val) > -1) return 1;
+                        a = _.levenshtein(val, a);
+                        b = _.levenshtein(val, b);
+                        if (a < b) return -1;
+                        if (a > b) return 1;
+                        return 0;
+                    });
+                    displayList.sort(function (a, b) {
+                        return 0;
+                    });
+                    displayList = displayList.filter(function (name) {
+                        return name.length >= val.length;
+                    });
+                }
 
-                    if (name.indexOf(val) > -1) $this.show();
-                });
+                renderList();
             });
         });
         _.ready(function buildMod() 

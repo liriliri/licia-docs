@@ -1,6 +1,7 @@
 .idea/
 dist/
 node_modules/
+eustia/
 src/docs.md
 src/docs_cn.md
 src/licia.json
