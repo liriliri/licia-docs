@@ -1,11 +1,13 @@
 table
     border-collapse collapse
     margin 1em 0
+    border 1px solid $pri-color
+    tr:nth-child(even)
+        background $gray
     thead
-        background $sec-color
+        background $pri-color
         th
             color #fff
             text-align left
     th, td
-        border 1px solid $sec-color
         padding 6px 10px

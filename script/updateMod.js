@@ -78,8 +78,11 @@ function addLink(body) {
       ret += ' [demo](/demo/' + name + '.html)'
     }
 
-    var env = index[name].env,
-      envHtml = ''
+    const since = util.safeGet(index, [name, 'since']) || '1.0.0'
+    ret += '<i class="since">' + since + '</i>'
+
+    const env = index[name].env
+    let envHtml = ''
 
     if (env.indexOf('browser') > -1) {
       envHtml += '<i class="env iconfont icon-browser"></i>'
