@@ -49,9 +49,9 @@ block content
         });
         _.ready(function buildMod() 
         {
-            _.$('h2').on('click', function () 
+            _.$('.download').on('click', function () 
             {
-                window.location = '/builder.html?module=' + _.$(this).text();                
+                window.location = '/builder.html?module=' + _.$(this).data('name');                
             });   
         });
         _.ready(function scrollEffect()

@@ -81,6 +81,8 @@ function addLink(body) {
     const since = util.safeGet(index, [name, 'since']) || '1.0.0'
     ret += '<i class="since">' + since + '</i>'
 
+    ret += `<i class="download iconfont icon-download" data-name="${name}"></i>`
+
     const env = index[name].env
     let envHtml = ''
 
