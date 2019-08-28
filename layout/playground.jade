@@ -12,11 +12,11 @@ block content
         RunKit.createNotebook({
             element: _.$('.playground').get(0),
             source: [
-                '// You can\'t require modules that are supposed to run in browsers only.\n',
-                'var uuid = require("licia/uuid"),',
-                '    dateFormat = require("licia/dateFormat"),',
-                '    now = require("licia/now"),',
-                '    randomBytes = require("licia/randomBytes");\n',
+                '// Only modules with all platform support can be required.',
+                'const uuid = require("licia/uuid");',
+                'const dateFormat = require("licia/dateFormat");',
+                'const now = require("licia/now");',
+                'const randomBytes = require("licia/randomBytes");\n',
                 'console.log(randomBytes(5));',
                 'console.log(uuid());',
                 'console.log(dateFormat(now(), "yyyy-mm-dd"));'
