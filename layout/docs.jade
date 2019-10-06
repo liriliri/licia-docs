@@ -32,9 +32,8 @@ block content
                 $tocContainer.html(html)
             }
 
-            $input.on('input', function ()
-            {
-                var val = _.trim(_.$(this).val().toLowerCase());
+            function search() {
+                var val = _.trim($input.val().toLowerCase());
 
                 $tocContainer.html('')
 
@@ -45,7 +44,10 @@ block content
                 }
 
                 renderList();
-            });
+            }
+            search();
+
+            $input.on('input', search);
         });
         _.ready(function buildMod() 
         {
