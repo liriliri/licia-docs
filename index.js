@@ -1,24 +1,24 @@
-var path = require('path'),
-  fs = require('fs'),
-  ncp = require('ncp'),
-  marked = require('marked'),
-  autoprefixer = require('autoprefixer-stylus')
+const path = require('path')
+const fs = require('fs')
+const ncp = require('ncp')
+const marked = require('marked')
+const autoprefixer = require('autoprefixer-stylus')
 
-var layouts = require('metalsmith-layouts'),
-  stylus = require('metalsmith-stylus'),
-  uglify = require('metalsmith-uglify'),
-  markdown = require('metalsmith-markdown'),
-  prism = require('metalsmith-prism'),
-  ignore = require('metalsmith-ignore'),
-  markedToc = require('./lib/markedToc'),
-  util = require('./lib/util')
+const layouts = require('metalsmith-layouts')
+const stylus = require('metalsmith-stylus')
+const uglify = require('metalsmith-uglify')
+const markdown = require('metalsmith-markdown')
+const prism = require('metalsmith-prism')
+const ignore = require('metalsmith-ignore')
+const markedToc = require('./lib/markedToc')
+const util = require('./lib/util')
 
-var dirname = __dirname,
-  port = 3000,
-  env = 'release'
+const dirname = __dirname
+const port = 3000
+let env = 'release'
 
 function dirPath() {
-  var args = [].slice.call(arguments)
+  const args = [].slice.call(arguments)
   args.unshift(dirname)
   return path.join.apply(null, args)
 }
@@ -37,17 +37,17 @@ function copyStatic() {
   })
 }
 
-var site = require('./src/site.json'),
-  licia = require('./src/licia.json')
+const site = require('./src/site.json')
+const licia = require('./src/licia.json')
 
 function build() {
   site.baseUrl =
     env === 'development' ? '//localhost:' + port + '/' : '//licia.liriliri.io/'
   site.env = env
 
-  var metalsmith = require('metalsmith')(dirname)
+  const metalsmith = require('metalsmith')(dirname)
 
-  var renderer = new marked.Renderer()
+  const renderer = new marked.Renderer()
 
   renderer.heading = heading
 
@@ -62,9 +62,8 @@ function build() {
     .clean(false)
     .use(
       markedToc({
-        omit: ['Eustia Documentation'],
-        maxDepth: 1,
-        slugify: slugify
+        maxdepth: 2,
+        slugify
       })
     )
     .use(
@@ -109,10 +108,10 @@ function server() {
   copyStatic()
   build()
 
-  var st = require('st'),
-    http = require('http')
+  const st = require('st')
+  const http = require('http')
 
-  var mount = st({
+  const mount = st({
     path: dirPath('dist'),
     cache: false,
     index: 'index.html'
@@ -126,9 +125,9 @@ function server() {
       console.log('http://localhost:' + port + '/')
     })
 
-  var chokidar = require('chokidar')
+  const chokidar = require('chokidar')
 
-  var options = {
+  const options = {
     persistent: true,
     ignoreInitial: true,
     followSymlinks: true,
@@ -140,9 +139,9 @@ function server() {
     ignorePermissionErrors: false
   }
 
-  var layout = chokidar.watch(dirPath('layout'), options),
-    src = chokidar.watch(dirPath('src'), options),
-    staticFiles = chokidar.watch(dirPath('static'), options)
+  const layout = chokidar.watch(dirPath('layout'), options)
+  const src = chokidar.watch(dirPath('src'), options)
+  const staticFiles = chokidar.watch(dirPath('static'), options)
 
   layout.on('change', build)
   src.on('change', build)

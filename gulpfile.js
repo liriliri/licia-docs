@@ -1,15 +1,15 @@
-var gulp = require('gulp'),
-  htmlmin = require('gulp-htmlmin'),
-  uglify = require('gulp-uglify')
+const gulp = require('gulp')
+const htmlmin = require('gulp-htmlmin')
+const uglify = require('gulp-uglify')
 
-gulp.task('js', function() {
+function js() {
   return gulp
     .src(['dist/**/*.js', '!dist/demo/*.js'])
     .pipe(uglify())
     .pipe(gulp.dest('dist/'))
-})
+}
 
-gulp.task('html', function() {
+function html() {
   return gulp
     .src('dist/**/*.html')
     .pipe(
@@ -19,6 +19,6 @@ gulp.task('html', function() {
       })
     )
     .pipe(gulp.dest('dist'))
-})
+}
 
-gulp.task('default', ['js', 'html'])
+exports.default = gulp.series(js, html)
