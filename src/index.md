@@ -6,7 +6,17 @@ layout: index.jade
 
 ## Benefits
 
-The library focus on getting things done, especially for mobile web development. You don’t need to use Zepto since there is a dom module with jQuery coding style. You don’t need to include a cookie library because a cookie module is already there. You don’t need moment, a dateFormat is good enough to handle most date related work. No need for Promise polyfill because there is already one. Same reason for micro event emitter libs. Ajax is not needed since we have not only ajax but also its Promise version fetch. You don’t need to include underscore anymore just because you want to use its shuffle function. As for mkdirp, the module that has many dependents in npm, there is no need for you to install it into your node_modules folder over and over again…
+Installing one library brings you tons of useful utilities: 
+
+* A dom module with jQuery coding style. 
+* A cookie library. 
+* dateFormat that is good enough to handle most date related work.
+* A Promise polyfill. 
+* A micro event emitter library. 
+* Ajax and its Promise version fetch.
+* Useful functions from underscore, such as shuffle, unique. 
+* mkdir, like mkdirp the module that has many dependents in npm.
+* ...
 
 ## Usage
 
