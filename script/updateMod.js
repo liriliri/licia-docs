@@ -44,7 +44,7 @@ function requestDoc(name, url, lang) {
 function addDesc(body, lang) {
   if (lang === 'en') {
     return body.replace(/^#.*/, function() {
-      return '[English](/docs.html) [中文](/docs_cn.html)\n'
+      return '[English](/docs.html) [中文](/docs_cn.html)'
     })
   } else if (lang === 'cn') {
     return '[English](/docs.html) [中文](/docs_cn.html)\n\n' + body
