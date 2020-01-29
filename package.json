@@ -1,7 +1,7 @@
 {
   "name": "yurii",
   "version": "0.0.1",
-  "description": "Eustia documentation",
+  "description": "Licia documentation",
   "main": "index.js",
   "scripts": {
     "build": "node script/updateMod && node . && gulp",
@@ -23,17 +23,8 @@
         "layout/**/*.jade",
         "static/js/*.js"
       ],
-      "output": "static/js/eustia.js",
+      "output": "static/js/util.js",
       "format": "global"
-    },
-    "node": {
-      "files": [
-        "lib/*.js",
-        "index.js",
-        "script/*.js"
-      ],
-      "output": "./lib/util.js",
-      "format": "commonjs"
     }
   },
   "homepage": "https://github.com/liriliri/caim#readme",
@@ -45,6 +36,7 @@
     "gulp-htmlmin": "^5.0.1",
     "gulp-uglify": "^3.0.2",
     "jade": "^1.11.0",
+    "licia": "^1.17.0",
     "markdown-toc": "^1.2.0",
     "marked": "^0.3.5",
     "metalsmith": "^2.1.0",

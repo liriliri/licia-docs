@@ -3,6 +3,7 @@ const fs = require('fs')
 const ncp = require('ncp')
 const marked = require('marked')
 const autoprefixer = require('autoprefixer-stylus')
+const rmdir = require('licia/rmdir')
 
 const layouts = require('metalsmith-layouts')
 const stylus = require('metalsmith-stylus')
@@ -11,7 +12,6 @@ const markdown = require('metalsmith-markdown')
 const prism = require('metalsmith-prism')
 const ignore = require('metalsmith-ignore')
 const markedToc = require('./lib/markedToc')
-const util = require('./lib/util')
 
 const dirname = __dirname
 const port = 3000
@@ -98,7 +98,7 @@ function build() {
 }
 
 function fullBuild() {
-  util.rmdir('dist', function() {
+  rmdir('dist', function() {
     copyStatic()
     build()
   })

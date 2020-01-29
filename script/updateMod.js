@@ -1,7 +1,6 @@
 const request = require('request')
 const fs = require('fs')
-
-const util = require('../lib/util')
+const safeGet = require('licia/safeGet')
 
 const INDEX_URL =
   'https://raw.githubusercontent.com/liriliri/licia/master/index.json'
@@ -70,15 +69,15 @@ function addLink(body) {
       source +
       '.test.js)'
 
-    if (util.safeGet(index, [name, 'benchmark'])) {
+    if (safeGet(index, [name, 'benchmark'])) {
       ret += ' [benchmark](' + source + '.benchmark.js)'
     }
 
-    if (util.safeGet(index, [name, 'demo'])) {
+    if (safeGet(index, [name, 'demo'])) {
       ret += ' [demo](/demo/' + name + '.html)'
     }
 
-    const since = util.safeGet(index, [name, 'since']) || '1.0.0'
+    const since = safeGet(index, [name, 'since']) || '1.0.0'
     ret += '<i class="since">' + since + '</i>'
 
     ret += `<i class="download iconfont icon-download" data-name="${name}"></i>`
