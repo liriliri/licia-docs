@@ -5,4 +5,5 @@ eustia/
 src/docs.md
 src/docs_cn.md
 src/licia.json
+static/js/eustia.js
 package-lock.json

@@ -22,4 +22,5 @@ block content
             each val, index in licia
                 li(title=val.description data-env=val.env.join(' '))= index    
 
+    script(src='#{site.baseUrl}static/js/eustia.js')
     script(src='#{site.baseUrl}static/js/builder.js')

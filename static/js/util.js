@@ -166,68 +166,6 @@ window._ = (function()
         return exports;
     })({});
 
-    /* ------------------------------ nextTick ------------------------------ */
-
-    var nextTick = _.nextTick = (function (exports) {
-        /* Next tick for both node and browser.
-         *
-         * |Name|Type    |Desc            |
-         * |----|--------|----------------|
-         * |cb  |function|Function to call|
-         *
-         * Use process.nextTick if available.
-         *
-         * Otherwise setImmediate or setTimeout is used as fallback.
-         */
-
-        /* example
-         * nextTick(function () {
-         *     // Do something...
-         * });
-         */
-
-        /* typescript
-         * export declare function nextTick(cb: Function): void;
-         */
-        if (typeof process === 'object' && process.nextTick) {
-            exports = process.nextTick;
-        } else if (typeof setImmediate === 'function') {
-            exports = function(cb) {
-                setImmediate(ensureCallable(cb));
-            };
-        } else {
-            exports = function(cb) {
-                setTimeout(ensureCallable(cb), 0);
-            };
-        }
-
-        function ensureCallable(fn) {
-            if (typeof fn !== 'function')
-                throw new TypeError(fn + ' is not a function');
-            return fn;
-        }
-
-        return exports;
-    })({});
-
-    /* ------------------------------ noop ------------------------------ */
-
-    var noop = _.noop = (function (exports) {
-        /* A no-operation function.
-         */
-
-        /* example
-         * noop(); // Does nothing
-         */
-
-        /* typescript
-         * export declare function noop(): void;
-         */
-        exports = function() {};
-
-        return exports;
-    })({});
-
     /* ------------------------------ now ------------------------------ */
 
     var now = _.now = (function (exports) {
@@ -386,99 +324,6 @@ window._ = (function()
                 return memo;
             };
         };
-
-        return exports;
-    })({});
-
-    /* ------------------------------ restArgs ------------------------------ */
-
-    var restArgs = _.restArgs = (function (exports) {
-        /* This accumulates the arguments passed into an array, after a given index.
-         *
-         * |Name        |Type    |Desc                                   |
-         * |------------|--------|---------------------------------------|
-         * |function    |function|Function that needs rest parameters    |
-         * |[startIndex]|number  |The start index to accumulates         |
-         * |return      |function|Generated function with rest parameters|
-         */
-
-        /* example
-         * const paramArr = restArgs(function (rest) { return rest });
-         * paramArr(1, 2, 3, 4); // -> [1, 2, 3, 4]
-         */
-
-        /* typescript
-         * export declare function restArgs(fn: Function, startIndex?: number): Function;
-         */
-        exports = function(fn, startIdx) {
-            startIdx = startIdx == null ? fn.length - 1 : +startIdx;
-            return function() {
-                var len = Math.max(arguments.length - startIdx, 0);
-                var rest = new Array(len);
-                var i;
-
-                for (i = 0; i < len; i++) {
-                    rest[i] = arguments[i + startIdx];
-                } // Call runs faster than apply.
-
-                switch (startIdx) {
-                    case 0:
-                        return fn.call(this, rest);
-
-                    case 1:
-                        return fn.call(this, arguments[0], rest);
-
-                    case 2:
-                        return fn.call(this, arguments[0], arguments[1], rest);
-                }
-
-                var args = new Array(startIdx + 1);
-
-                for (i = 0; i < startIdx; i++) {
-                    args[i] = arguments[i];
-                }
-
-                args[startIdx] = rest;
-                return fn.apply(this, args);
-            };
-        };
-
-        return exports;
-    })({});
-
-    /* ------------------------------ bind ------------------------------ */
-
-    var bind = _.bind = (function (exports) {
-        /* Create a function bound to a given object.
-         *
-         * |Name   |Type    |Desc                    |
-         * |-------|--------|------------------------|
-         * |fn     |function|Function to bind        |
-         * |ctx    |*       |This binding of given fn|
-         * |...rest|*       |Optional arguments      |
-         * |return |function|New bound function      |
-         */
-
-        /* example
-         * const fn = bind(function (msg) {
-         *     console.log(this.name + ':' + msg);
-         * }, {name: 'eustia'}, 'I am a utility library.');
-         * fn(); // -> 'eustia: I am a utility library.'
-         */
-
-        /* typescript
-         * export declare function bind(fn: Function, ctx: any, ...rest: any[]): Function;
-         */
-
-        /* dependencies
-         * restArgs 
-         */
-
-        exports = restArgs(function(fn, ctx, rest) {
-            return restArgs(function(callArgs) {
-                return fn.apply(ctx, rest.concat(callArgs));
-            });
-        });
 
         return exports;
     })({});
@@ -885,8 +730,7 @@ window._ = (function()
     })({});
 
     /* ------------------------------ escape ------------------------------ */
-
-    var escape = _.escape = (function (exports) {
+    _.escape = (function (exports) {
         /* Escapes a string for insertion into HTML, replacing &, <, >, ", `, and ' characters.
          *
          * |Name  |Type  |Desc            |
@@ -930,6 +774,62 @@ window._ = (function()
         return exports;
     })({});
 
+    /* ------------------------------ restArgs ------------------------------ */
+
+    var restArgs = _.restArgs = (function (exports) {
+        /* This accumulates the arguments passed into an array, after a given index.
+         *
+         * |Name        |Type    |Desc                                   |
+         * |------------|--------|---------------------------------------|
+         * |function    |function|Function that needs rest parameters    |
+         * |[startIndex]|number  |The start index to accumulates         |
+         * |return      |function|Generated function with rest parameters|
+         */
+
+        /* example
+         * const paramArr = restArgs(function (rest) { return rest });
+         * paramArr(1, 2, 3, 4); // -> [1, 2, 3, 4]
+         */
+
+        /* typescript
+         * export declare function restArgs(fn: Function, startIndex?: number): Function;
+         */
+        exports = function(fn, startIdx) {
+            startIdx = startIdx == null ? fn.length - 1 : +startIdx;
+            return function() {
+                var len = Math.max(arguments.length - startIdx, 0);
+                var rest = new Array(len);
+                var i;
+
+                for (i = 0; i < len; i++) {
+                    rest[i] = arguments[i + startIdx];
+                } // Call runs faster than apply.
+
+                switch (startIdx) {
+                    case 0:
+                        return fn.call(this, rest);
+
+                    case 1:
+                        return fn.call(this, arguments[0], rest);
+
+                    case 2:
+                        return fn.call(this, arguments[0], arguments[1], rest);
+                }
+
+                var args = new Array(startIdx + 1);
+
+                for (i = 0; i < startIdx; i++) {
+                    args[i] = arguments[i];
+                }
+
+                args[startIdx] = rest;
+                return fn.apply(this, args);
+            };
+        };
+
+        return exports;
+    })({});
+
     /* ------------------------------ toStr ------------------------------ */
 
     var toStr = _.toStr = (function (exports) {
@@ -954,61 +854,6 @@ window._ = (function()
         exports = function(val) {
             return val == null ? '' : val.toString();
         };
-
-        return exports;
-    })({});
-
-    /* ------------------------------ escapeJsStr ------------------------------ */
-
-    var escapeJsStr = _.escapeJsStr = (function (exports) {
-        /* Escape string to be a valid JavaScript string literal between quotes.
-         *
-         * http://www.ecma-international.org/ecma-262/5.1/#sec-7.8.4
-         *
-         * |Name  |Type  |Desc            |
-         * |------|------|----------------|
-         * |str   |string|String to escape|
-         * |return|string|Escaped string  |
-         */
-
-        /* example
-         * escapeJsStr('\"\n'); // -> '\\"\\\\n'
-         */
-
-        /* typescript
-         * export declare function escapeJsStr(str: string): string;
-         */
-
-        /* dependencies
-         * toStr 
-         */
-
-        exports = function(str) {
-            return toStr(str).replace(regEscapeChars, function(char) {
-                switch (char) {
-                    case '"':
-                    case "'":
-                    case '\\':
-                        return '\\' + char;
-
-                    case '\n':
-                        return '\\n';
-
-                    case '\r':
-                        return '\\r';
-                    // Line separator
-
-                    case '\u2028':
-                        return '\\u2028';
-                    // Paragraph separator
-
-                    case '\u2029':
-                        return '\\u2029';
-                }
-            });
-        };
-
-        var regEscapeChars = /["'\\\n\r\u2028\u2029]/g;
 
         return exports;
     })({});
@@ -1132,43 +977,6 @@ window._ = (function()
          */
         exports = function(val) {
             return val;
-        };
-
-        return exports;
-    })({});
-
-    /* ------------------------------ repeat ------------------------------ */
-
-    var repeat = _.repeat = (function (exports) {
-        /* Repeat string n-times.
-         *
-         * |Name  |Type  |Desc            |
-         * |------|------|----------------|
-         * |str   |string|String to repeat|
-         * |n     |number|Repeat times    |
-         * |return|string|Repeated string |
-         */
-
-        /* example
-         * repeat('a', 3); // -> 'aaa'
-         * repeat('ab', 2); // -> 'abab'
-         * repeat('*', 0); // -> ''
-         */
-
-        /* typescript
-         * export declare function repeat(str: string, n: number): string;
-         */
-        exports = function(str, n) {
-            var ret = '';
-            if (n < 1) return '';
-
-            while (n > 0) {
-                if (n & 1) ret += str;
-                n >>= 1;
-                str += str;
-            }
-
-            return ret;
         };
 
         return exports;
@@ -1544,47 +1352,6 @@ window._ = (function()
 
         exports = function(val) {
             return objToStr(val) === '[object Number]';
-        };
-
-        return exports;
-    })({});
-
-    /* ------------------------------ indent ------------------------------ */
-    _.indent = (function (exports) {
-        /* Indent each line in a string.
-         *
-         * |Name  |Type  |Desc                |
-         * |------|------|--------------------|
-         * |str   |string|String to indent    |
-         * |[char]|string|Character to prepend|
-         * |[len] |number|Indent length       |
-         * |return|string|Indented string     |
-         */
-
-        /* example
-         * indent('foo\nbar', ' ', 4); // -> '    foo\n    bar'
-         */
-
-        /* typescript
-         * export declare function indent(str: string, char?: string, len?: number): string;
-         */
-
-        /* dependencies
-         * isNum isUndef repeat 
-         */
-
-        var regLineBegin = /^(?!\s*$)/gm;
-
-        exports = function(str, char, len) {
-            if (isNum(char)) {
-                len = char;
-                char = ' ';
-            }
-
-            if (isUndef(len)) len = 4;
-            if (isUndef(char)) char = ' ';
-            char = repeat(char, len);
-            return str.replace(regLineBegin, char);
         };
 
         return exports;
@@ -4542,400 +4309,6 @@ window._ = (function()
         return exports;
     })({});
 
-    /* ------------------------------ Promise ------------------------------ */
-
-    var Promise = _.Promise = (function (exports) {
-        /* Lightweight Promise implementation.
-         *
-         * [Promises spec](https://github.com/promises-aplus/promises-spec)
-         */
-
-        /* example
-         * function get(url) {
-         *     return new Promise(function (resolve, reject) {
-         *         const req = new XMLHttpRequest();
-         *         req.open('GET', url);
-         *         req.onload = function () {
-         *             req.status == 200 ? resolve(req.response) : reject(Error(req.statusText));
-         *         };
-         *         req.onerror = function () { reject(Error('Network Error')) };
-         *         req.send();
-         *     });
-         * }
-         *
-         * get('test.json').then(function (result) {
-         *     // Do something...
-         * });
-         */
-
-        /* typescript
-         */
-
-        /* dependencies
-         * Class isObj isFn State bind nextTick noop toArr 
-         */
-
-        var Promise = (exports = Class(
-            {
-                initialize: function Promise(fn) {
-                    if (!isObj(this))
-                        throw new TypeError('Promises must be constructed via new');
-                    if (!isFn(fn)) throw new TypeError(fn + ' is not a function');
-                    var self = this;
-                    this._state = new State('pending', {
-                        fulfill: {
-                            from: 'pending',
-                            to: 'fulfilled'
-                        },
-                        reject: {
-                            from: 'pending',
-                            to: 'rejected'
-                        },
-                        adopt: {
-                            from: 'pending',
-                            to: 'adopted'
-                        }
-                    })
-                        .on('fulfill', assignVal)
-                        .on('reject', assignVal)
-                        .on('adopt', assignVal);
-
-                    function assignVal(val) {
-                        self._value = val;
-                    }
-
-                    this._handled = false;
-                    this._value = undefined;
-                    this._deferreds = [];
-                    doResolve(fn, this);
-                },
-                catch: function(onRejected) {
-                    return this.then(null, onRejected);
-                },
-                then: function(onFulfilled, onRejected) {
-                    var promise = new Promise(noop);
-                    handle(this, new Handler(onFulfilled, onRejected, promise));
-                    return promise;
-                }
-            },
-            {
-                all: function(arr) {
-                    var args = toArr(arr);
-                    return new Promise(function(resolve, reject) {
-                        if (args.length === 0) return resolve([]);
-                        var remaining = args.length;
-
-                        function res(i, val) {
-                            try {
-                                if (val && (isObj(val) || isFn(val))) {
-                                    var then = val.then;
-
-                                    if (isFn(then)) {
-                                        then.call(
-                                            val,
-                                            function(val) {
-                                                res(i, val);
-                                            },
-                                            reject
-                                        );
-                                        return;
-                                    }
-                                }
-
-                                args[i] = val;
-                                if (--remaining === 0) resolve(args);
-                            } catch (e) {
-                                reject(e);
-                            }
-                        }
-
-                        for (var i = 0; i < args.length; i++) {
-                            res(i, args[i]);
-                        }
-                    });
-                },
-                resolve: function(val) {
-                    if (val && isObj(val) && val.constructor === Promise) return val;
-                    return new Promise(function(resolve) {
-                        resolve(val);
-                    });
-                },
-                reject: function(val) {
-                    return new Promise(function(resolve, reject) {
-                        reject(val);
-                    });
-                },
-                race: function(values) {
-                    return new Promise(function(resolve, reject) {
-                        for (var i = 0, len = values.length; i < len; i++) {
-                            values[i].then(resolve, reject);
-                        }
-                    });
-                }
-            }
-        ));
-        var Handler = Class({
-            initialize: function Handler(onFulfilled, onRejected, promise) {
-                this.onFulfilled = isFn(onFulfilled) ? onFulfilled : null;
-                this.onRejected = isFn(onRejected) ? onRejected : null;
-                this.promise = promise;
-            }
-        });
-
-        function reject(self, err) {
-            self._state.reject(err);
-
-            finale(self);
-        }
-
-        function resolve(self, val) {
-            try {
-                if (val === self)
-                    throw new TypeError('A promise cannot be resolved with itself');
-
-                if (val && (isObj(val) || isFn(val))) {
-                    var then = val.then;
-
-                    if (val instanceof Promise) {
-                        self._state.adopt(val);
-
-                        return finale(self);
-                    }
-
-                    if (isFn(then)) return doResolve(bind(then, val), self);
-                }
-
-                self._state.fulfill(val);
-
-                finale(self);
-            } catch (e) {
-                reject(self, e);
-            }
-        }
-
-        function finale(self) {
-            for (var i = 0, len = self._deferreds.length; i < len; i++) {
-                handle(self, self._deferreds[i]);
-            }
-
-            self._deferreds = null;
-        }
-
-        function handle(self, deferred) {
-            while (self._state.is('adopted')) {
-                self = self._value;
-            }
-
-            if (self._state.is('pending')) return self._deferreds.push(deferred);
-            self._handled = true;
-            nextTick(function() {
-                var isFulfilled = self._state.is('fulfilled');
-
-                var cb = isFulfilled ? deferred.onFulfilled : deferred.onRejected;
-                if (cb === null)
-                    return (isFulfilled ? resolve : reject)(
-                        deferred.promise,
-                        self._value
-                    );
-                var ret;
-
-                try {
-                    ret = cb(self._value);
-                } catch (e) {
-                    return reject(deferred.promise, e);
-                }
-
-                resolve(deferred.promise, ret);
-            });
-        }
-
-        function doResolve(fn, self) {
-            var done = false;
-
-            try {
-                fn(
-                    function(val) {
-                        if (done) return;
-                        done = true;
-                        resolve(self, val);
-                    },
-                    function(reason) {
-                        if (done) return;
-                        done = true;
-                        reject(self, reason);
-                    }
-                );
-            } catch (e) {
-                if (done) return;
-                done = true;
-                reject(self, e);
-            }
-        }
-
-        return exports;
-    })({});
-
-    /* ------------------------------ fetch ------------------------------ */
-    _.fetch = (function (exports) {
-        /* Turn XMLHttpRequest into promise like.
-         *
-         * Note: This is not a complete fetch pollyfill.
-         *
-         * |Name     |Type   |Desc           |
-         * |---------|-------|---------------|
-         * |url      |string |Request url    |
-         * |[options]|object |Request options|
-         * |return   |Promise|Request promise|
-         */
-
-        /* example
-         * fetch('test.json', {
-         *     method: 'GET',
-         *     timeout: 3000,
-         *     headers: {},
-         *     body: ''
-         * }).then(function (res) {
-         *     return res.json();
-         * }).then(function (data) {
-         *     console.log(data);
-         * });
-         */
-
-        /* typescript
-         * export declare namespace fetch {
-         *     interface IOptions {
-         *         method?: string;
-         *         timeout?: number;
-         *         headers?: { [name: string]: string };
-         *         body?: any;
-         *     }
-         *     interface IHeaders {
-         *         keys(): string[];
-         *         entries(): Array<string[]>;
-         *         get(name: string): string;
-         *         has(name: string): boolean;
-         *     }
-         *     interface IResult {
-         *         ok: boolean;
-         *         status: number;
-         *         statusText: string;
-         *         url: string;
-         *         clone(): IResult;
-         *         text(): Promise<string>;
-         *         json(): Promise<any>;
-         *         xml(): Promise<Document | null>;
-         *         blob(): Promise<Blob>;
-         *         headers: IHeaders;
-         *     }
-         * }
-         * export declare function fetch(
-         *     url: string,
-         *     options?: fetch.IOptions
-         * ): Promise<fetch.IResult>;
-         */
-
-        /* dependencies
-         * Promise each defaults noop has 
-         */
-
-        exports = function(url, options) {
-            options = options || {};
-            defaults(options, exports.setting);
-            return new Promise(function(resolve, reject) {
-                var xhr = options.xhr();
-                var headers = options.headers;
-                var body = options.body;
-                var timeout = options.timeout;
-                var abortTimer;
-                xhr.withCredentials = options.credentials == 'include';
-
-                xhr.onload = function() {
-                    clearTimeout(abortTimer);
-                    resolve(getRes(xhr));
-                };
-
-                xhr.onerror = reject;
-                xhr.open(options.method, url, true);
-                each(headers, function(val, key) {
-                    xhr.setRequestHeader(key, val);
-                });
-
-                if (timeout > 0) {
-                    setTimeout(function() {
-                        xhr.onload = noop;
-                        xhr.abort();
-                        reject(Error('timeout'));
-                    }, timeout);
-                }
-
-                xhr.send(body);
-            });
-        };
-
-        var regHeaders = /^(.*?):\s*([\s\S]*?)$/gm;
-
-        function getRes(xhr) {
-            var keys = [];
-            var all = [];
-            var headers = {};
-            var header;
-            xhr.getAllResponseHeaders().replace(regHeaders, function(m, key, val) {
-                key = key.toLowerCase();
-                keys.push(key); // Duplicated headers is possible.
-
-                all.push([key, val]);
-                header = headers[key];
-                headers[key] = header ? header + ',' + val : val;
-            });
-            return {
-                ok: xhr.status >= 200 && xhr.status < 400,
-                status: xhr.status,
-                statusText: xhr.statusText,
-                url: xhr.responseURL,
-                clone: function() {
-                    return getRes(xhr);
-                },
-                text: function() {
-                    return Promise.resolve(xhr.responseText);
-                },
-                json: function() {
-                    return Promise.resolve(xhr.responseText).then(JSON.parse);
-                },
-                xml: function() {
-                    return Promise.resolve(xhr.responseXML);
-                },
-                blob: function() {
-                    return Promise.resolve(new Blob([xhr.response]));
-                },
-                headers: {
-                    keys: function() {
-                        return keys;
-                    },
-                    entries: function() {
-                        return all;
-                    },
-                    get: function(name) {
-                        return headers[name.toLowerCase()];
-                    },
-                    has: function(name) {
-                        return has(headers, name);
-                    }
-                }
-            };
-        }
-
-        exports.setting = {
-            method: 'GET',
-            headers: {},
-            timeout: 0,
-            xhr: function() {
-                return new XMLHttpRequest();
-            }
-        };
-
-        return exports;
-    })({});
-
     /* ------------------------------ Tween ------------------------------ */
     _.Tween = (function (exports) {
         /* Tween engine for JavaScript animations.
@@ -5748,225 +5121,6 @@ window._ = (function()
         var regProto = /^([a-z0-9.+-]+:)/i;
         var regPort = /:[0-9]*$/;
         var hostEndingChars = ['/', '?', '#'];
-
-        return exports;
-    })({});
-
-    /* ------------------------------ template ------------------------------ */
-    _.template = (function (exports) {
-        /* Compile JavaScript template into function that can be evaluated for rendering.
-         *
-         * |Name  |Type    |Desc                      |
-         * |------|--------|--------------------------|
-         * |str   |string  |Template string           |
-         * |[util]|object  |Utility functions         |
-         * |return|function|Compiled template function|
-         */
-
-        /* example
-         * template('Hello <%= name %>!')({name: 'licia'}); // -> 'Hello licia!'
-         * template('<p><%- name %></p>')({name: '<licia>'}); // -> '<p>&lt;licia&gt;</p>'
-         * template('<%if (echo) {%>Hello licia!<%}%>')({echo: true}); // -> 'Hello licia!'
-         * template('<p><%= util["upperCase"](name) %></p>', {
-         *     upperCase: function (str) {
-         *         return str.toLocaleUpperCase();
-         *     }
-         * })({ name: 'licia' }); // -> '<p>LICIA</p>'
-         */
-
-        /* typescript
-         * export declare function template(str: string, util?: any): Function;
-         */
-
-        /* dependencies
-         * escape defaults escapeJsStr 
-         */
-        /* global _ */
-
-        var regMatcher = /<%-([\s\S]+?)%>|<%=([\s\S]+?)%>|<%([\s\S]+?)%>|$/g;
-
-        exports = function(str, util) {
-            if (!util) {
-                util =
-                    typeof _ === 'object'
-                        ? _
-                        : {
-                              escape: escape
-                          };
-            } else {
-                defaults(util, {
-                    escape: escape
-                });
-            }
-
-            var index = 0;
-            var src = "__p+='";
-            str.replace(regMatcher, function(
-                match,
-                escape,
-                interpolate,
-                evaluate,
-                offset
-            ) {
-                src += escapeJsStr(str.slice(index, offset));
-                index = offset + match.length;
-
-                if (escape) {
-                    src += "'+\n((__t=(".concat(
-                        escape,
-                        "))==null?'':util.escape(__t))+\n'"
-                    );
-                } else if (interpolate) {
-                    src += "'+\n((__t=(".concat(interpolate, "))==null?'':__t)+\n'");
-                } else if (evaluate) {
-                    src += "';\n".concat(evaluate, "\n__p+='");
-                }
-
-                return match;
-            });
-            src += "';\n";
-            src = 'with(obj||{}){\n'.concat(src, '}\n');
-            src = "var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};\n".concat(
-                src,
-                'return __p;\n'
-            );
-            var render = new Function('obj', 'util', src);
-            return function(data) {
-                return render.call(null, data, util);
-            };
-        };
-
-        return exports;
-    })({});
-
-    /* ------------------------------ topoSort ------------------------------ */
-    _.topoSort = (function (exports) {
-        /* Topological sorting algorithm.
-         *
-         * |Name  |Type |Desc        |
-         * |------|-----|------------|
-         * |edges |array|Dependencies|
-         * |return|array|Sorted order|
-         */
-
-        /* example
-         * topoSort([[1, 2], [1, 3], [3, 2]]); // -> [1, 3, 2]
-         */
-
-        /* typescript
-         * export declare function topoSort(edges: any[]): any[];
-         */
-        exports = function(edges) {
-            return sort(uniqueNodes(edges), edges);
-        };
-
-        function uniqueNodes(arr) {
-            var ret = [];
-
-            for (var i = 0, len = arr.length; i < len; i++) {
-                var edge = arr[i];
-                if (ret.indexOf(edge[0]) < 0) ret.push(edge[0]);
-                if (ret.indexOf(edge[1]) < 0) ret.push(edge[1]);
-            }
-
-            return ret;
-        }
-
-        function sort(nodes, edges) {
-            var cursor = nodes.length;
-            var sorted = new Array(cursor);
-            var visited = {};
-            var i = cursor;
-
-            while (i--) {
-                if (!visited[i]) visit(nodes[i], i, []);
-            }
-
-            function visit(node, i, predecessors) {
-                if (predecessors.indexOf(node) >= 0) {
-                    throw new Error('Cyclic dependency: ' + JSON.stringify(node));
-                }
-
-                if (visited[i]) return;
-                visited[i] = true;
-                var outgoing = edges.filter(function(edge) {
-                    return edge[0] === node;
-                });
-                /* eslint-disable no-cond-assign */
-
-                if ((i = outgoing.length)) {
-                    var preds = predecessors.concat(node);
-
-                    do {
-                        var child = outgoing[--i][1];
-                        visit(child, nodes.indexOf(child), preds);
-                    } while (i);
-                }
-
-                sorted[--cursor] = node;
-            }
-
-            return sorted;
-        }
-
-        return exports;
-    })({});
-
-    /* ------------------------------ waterfall ------------------------------ */
-    _.waterfall = (function (exports) {
-        /* Run an array of functions in series.
-         *
-         * |Name |Type    |Desc                   |
-         * |-----|--------|-----------------------|
-         * |tasks|array   |Array of functions     |
-         * |[cb] |function|Callback once completed|
-         */
-
-        /* example
-         * waterfall([
-         *     function (cb) {
-         *         cb(null, 'one');
-         *     },
-         *     function (arg1, cb) {
-         *         // arg1 -> 'one'
-         *         cb(null, 'done');
-         *     }
-         * ], function (err, result) {
-         *     // result -> 'done'
-         * });
-         */
-
-        /* typescript
-         * export declare function waterfall(tasks: Function[], cb?: Function): void;
-         */
-
-        /* dependencies
-         * noop nextTick restArgs 
-         */
-
-        exports = function(tasks, cb) {
-            cb = cb || noop;
-            var current = 0;
-            var taskCb = restArgs(function(err, args) {
-                if (++current >= tasks.length || err) {
-                    args.unshift(err);
-                    nextTick(function() {
-                        cb.apply(null, args);
-                    });
-                } else {
-                    args.push(taskCb);
-                    tasks[current].apply(null, args);
-                }
-            });
-
-            if (tasks.length) {
-                tasks[0](taskCb);
-            } else {
-                nextTick(function() {
-                    cb();
-                });
-            }
-        };
 
         return exports;
     })({});
