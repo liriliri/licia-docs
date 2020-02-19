@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node script/genEustia && node script/updateMod && node . && gulp",
     "dev": "node . serve",
-    "format": "prettier *.js lib/markedToc.js script/*.js static/js/builder.js --write"
+    "format": "prettier *.js lib/markedToc.js script/*.js static/js/builder.js static/js/index.js --write"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
     "page": {
       "files": [
         "layout/**/*.jade",
-        "static/js/builder.js"
+        "static/js/builder.js",
+        "static/js/index.js"
       ],
       "output": "static/js/util.js",
       "format": "global"
