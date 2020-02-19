@@ -294,8 +294,6 @@ Vector.prototype.distanceTo = function(vector, abs) {
   return abs || false ? Math.abs(distance) : distance
 }
 
-var height = _.isMobile() ? 280 : 360
-
 new Canvas({
   el: document.getElementById('canvas'),
   count: 15,
@@ -304,7 +302,9 @@ new Canvas({
   width: function() {
     return window.innerWidth
   },
-  height: height,
+  height: function() {
+    return window.innerWidth < 1024 ? 280 : 360
+  },
   size: 15,
   color: '255, 255, 255',
   maxDistance: 100,
