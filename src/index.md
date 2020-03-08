@@ -2,7 +2,7 @@
 layout: index.jade
 ---
 
-[Licia](https://licia.liriliri.io/) is a utility library that focus on getting daily works done. Unlike other libraries such as underscore, mout, which strictly separates its functions into several categories like array, string and function etc, licia is just a deadly simple collection of over 300 micro modules dealing problems in different aspects. For example, dom manipulation, cookies, class creation, template, date format, ajax, url, event emitter and a bunch more, even Promise.
+[Licia](https://licia.liriliri.io/) is a utility library that focus on getting daily works done. Unlike other libraries such as underscore, mout, which strictly separates its functions into several categories like array, string and function etc, licia is just a deadly simple collection of over 400 micro modules dealing problems in different aspects. For example, dom manipulation, cookies, class creation, template, date format, ajax, url, event emitter and a bunch more, even Promise.
 
 ## Benefits
 
