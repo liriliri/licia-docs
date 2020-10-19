@@ -59,7 +59,7 @@ function addLink(body) {
     var ret = `${match}\n\n[source](${source}src/${name}.js) [test](${source}test/${name}.js)`
 
     if (safeGet(index, [name, 'benchmark'])) {
-      ret += ' [benchmark](' + source + '.benchmark.js)'
+      ret += ' [benchmark](' + source + 'benchmark/' + name + '.js)'
     }
 
     if (safeGet(index, [name, 'demo'])) {
