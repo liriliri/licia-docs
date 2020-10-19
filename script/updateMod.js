@@ -56,7 +56,6 @@ function addLink(body) {
   return body.replace(/^##\s+([\w$]+)/gm, function(match, name) {
     var source =
       'https://github.com/liriliri/licia/blob/master/src/' +
-      name[0].toLowerCase() +
       '/' +
       name
 
