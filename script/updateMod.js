@@ -56,18 +56,7 @@ function addLink(body) {
   return body.replace(/^##\s+([\w$]+)/gm, function(match, name) {
     var source = 'https://github.com/liriliri/licia/blob/master/'
 
-    var ret =
-      match +
-      '\n\n[source](' +
-      source +
-      'src/' +
-      name +
-      '.js) ' +
-      '[test](' +
-      source +
-      'test/' +
-      name +
-      '.test.js)'
+    var ret = `${match}\n\n[source](${source}src/${name}.js) [test](${source}test/${name}.js)`
 
     if (safeGet(index, [name, 'benchmark'])) {
       ret += ' [benchmark](' + source + '.benchmark.js)'
