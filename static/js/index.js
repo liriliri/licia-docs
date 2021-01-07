@@ -37,7 +37,7 @@ function Canvas(options) {
 Canvas.prototype.updateDimensions = function() {
   this.width = this.el.width = result(this.options, 'width') * this.dpr
   this.height = this.el.height = result(this.options, 'height') * this.dpr
-  this.el.style.width = result(this.options, 'width') + 'px'
+  this.el.style.width = '100%' 
   this.el.style.height = result(this.options, 'height') + 'px'
 }
 
