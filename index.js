@@ -68,7 +68,7 @@ function build() {
     )
     .use(
       markdown({
-        renderer: renderer,
+        renderer,
         langPrefix: 'language-'
       })
     )
