@@ -5,7 +5,6 @@ title: Licia - Useful Utility Collection with Zero Dependencies:)
 
 <script setup>
 import Home from '@theme/components/Home.vue'
-import { } from 'vitepress/theme'
 </script>
 
 <Home />

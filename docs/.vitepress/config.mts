@@ -13,7 +13,7 @@ export default defineConfig({
       { text: 'Document', link: '/document' },
       { text: 'Playground', link: '/playground' },
       { text: 'Builder', link: '/builder' },
-    ]
+    ],
   },
   locales: {
     root: {
@@ -28,8 +28,8 @@ export default defineConfig({
           { text: 'Document', link: '/zh/document' },
           { text: 'Playground', link: '/playground' },
           { text: 'Builder', link: '/builder' },
-        ]
-      }
-    }
-  }
+        ],
+      },
+    },
+  },
 })
