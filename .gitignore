@@ -1,9 +1,7 @@
-.idea/
-dist/
 node_modules/
-eustia/
-src/docs.md
-src/docs_cn.md
-src/licia.json
-static/js/eustia.js
+docs/.vitepress/cache/
+docs/.vitepress/theme/lib/licia.json
+docs/document.md
+docs/zh/document.md
+dist/
 package-lock.json

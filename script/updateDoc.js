@@ -1,55 +1,63 @@
-const request = require('request')
+const axios = require('axios')
 const fs = require('fs')
+const path = require('path')
 const safeGet = require('licia/safeGet')
+const stripIndent = require('licia/stripIndent')
+const trim = require('licia/trim')
 
 const INDEX_URL =
   'https://raw.githubusercontent.com/liriliri/licia/master/index.json'
 let index = {}
 
-request(INDEX_URL, function(err, res, body) {
-  if (err) return console.log(err)
+axios.get(INDEX_URL).then(function(res) {
+  const liciaPath = path.resolve(__dirname, '../docs/.vitepress/theme/lib/licia.json')
+  fs.writeFile(liciaPath, JSON.stringify(res.data, null, 4), function() {})
 
-  index = JSON.parse(body)
-
-  fs.writeFile('src/licia.json', JSON.stringify(index, null, 4), function() {})
-
-  requestDoc(
-    'docs',
+  getDoc(
     'https://raw.githubusercontent.com/liriliri/licia/master/DOC.md',
     'en'
   )
-  requestDoc(
-    'docs_cn',
+  getDoc(
     'https://raw.githubusercontent.com/liriliri/licia/master/DOC_CN.md',
     'cn'
   )
 })
 
-function requestDoc(name, url, lang) {
-  request(url, function(err, res, body) {
-    if (err) return console.log(err)
+function getDoc(url, lang) {
+  axios.get(url, {
+    responseType: 'text'
+  }).then(function(res) {
+    let body = res.data
 
-    body = addDesc(body, lang)
-    body = addLink(body)
+    if (lang === 'en') {
+      body = body.replace(/^#.*\n\n/, '')
+    }
+    // body = addLink(body)
 
-    var data = '---\nlayout: docs.jade\ntitle: Docs\n---\n\n' + body
+    let data = stripIndent`---
+    layout: page
+    ---
+    
+    <div class="vp-doc document">
+    
+    __body__
 
-    fs.writeFile(`src/${name}.md`, data, 'utf-8', function(err) {
+    </div>
+    
+    <style>
+    .document {
+      padding: 0 32px 128px;
+      max-width: 1088px;
+      margin: 0 auto;
+    }
+    </style>`
+
+    data = data.replace('__body__', trim(body))
+
+    fs.writeFile(`docs/${lang === 'cn' ? 'zh/' : ''}document.md`, data, 'utf-8', function(err) {
       if (err) console.log(err)
     })
   })
-}
-
-function addDesc(body, lang) {
-  if (lang === 'en') {
-    return body.replace(/^#.*/, function() {
-      return '[English](/docs.html) [中文](/docs_cn.html)'
-    })
-  } else if (lang === 'cn') {
-    return '[English](/docs.html) [中文](/docs_cn.html)\n\n' + body
-  }
-
-  return body
 }
 
 function addLink(body) {

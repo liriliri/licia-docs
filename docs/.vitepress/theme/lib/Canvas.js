@@ -1,13 +1,18 @@
+import clone from 'licia/clone'
+import defaults from 'licia/defaults'
+import safeGet from 'licia/safeGet'
+import isFn from 'licia/isFn'
+import bind from 'licia/bind'
+
 // https://codepen.io/isuttell/pen/raxRaJ
 var PI2 = Math.PI * 2
-var HALF_PI = Math.PI / 2
 
 var isTouch = 'ontouchstart' in window
 var isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)
 
 function Canvas(options) {
-  options = _.clone(options || {})
-  this.options = _.defaults(options, this.options)
+  options = clone(options || {})
+  this.options = defaults(options, this.options)
 
   this.el = this.options.el
   this.ctx = this.el.getContext('2d')
@@ -34,25 +39,25 @@ function Canvas(options) {
   this.loop()
 }
 
-Canvas.prototype.updateDimensions = function() {
+Canvas.prototype.updateDimensions = function () {
   this.width = this.el.width = result(this.options, 'width') * this.dpr
   this.height = this.el.height = result(this.options, 'height') * this.dpr
-  this.el.style.width = '100%' 
+  this.el.style.width = '100%'
   this.el.style.height = result(this.options, 'height') + 'px'
 }
 
 // Update the orb target
-Canvas.prototype.mouseMove = function(event) {
+Canvas.prototype.mouseMove = function (event) {
   this.target = new Vector(event.clientX * this.dpr, event.clientY * this.dpr)
 }
 
 // Reset to center when we mouse out
-Canvas.prototype.resetTarget = function() {
+Canvas.prototype.resetTarget = function () {
   this.target = new Vector(this.width / 2, this.height / 2)
 }
 
 // Touch Eent
-Canvas.prototype.touchMove = function(event) {
+Canvas.prototype.touchMove = function (event) {
   if (event.touches.length === 1) {
     event.preventDefault()
   }
@@ -72,10 +77,10 @@ Canvas.prototype.options = {
   size: 10,
   radius: 5,
   background: '29, 22, 52',
-  maxDistance: 100
+  maxDistance: 100,
 }
 
-Canvas.prototype.setupParticles = function() {
+Canvas.prototype.setupParticles = function () {
   this.particles = []
   var index = -1
   var between = PI2 / this.options.count
@@ -99,14 +104,14 @@ Canvas.prototype.setupParticles = function() {
       radius: this.options.radius,
       size: this.options.size,
       angle: angle,
-      color: this.options.color
+      color: this.options.color,
     })
 
     this.particles.push(particle)
   }
 }
 
-Canvas.prototype.findClosest = function() {
+Canvas.prototype.findClosest = function () {
   var index = -1
   var pointsLength = this.particles.length
 
@@ -127,7 +132,7 @@ Canvas.prototype.findClosest = function() {
   }
 }
 
-Canvas.prototype.loop = function() {
+Canvas.prototype.loop = function () {
   //   this.clear();
   if (isTouch || isSafari) {
     this.ghost()
@@ -139,14 +144,14 @@ Canvas.prototype.loop = function() {
   }
   this.draw()
 
-  window.requestAnimationFrame(_.bind(this.loop, this))
+  window.requestAnimationFrame(bind(this.loop, this))
 }
 
-Canvas.prototype.clear = function() {
+Canvas.prototype.clear = function () {
   this.ctx.clearRect(0, 0, this.width, this.height)
 }
 
-Canvas.prototype.ghost = function() {
+Canvas.prototype.ghost = function () {
   this.ctx.globalCompositeOperation = 'source-over'
   this.ctx.rect(0, 0, this.width, this.height)
   if (typeof this.options.background === 'string') {
@@ -158,7 +163,7 @@ Canvas.prototype.ghost = function() {
   this.ctx.fill()
 }
 
-Canvas.prototype.ghostGradient = function() {
+Canvas.prototype.ghostGradient = function () {
   var gradient
 
   if (typeof this.options.background === 'string') {
@@ -189,7 +194,7 @@ Canvas.prototype.ghostGradient = function() {
 }
 
 // Draw
-Canvas.prototype.draw = function() {
+Canvas.prototype.draw = function () {
   var index = -1
   var length = this.particles.length
   while (++index < length) {
@@ -212,7 +217,7 @@ Canvas.prototype.draw = function() {
 }
 
 // Draw connecting lines
-Canvas.prototype.drawLines = function(point, color) {
+Canvas.prototype.drawLines = function (point, color) {
   color = color || this.options.color
   var index = -1
   var length = point.closest.length
@@ -231,8 +236,8 @@ Canvas.prototype.drawLines = function(point, color) {
 }
 
 function Particle(options) {
-  options = _.clone(options || {})
-  this.options = _.defaults(options, this.options)
+  options = clone(options || {})
+  this.options = defaults(options, this.options)
 
   this.position = this.shift = new Vector(this.options.x, this.options.y)
 
@@ -264,7 +269,7 @@ function Particle(options) {
     this.options.radius * 0.5 + this.options.radius * 0.5 * Math.random()
 }
 
-Particle.prototype.update = function(target, index) {
+Particle.prototype.update = function (target, index) {
   this.angle += this.speed
 
   this.shift.x += (target.x - this.shift.x) * this.speed
@@ -287,34 +292,19 @@ function Vector(x, y) {
   this.y = y || 0
 }
 
-Vector.prototype.distanceTo = function(vector, abs) {
+Vector.prototype.distanceTo = function (vector, abs) {
   var distance = Math.sqrt(
     Math.pow(this.x - vector.x, 2) + Math.pow(this.y - vector.y, 2)
   )
   return abs || false ? Math.abs(distance) : distance
 }
 
-new Canvas({
-  el: document.getElementById('canvas'),
-  count: 15,
-  speed: 0.3,
-  radius: 10,
-  width: function() {
-    return window.innerWidth
-  },
-  height: function() {
-    return window.innerWidth < 1024 ? 280 : 360
-  },
-  size: 15,
-  color: '255, 255, 255',
-  maxDistance: 100,
-  background: ['58, 58, 84', '191, 33, 93']
-})
-
 function result(obj, prop) {
-  const target = _.safeGet(obj, prop)
+  const target = safeGet(obj, prop)
   if (target) {
-    if (_.isFn(target)) return target.call(obj)
+    if (isFn(target)) return target.call(obj)
     return target
   }
 }
+
+export default Canvas
