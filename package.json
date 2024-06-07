@@ -9,7 +9,8 @@
     "build": "vitepress build docs",
     "preview": "vitepress preview docs",
     "format": "lsla prettier \"*.json\" \"docs/**/*.{mts,js,vue,css}\" --write",
-    "updateDoc": "node script/updateDoc.js"
+    "updateDoc": "node script/updateDoc.js",
+    "genEustia": "node script/genEustia.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,8 @@
   "homepage": "https://github.com/liriliri/licia-docs#readme",
   "devDependencies": {
     "axios": "^1.7.2",
+    "browserify": "^17.0.0",
+    "eustia": "^1.0.0",
     "licia": "^1.39.2",
     "pug": "^3.0.3",
     "stylus": "^0.63.0",

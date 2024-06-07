@@ -1,6 +1,7 @@
 node_modules/
 docs/.vitepress/cache/
 docs/.vitepress/theme/lib/licia.json
+docs/.vitepress/theme/lib/eustia.js
 docs/document.md
 docs/zh/document.md
 dist/
