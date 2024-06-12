@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Licia - Useful Utility Collection with Zero Dependencies:)
+title: Licia - Useful Utility Collection with Zero Dependencies
 ---
 
 <script setup>

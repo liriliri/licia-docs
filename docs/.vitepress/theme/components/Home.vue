@@ -1,6 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Canvas from '../lib/Canvas'
+import { useData, useRouter } from 'vitepress'
+
+const { lang } = useData()
+
+const { go } = useRouter()
 
 const canvas = ref(null)
 
@@ -22,13 +27,20 @@ onMounted(() => {
     background: ['58, 58, 84', '191, 33, 93'],
   })
 })
+
+function goTo(href) {
+  if (lang.value === 'zh') {
+    href = '/zh' + href
+  }
+  go(href)
+}
 </script>
 
 <template lang="pug">
 .banner
   canvas#canvas(ref="canvas")
-  h1 Useful Utility Collection with Zero Dependencies:)
-  a.btn.second(href='') VIEW DOCS 
+  h1 {{ lang === 'zh' ? '实用 JavaScript 工具库' : 'Useful Utility Collection with Zero Dependencies' }}
+  a.btn.second(href='' @click="goTo('/document.html')") {{ lang === 'zh' ? '查看文档' : 'VIEW DOCS' }}
 </template>
 
 <style lang="stylus">
