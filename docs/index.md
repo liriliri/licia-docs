@@ -11,7 +11,7 @@ import Home from '@theme/components/Home.vue'
 
 <div class="vp-doc intro">
 
-[Licia](https://licia.liriliri.io/) is a utility library that focus on getting daily works done. Unlike other libraries such as underscore, mout, which strictly separates its functions into several categories like array, string and function etc, licia is just a deadly simple collection of over 400 micro modules dealing problems in different aspects. For example, dom manipulation, cookies, class creation, template, date format, ajax, url, event emitter and a bunch more, even Promise.
+Licia is a utility library that focus on getting daily works done. Unlike other libraries such as underscore, mout, which strictly separates its functions into several categories like array, string and function etc, licia is just a deadly simple collection of over 400 micro modules dealing problems in different aspects. For example, dom manipulation, cookies, class creation, template, date format, ajax, url, event emitter and a bunch more, even Promise.
 
 ## Benefits
 
@@ -41,6 +41,6 @@ const uuid = require('licia/uuid');
 console.log(uuid()); // -> 0e3b84af-f911-4a55-b78a-cedf6f0bd815
 ```
 
-There is also an online tool to build a customized utility library, check [here](https://licia.liriliri.io/builder.html).
+There is also an online tool to build a customized utility library, check [here](/builder.md).
 
 </div>

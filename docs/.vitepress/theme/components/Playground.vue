@@ -2,6 +2,9 @@
 import loadJs from 'licia/loadJs'
 import $ from 'licia/$'
 import { ref } from 'vue'
+import { useData } from 'vitepress'
+
+const { lang } = useData()
 
 const playground = ref(null)
 
@@ -9,7 +12,9 @@ loadJs('//embed.runkit.com', function () {
   RunKit.createNotebook({
     element: playground.value,
     source: [
-      '// Only modules with all platform support can be required.',
+      lang.value === 'zh'
+        ? '// 只能引入支持所有环境的模块'
+        : '// Only modules with all platform support can be required.',
       'const uuid = require("licia/uuid");',
       'const dateFormat = require("licia/dateFormat");',
       'const now = require("licia/now");',
@@ -28,7 +33,7 @@ loadJs('//embed.runkit.com', function () {
 <template lang="pug">
 .container.mobile
   .playground(ref="playground")
-    .initial-text Initializing RunKit...
+    .initial-text {{ lang === 'zh' ? '初始化 RunKit 中...' : 'Initializing RunKit...' }}
 </template>
 o
 <style lang="stylus">

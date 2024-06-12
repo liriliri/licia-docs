@@ -47,7 +47,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '文档', link: '/zh/document' },
-          { text: '示例', link: '/playground' },
+          { text: '示例', link: '/zh/playground' },
           { text: '定制', link: '/builder' },
         ],
       },
