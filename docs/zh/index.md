@@ -78,11 +78,3 @@ util.wx.getStorage({
 ```
 
 </div>
-
-<style>
-.intro {
-  padding: 48px 32px 128px;
-  max-width: 1088px;
-  margin: 0 auto;
-}
-</style>

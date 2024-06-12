@@ -44,11 +44,3 @@ console.log(uuid()); // -> 0e3b84af-f911-4a55-b78a-cedf6f0bd815
 There is also an online tool to build a customized utility library, check [here](https://licia.liriliri.io/builder.html).
 
 </div>
-
-<style>
-.intro {
-  padding: 48px 32px 128px;
-  max-width: 1088px;
-  margin: 0 auto;
-}
-</style>

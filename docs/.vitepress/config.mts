@@ -46,9 +46,9 @@ export default defineConfig({
       lang: 'zh',
       themeConfig: {
         nav: [
-          { text: 'Document', link: '/zh/document' },
-          { text: 'Playground', link: '/playground' },
-          { text: 'Builder', link: '/builder' },
+          { text: '文档', link: '/zh/document' },
+          { text: '示例', link: '/playground' },
+          { text: '定制', link: '/builder' },
         ],
       },
     },

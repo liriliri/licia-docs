@@ -42,15 +42,7 @@ function getDoc(url, lang) {
     
     __body__
 
-    </div>
-    
-    <style>
-    .document {
-      padding: 0 32px 128px;
-      max-width: 1088px;
-      margin: 0 auto;
-    }
-    </style>`
+    </div>`
 
     data = data.replace('__body__', trim(body))
 
