@@ -11,6 +11,7 @@ let index = {}
 
 axios.get(INDEX_URL).then(function(res) {
   const liciaPath = path.resolve(__dirname, '../docs/.vitepress/theme/lib/licia.json')
+  index = res.data
   fs.writeFile(liciaPath, JSON.stringify(res.data, null, 4), function() {})
 
   getDoc(
@@ -32,7 +33,7 @@ function getDoc(url, lang) {
     if (lang === 'en') {
       body = body.replace(/^#.*\n\n/, '')
     }
-    // body = addLink(body)
+    body = addLink(body)
 
     let data = stripIndent`---
     layout: page
@@ -63,13 +64,13 @@ function addLink(body) {
     }
 
     if (safeGet(index, [name, 'demo'])) {
-      ret += ' [demo](/demo/' + name + '.html)'
+      ret += ' <a href="/demo/' + name + '.html" target="_blank">demo</a>'
     }
 
     const since = safeGet(index, [name, 'since']) || '1.0.0'
     ret += '<i class="since">' + since + '</i>'
 
-    ret += `<i class="download iconfont icon-download" data-name="${name}"></i>`
+    ret += `<Download name="${name}" />`
 
     const env = index[name].env
     let envHtml = ''

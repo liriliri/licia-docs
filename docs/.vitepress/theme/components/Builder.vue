@@ -1,25 +1,142 @@
 <script setup>
 import licia from '../lib/licia.json'
+import { ref, watch } from 'vue'
+import contain from 'licia/contain'
+import each from 'licia/each'
+import trim from 'licia/trim'
+import filter from 'licia/filter'
+import unique from 'licia/unique'
+import now from 'licia/now'
+import format from 'licia/format'
+import getUrlParam from 'licia/getUrlParam'
+import createUrl from 'licia/createUrl'
+import { useData } from 'vitepress'
+
+const { lang } = useData()
+
+const INPUT_STORE_NAME = 'buildModules'
+
+const input = ref('')
+const isBuilding = ref(false)
+const downloadUrl = ref('')
+const logs = ref([])
+const downloadBtn = ref(null)
+const isZh = lang.value === 'zh'
+
+watch(() => input.value, reset)
+
+const module = getUrlParam('module')
+if (module) {
+  input.value = module
+  setTimeout(() => startBuild(), 1000)
+} else if (global.localStorage) {
+  input.value = localStorage.getItem(INPUT_STORE_NAME)
+}
+
+function startBuild() {
+  let modules = trim(input.value)
+  modules = unique(filter(modules.split(/\s+/), (name) => name !== ''))
+  if (modules.length === 0) return
+
+  const startTime = now()
+
+  build(modules, function (err, output) {
+    if (err) {
+      log(err.message)
+      log(isZh ? '中止任务。' : 'TASK ABORT.')
+      return
+    }
+
+    log(isZh ? '耗时 %dms。' : 'TIME COST %dms.', now() - startTime)
+
+    downloadUrl.value = createUrl(output)
+    setTimeout(() => {
+      downloadBtn.value.click()
+    }, 200)
+  })
+
+  localStorage.setItem(INPUT_STORE_NAME, input.value)
+}
+
+function build(modules, cb) {
+  if (!window.eustia) {
+    return
+  }
+
+  isBuilding.value = true
+
+  log(isZh ? '包含模块' : 'MODULES INCLUDED')
+  log(modules.join(' '))
+  log(isZh ? '构建中...' : 'BUILDING...')
+
+  eustia.build(
+    {
+      include: modules,
+    },
+    function (err, result) {
+      isBuilding.value = false
+
+      if (err) return cb(err)
+
+      cb(null, result)
+    }
+  )
+}
+
+function clear() {
+  input.value = ''
+}
+
+function selectModule(name) {
+  if (!contain(input.value, name)) {
+    input.value += ' ' + name
+    input.value = trim(input.value)
+  }
+}
+
+function selectModules(type) {
+  if (contain(['all', 'browser', 'node', 'miniprogram'], type)) {
+    each(licia, function (module, name) {
+      if (type === 'all' || contain(module.env, type)) {
+        input.value += ' ' + name
+      }
+    })
+  } else {
+    selectModule(type)
+  }
+}
+
+function reset() {
+  downloadUrl.value = ''
+  logs.value = []
+}
+
+function log() {
+  logs.value.push(format(...arguments))
+}
 </script>
 
 <template lang="pug">
 .container.mobile
 
-  textarea#input-modules(rows='4' placeholder="fetch each random...")
-  a.btn#build-btn(href='#') BUILD
-  a.btn#clear-btn(href='#') CLEAR
-  a.btn#download-btn.disabled(download='util.js') DOWNLOAD
+  textarea#input-modules(rows='4' placeholder="fetch each random..." v-model="input" :disabled="isBuilding")
+  a.btn#build-btn(:class="isBuilding || downloadUrl ? 'disabled' : ''" href='#' @click="startBuild") {{ isZh ? '构建' : 'BUILD' }}
+  a.btn#clear-btn(:class="isBuilding ? 'disabled' : ''" href='#' @click="clear") {{ isZh ? '清除' : 'CLEAR' }}
+  a.btn#download-btn(:class="downloadUrl ? '' : 'disabled'" download='util.js' :href="downloadUrl" ref="downloadBtn") {{ isZh ? '下载' : 'DOWNLOAD' }}
 
-  ul#build-logger
-    li Note:
-    li Module names are separated by spaces.
-    li The generated library is exported as "_" in global space, using UMD pattern.
+  ul#build-logger(v-if="logs.length === 0")
+    li {{ isZh ? '提示：' : 'Note:' }}
+    li {{ isZh ? '模块名用空格分隔。' : 'Module names are separated by spaces.' }}
+    li {{ isZh ? '生成库导出全局变量 “_”，使用 UMD 规范。' : 'The generated library is exported as "_" in global space, using UMD pattern.' }}
+  ul#build-logger(v-else)  
+    li(v-for="log in logs" :key="log") {{ log }}
 
-  ul#build-modules
-    li(title="All modules that can run on both browser and node.js.") all
-    li(title='All browser modules.') allBrowser
-    li(title='All node.js modules.') allNode
-    li(title='All miniprogram modules.') allMiniProgram
+  ul#build-modules(v-if="!isBuilding")
+    li(title="All modules that can run on both browser and node.js." @click="selectModules('all')") {{ isZh ? '全部' : 'All' }}
+    li(title='All browser modules.' @click="selectModules('browser')") {{ isZh ? '浏览器' : 'Browser' }}
+    li(title='All node.js modules.' @click="selectModules('node')") Node
+    li(title='All miniprogram modules.' @click="selectModules('miniprogram')") {{ isZh ? '小程序' : 'miniprogram' }}
+    li(v-for="(module, name) in licia" :key="name" :title="module.description" @click="selectModules(name)") {{ name }}
 </template>
 
 <style lang="stylus">
@@ -31,7 +148,7 @@ import licia from '../lib/licia.json'
   margin-bottom 15px
   outline none
   padding 10px
-  border 2px solid $gray
+  border 1px solid $gray
   font-family $font-family
   resize vertical
   appearance none
@@ -45,7 +162,6 @@ import licia from '../lib/licia.json'
   margin 25px 0
   li
     margin-bottom 10px
-    color $pri-color
     font-size 14px
 
 #build-modules
@@ -56,13 +172,13 @@ import licia from '../lib/licia.json'
     clear both
   li
     float left
-    color $pri-color
     margin-right 4px
     margin-top 4px
     padding 2px 4px
     font-size 12px
     cursor pointer
     opacity .6
+    line-height 1.5
     &:hover
       text-decoration underline
       opacity 1

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  ignoreDeadLinks: true,
   title: 'Licia',
   description: 'Licia Documentation',
   lastUpdated: true,
@@ -48,9 +49,17 @@ export default defineConfig({
         nav: [
           { text: '文档', link: '/zh/document' },
           { text: '示例', link: '/zh/playground' },
-          { text: '定制', link: '/builder' },
+          { text: '定制', link: '/zh/builder' },
         ],
       },
     },
   },
+  head: [
+    [
+      'script',
+      {
+        src: '/eustia.js',
+      },
+    ],
+  ],
 })

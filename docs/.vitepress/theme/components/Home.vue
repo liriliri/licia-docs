@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import Canvas from '../lib/Canvas'
 import { useData, useRouter } from 'vitepress'
 
 const { lang } = useData()
@@ -10,21 +9,23 @@ const { go } = useRouter()
 const canvas = ref(null)
 
 onMounted(() => {
-  new Canvas({
-    el: canvas.value,
-    count: 15,
-    speed: 0.3,
-    radius: 10,
-    width: function () {
-      return window.innerWidth
-    },
-    height: function () {
-      return window.innerWidth < 1024 ? 280 : 360
-    },
-    size: 15,
-    color: '255, 255, 255',
-    maxDistance: 100,
-    background: ['58, 58, 84', '191, 33, 93'],
+  import('../lib/Canvas').then(({ default: Canvas }) => {
+    new Canvas({
+      el: canvas.value,
+      count: 15,
+      speed: 0.3,
+      radius: 10,
+      width: function () {
+        return window.innerWidth
+      },
+      height: function () {
+        return window.innerWidth < 1024 ? 280 : 360
+      },
+      size: 15,
+      color: '255, 255, 255',
+      maxDistance: 100,
+      background: ['58, 58, 84', '191, 33, 93'],
+    })
   })
 })
 

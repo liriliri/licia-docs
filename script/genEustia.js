@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 
 const writeSteam = fs.createWriteStream(
-  path.resolve(__dirname, '../docs/.vitepress/theme/lib/eustia.js'),
+  path.resolve(__dirname, '../docs/public/eustia.js'),
   {
     encoding: 'utf8'
   }
