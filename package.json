@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
+    "build": "npm run genEustia && npm run updateDoc && vitepress build docs",
     "preview": "vitepress preview docs",
     "format": "lsla prettier \"*.json\" \"docs/**/*.{mts,js,vue,css}\" --write",
     "updateDoc": "node script/updateDoc.js",
