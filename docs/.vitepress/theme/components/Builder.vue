@@ -29,7 +29,7 @@ const module = getUrlParam('module')
 if (module) {
   input.value = module
   setTimeout(() => startBuild(), 1000)
-} else if (global.localStorage) {
+} else if (typeof localStorage !== 'undefined') {
   input.value = localStorage.getItem(INPUT_STORE_NAME)
 }
 
