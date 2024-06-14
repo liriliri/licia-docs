@@ -1,3 +1,6 @@
-# Licia Docs
- 
-[Licia official website](https://licia.liriliri.io/)
+# licia.liriliri.io
+
+```bash
+npm i
+npm run dev
+```
