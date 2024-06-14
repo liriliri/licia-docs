@@ -135,7 +135,7 @@ function log() {
     li(title="All modules that can run on both browser and node.js." @click="selectModules('all')") {{ isZh ? '全部' : 'All' }}
     li(title='All browser modules.' @click="selectModules('browser')") {{ isZh ? '浏览器' : 'Browser' }}
     li(title='All node.js modules.' @click="selectModules('node')") Node
-    li(title='All miniprogram modules.' @click="selectModules('miniprogram')") {{ isZh ? '小程序' : 'miniprogram' }}
+    li(title='All miniprogram modules.' @click="selectModules('miniprogram')") {{ isZh ? '小程序' : 'MiniProgram' }}
     li(v-for="(module, name) in licia" :key="name" :title="module.description" @click="selectModules(name)") {{ name }}
 </template>
 

@@ -63,7 +63,7 @@ licia.safeGet({a: {b: 1}}, 'a.b'); // -> 1
 
 使用 npm 包的方式会将所有功能引入到代码包中，大概会增加 100 kb 的大小。如果你只想引入所需脚本，可以使用在线工具生成定制化 util 库。
 
-1、访问 [https://licia.liriliri.io/builder.html](/builder.html)
+1、访问 [https://licia.liriliri.io/zh/builder.html](/zh/builder.md)
 
 2、输入需要的模块名，点击生成下载 util.js。
 
