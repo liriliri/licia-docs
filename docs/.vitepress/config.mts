@@ -36,6 +36,12 @@ export default defineConfig({
       { text: 'Playground', link: '/playground' },
       { text: 'Builder', link: '/builder' },
     ],
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.com/liriliri/licia',
+      },
+    ],
   },
   locales: {
     root: {
@@ -60,6 +66,21 @@ export default defineConfig({
       {
         src: '/eustia.js',
       },
+    ],
+    [
+      'script',
+      {
+        async: '',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-HLMNNR1SC0',
+      },
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HLMNNR1SC0');`,
     ],
   ],
 })
