@@ -96,11 +96,13 @@ function selectModule(name) {
 
 function selectModules(type) {
   if (contain(['all', 'browser', 'node', 'miniprogram'], type)) {
+    input.value = ''
     each(licia, function (module, name) {
       if (type === 'all' || contain(module.env, type)) {
         input.value += ' ' + name
       }
     })
+    input.value = trim(input.value)
   } else {
     selectModule(type)
   }
