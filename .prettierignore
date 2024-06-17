@@ -1,4 +1,4 @@
 docs/.vitepress/cache/
 docs/.vitepress/.temp/
-docs/.vitepress/theme/lib/eustia.js
+docs/public/eustia.js
 docs/.vitepress/theme/css/iconfont/

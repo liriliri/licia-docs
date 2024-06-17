@@ -3,13 +3,6 @@ const path = require('path')
 const fs = require('fs')
 
 const outputPath = path.resolve(__dirname, '../docs/public/eustia.js')
-const outputDir = path.dirname(outputPath)
-
-if (!fs.existsSync(outputDir)) {
-  fs.mkdirSync(outputDir, {
-    recursive: true
-  })
-}
 
 const writeSteam = fs.createWriteStream(
   outputPath,

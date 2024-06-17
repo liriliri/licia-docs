@@ -31,6 +31,11 @@ export default defineConfig({
         },
       },
     },
+    logo: {
+      src: '/icon.png',
+      width: 24,
+      height: 24,
+    },
     nav: [
       { text: 'Document', link: '/document' },
       { text: 'Playground', link: '/playground' },
