@@ -12,7 +12,7 @@ import getUrlParam from 'licia/getUrlParam'
 import createUrl from 'licia/createUrl'
 import { useData } from 'vitepress'
 
-const { lang } = useData()
+const t = (en, zh) => (useData().lang.value === 'zh' ? zh : en)
 
 const INPUT_STORE_NAME = 'buildModules'
 
@@ -21,7 +21,6 @@ const isBuilding = ref(false)
 const downloadUrl = ref('')
 const logs = ref([])
 const downloadBtn = ref(null)
-const isZh = lang.value === 'zh'
 
 watch(() => input.value, reset)
 
@@ -43,11 +42,11 @@ function startBuild() {
   build(modules, function (err, output) {
     if (err) {
       log(err.message)
-      log(isZh ? '中止任务。' : 'TASK ABORT.')
+      log(t('TASK ABORT.', '中止任务。'))
       return
     }
 
-    log(isZh ? '耗时 %dms。' : 'TIME COST %dms.', now() - startTime)
+    log(t('TIME COST %dms.', '耗时 %dms。'), now() - startTime)
 
     downloadUrl.value = createUrl(output)
     setTimeout(() => {
@@ -65,9 +64,9 @@ function build(modules, cb) {
 
   isBuilding.value = true
 
-  log(isZh ? '包含模块' : 'MODULES INCLUDED')
+  log(t('MODULES INCLUDED', '包含模块'))
   log(modules.join(' '))
-  log(isZh ? '构建中...' : 'BUILDING...')
+  log(t('BUILDING...', '构建中...'))
 
   eustia.build(
     {
@@ -122,22 +121,22 @@ function log() {
 .container.mobile
 
   textarea#input-modules(rows='4' placeholder="fetch each random..." v-model="input" :disabled="isBuilding")
-  a.btn#build-btn(:class="isBuilding || downloadUrl ? 'disabled' : ''" href='#' @click="startBuild") {{ isZh ? '构建' : 'BUILD' }}
-  a.btn#clear-btn(:class="isBuilding ? 'disabled' : ''" href='#' @click="clear") {{ isZh ? '清除' : 'CLEAR' }}
-  a.btn#download-btn(:class="downloadUrl ? '' : 'disabled'" download='util.js' :href="downloadUrl" ref="downloadBtn") {{ isZh ? '下载' : 'DOWNLOAD' }}
+  a.btn#build-btn(:class="isBuilding || downloadUrl ? 'disabled' : ''" href='#' @click="startBuild") {{ t('BUILD', '构建') }}
+  a.btn#clear-btn(:class="isBuilding ? 'disabled' : ''" href='#' @click="clear") {{ t('CLEAR', '清除') }}
+  a.btn#download-btn(:class="downloadUrl ? '' : 'disabled'" download='util.js' :href="downloadUrl" ref="downloadBtn") {{ t('DOWNLOAD', '下载') }}
 
   ul#build-logger(v-if="logs.length === 0")
-    li {{ isZh ? '提示：' : 'Note:' }}
-    li {{ isZh ? '模块名用空格分隔。' : 'Module names are separated by spaces.' }}
-    li {{ isZh ? '生成库导出全局变量 “_”，使用 UMD 规范。' : 'The generated library is exported as "_" in global space, using UMD pattern.' }}
+    li {{ t('Note:', '提示：') }}
+    li {{ t('Module names are separated by spaces.', '模块名用空格分隔。') }}
+    li {{ t('The generated library is exported as "_" in global space, using UMD pattern.', '生成库导出全局变量 “_”，使用 UMD 规范。') }}
   ul#build-logger(v-else)  
     li(v-for="log in logs" :key="log") {{ log }}
 
   ul#build-modules(v-if="!isBuilding")
-    li(title="All modules that can run on both browser and node.js." @click="selectModules('all')") {{ isZh ? '全部' : 'All' }}
-    li(title='All browser modules.' @click="selectModules('browser')") {{ isZh ? '浏览器' : 'Browser' }}
+    li(title="All modules that can run on both browser and node.js." @click="selectModules('all')") {{ t('All', '全部') }}
+    li(title='All browser modules.' @click="selectModules('browser')") {{ t('Browser', '浏览器') }}
     li(title='All node.js modules.' @click="selectModules('node')") Node
-    li(title='All miniprogram modules.' @click="selectModules('miniprogram')") {{ isZh ? '小程序' : 'MiniProgram' }}
+    li(title='All miniprogram modules.' @click="selectModules('miniprogram')") {{ t('MiniProgram', '小程序') }}
     li(v-for="(module, name) in licia" :key="name" :title="module.description" @click="selectModules(name)") {{ name }}
 </template>
 
