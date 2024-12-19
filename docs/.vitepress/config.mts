@@ -55,6 +55,10 @@ export default defineConfig({
         link: 'https://github.com/liriliri/licia',
       },
     ],
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2016-present liriliri',
+    },
   },
   locales: {
     root: {
@@ -70,6 +74,10 @@ export default defineConfig({
           { text: '示例', link: '/zh/playground' },
           { text: '定制', link: '/zh/builder' },
         ],
+        footer: {
+          message: '基于 MIT 许可发布',
+          copyright: '版权所有 © 2016 至今 liriliri',
+        },
       },
     },
   },
