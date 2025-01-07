@@ -2,6 +2,10 @@ import { defineConfig } from 'vitepress'
 import * as fs from 'fs'
 import * as path from 'path'
 
+const icon = (name: string) => {
+  return fs.readFileSync(path.resolve(__dirname, `${name}.svg`), 'utf8')
+}
+
 export default defineConfig({
   ignoreDeadLinks: true,
   title: 'Licia',
@@ -46,9 +50,15 @@ export default defineConfig({
     socialLinks: [
       {
         icon: {
-          svg: fs.readFileSync(path.resolve(__dirname, 'kofi.svg'), 'utf8'),
+          svg: icon('kofi'),
         },
         link: 'https://ko-fi.com/surunzi',
+      },
+      {
+        icon: {
+          svg: icon('wechatpay'),
+        },
+        link: 'https://surunzi.com/wechatpay.html',
       },
       {
         icon: 'github',
