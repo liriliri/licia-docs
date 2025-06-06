@@ -149,7 +149,7 @@ function log() {
   margin-bottom 15px
   outline none
   padding 10px
-  border 1px solid $gray
+  border 1px solid var(--vp-c-gutter)
   font-family $font-family
   resize vertical
   appearance none
