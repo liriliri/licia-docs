@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/liriliri/licia-docs#readme",
   "devDependencies": {
+    "@stackblitz/sdk": "^1.11.0",
     "@types/node": "^22.7.4",
     "axios": "^1.7.2",
     "browserify": "^17.0.0",
