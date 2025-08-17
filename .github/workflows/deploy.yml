@@ -35,13 +35,13 @@ jobs:
         cp -r .licia/demo/* ../licia-docs/dist/demo/
     - working-directory: ./project/licia-docs
       run: |
-        mkdir -p ../../page/licia
-        cp -r dist/* ../../page/licia
+        mkdir -p ../../liriliri/licia
+        cp -r dist/* ../../liriliri/licia
     - uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        source: "page/licia/"
-        target: "/root/"    
+        source: "liriliri/licia/"
+        target: "/var/www/"    
     
