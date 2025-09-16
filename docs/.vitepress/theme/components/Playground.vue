@@ -34,18 +34,18 @@ o
 @import '../css/variable.styl'
 
 .playground
-    position relative
-    padding-top 30px
-    margin-top 10px
-    .initial-text
-        position absolute
-        width 100%
-        top 0
-        left 0
-        text-align center
-iframe.playground
+  position relative
+  padding-top 30px
+  margin-top 10px
+  .initial-text
+    position absolute
     width 100%
-    min-height 600px
-    padding-top 0
-    border 1px solid var(--vp-c-gutter)
+    top 0
+    left 0
+    text-align center
+iframe.playground
+  width 100%
+  min-height 600px
+  padding-top 0
+  border 1px solid var(--vp-c-gutter)
 </style>
