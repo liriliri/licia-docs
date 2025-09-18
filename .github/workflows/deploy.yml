@@ -15,6 +15,7 @@ jobs:
     - uses: actions/checkout@v4
       with: 
         path: project/licia-docs
+        submodules: true
     - uses: actions/checkout@v4
       with:
         repository: liriliri/licia
