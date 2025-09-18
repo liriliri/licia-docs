@@ -118,7 +118,7 @@ function log() {
 </script>
 
 <template lang="pug">
-.container.mobile
+.licia-container.mobile
 
   textarea#input-modules(rows='4' placeholder="fetch each random..." v-model="input" :disabled="isBuilding")
   a.btn#build-btn(:class="isBuilding || downloadUrl ? 'disabled' : ''" href='#' @click="startBuild") {{ t('BUILD', '构建') }}

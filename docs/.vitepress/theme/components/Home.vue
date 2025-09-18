@@ -95,7 +95,7 @@ function goTo(href) {
 
 <template lang="pug">
 .banner
-  luna-shader-toy-player.player(:controls="false" :renderPass="renderPass" :style="{}")
+  luna-shader-toy-player.player(:controls="false" :renderPass="renderPass")
   h1 {{ lang === 'zh' ? '实用 JavaScript 工具库' : 'Useful Utility Collection with Zero Dependencies' }}
   a.btn.second(href='' @click="goTo('/document.html')") {{ lang === 'zh' ? '查看文档' : 'VIEW DOCS' }}
 </template>

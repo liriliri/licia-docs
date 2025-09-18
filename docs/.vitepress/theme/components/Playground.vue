@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.container.mobile
+.licia-container.mobile
   .playground(ref="playground")
     .initial-text(v-if="loading") {{ lang === 'zh' ? '初始化 StackBlitz 中...' : 'Initializing StackBlitz...' }}
 </template>
