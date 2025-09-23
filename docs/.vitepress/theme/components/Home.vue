@@ -19,7 +19,7 @@ const LunaShaderToyPlayer = defineClientComponent(
 // https://www.shadertoy.com/view/XX3fDH
 const code = `//modified from @XorDev
 
-#define NUM_OCTAVES 5
+#define NUM_OCTAVES 2
 
 float rand(vec2 n) {
   return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
