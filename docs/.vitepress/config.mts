@@ -1,10 +1,5 @@
 import { defineConfig } from 'vitepress'
-import * as fs from 'fs'
-import * as path from 'path'
-
-const icon = (name: string) => {
-  return fs.readFileSync(path.resolve(__dirname, `${name}.svg`), 'utf8')
-}
+import { googleAnalytics, kofi, wechatpay } from './share/config.mjs'
 
 export default defineConfig({
   ignoreDeadLinks: true,
@@ -48,18 +43,8 @@ export default defineConfig({
       { text: 'Builder', link: '/builder' },
     ],
     socialLinks: [
-      {
-        icon: {
-          svg: icon('kofi'),
-        },
-        link: 'https://ko-fi.com/surunzi',
-      },
-      {
-        icon: {
-          svg: icon('wechatpay'),
-        },
-        link: 'https://surunzi.com/wechatpay.html',
-      },
+      kofi,
+      wechatpay,
       {
         icon: 'github',
         link: 'https://github.com/liriliri/licia',
@@ -98,20 +83,6 @@ export default defineConfig({
         src: '/eustia.js',
       },
     ],
-    [
-      'script',
-      {
-        async: '',
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-HLMNNR1SC0',
-      },
-    ],
-    [
-      'script',
-      {},
-      `window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HLMNNR1SC0');`,
-    ],
+    ...googleAnalytics('G-HLMNNR1SC0'),
   ],
 })
