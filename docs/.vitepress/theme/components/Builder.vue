@@ -12,7 +12,8 @@ import getUrlParam from 'licia/getUrlParam'
 import createUrl from 'licia/createUrl'
 import { useData } from 'vitepress'
 
-const t = (en, zh) => (useData().lang.value === 'zh' ? zh : en)
+const { lang } = useData()
+const t = (en, zh) => (lang.value === 'zh' ? zh : en)
 
 const INPUT_STORE_NAME = 'buildModules'
 
@@ -29,7 +30,10 @@ if (module) {
   input.value = module
   setTimeout(() => startBuild(), 1000)
 } else if (typeof localStorage !== 'undefined') {
-  input.value = localStorage.getItem(INPUT_STORE_NAME)
+  const module = localStorage.getItem(INPUT_STORE_NAME)
+  if (module) {
+    input.value = module
+  }
 }
 
 function startBuild() {
